@@ -1,0 +1,19 @@
+secret_key_base: QcwfjmlsPPtHCiTq3DgCXom9eubVnxI18t019IZPsMw
+port: 3000
+name: offline_pink
+log: "::Logger.new(STDOUT)"
+log_level: "::Logger::INFO"
+color: true
+host: 0.0.0.0
+port_reuse: false
+process_count: (ENV[%(AMBER_PROCESS_COUNT)]? || 1).to_i
+ssl_key_file:
+ssl_cert_file:
+redis_url: "redis://localhost:6379"
+session:
+  key: amber.session
+  store: :signed_cookie
+  expires: 0
+secrets:
+  description: Store your development secrets credentials and settings here.
+  database: postgres://postgres:@pg:5432/offline_pink_development

@@ -1,0 +1,10 @@
+/doc/
+/lib/
+/.crystal/
+/.shards/
+/.vscode/
+.env
+.amber_secret_key
+production.yml
+.DS_Store
+
