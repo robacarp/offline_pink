@@ -3,11 +3,18 @@
   - check.errors.each do |error|
     li = error.to_s
 
-== form(action: "/checks/#{check.id.to_s}", method: check.id ? :patch : :post) do
+== form action: "/checks/#{check.id.to_s}", method: check.id ? :patch : :post do
   == csrf_tag
   div.form-group
-  == text_field(name: "type", value: check.type, placeholder: "Type", class: "form-control")
+    == check_box name: "get_request", checked: check.get_request
+    == label :get_request, "Send GET request"
   div.form-group
-  == text_field(name: "reference", value: check.reference, placeholder: "Reference", class: "form-control")
-  == submit("Submit", class: "btn btn-primary btn-xs")
-  == link_to("back", "/checks", class: "btn btn-default btn-xs")
+    == check_box name: "ping_check", checked: check.ping_check
+    == label :ping_check, "Ping host?"
+  div.form-group
+    == text_field name: "host", value: check.host, placeholder: "Host", class: "form-control"
+  div.form-group
+    == text_field name: "url", value: check.url, placeholder: "Url", class: "form-control"
+  div.form-group
+    == submit "Submit", class: "btn btn-primary btn-xs"
+  == link_to "back", "/checks", class: "btn btn-default btn-xs"

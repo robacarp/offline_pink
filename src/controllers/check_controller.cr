@@ -7,14 +7,22 @@ class CheckController < ApplicationController
     end
   end
 
+  private def check_fields
+    params.to_h.select [
+      "ping_check",
+      "get_request",
+      "host",
+      "url"
+    ]
+  end
   def index
     checks = current_user.checks
-    render("index.slang")
+    render "index.slang"
   end
 
   def show
     if check = Check.find params["id"]
-      render("show.slang")
+      render "show.slang"
     else
       flash["warning"] = "Check with ID #{params["id"]} Not Found"
       redirect_to "/checks"
@@ -23,24 +31,26 @@ class CheckController < ApplicationController
 
   def new
     check = Check.new
-    render("new.slang")
+    render "new.slang"
   end
 
   def create
-    check = Check.new(params.to_h.select(["type", "reference"]))
+    check = Check.new check_fields
+
+    check.user = current_user
 
     if check.valid? && check.save
       flash["success"] = "Created Check successfully."
       redirect_to "/checks"
     else
       flash["danger"] = "Could not create Check!"
-      render("new.slang")
+      render "new.slang"
     end
   end
 
   def edit
     if check = Check.find params["id"]
-      render("edit.slang")
+      render "edit.slang"
     else
       flash["warning"] = "Check with ID #{params["id"]} Not Found"
       redirect_to "/checks"
@@ -48,14 +58,14 @@ class CheckController < ApplicationController
   end
 
   def update
-    if check = Check.find(params["id"])
-      check.set_attributes(params.to_h.select(["type", "reference"]))
+    if check = Check.find params["id"]
+      check.set_attributes check_fields
       if check.valid? && check.save
         flash["success"] = "Updated Check successfully."
         redirect_to "/checks"
       else
         flash["danger"] = "Could not update Check!"
-        render("edit.slang")
+        render "edit.slang"
       end
     else
       flash["warning"] = "Check with ID #{params["id"]} Not Found"

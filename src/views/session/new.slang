@@ -1,4 +1,4 @@
-== form method: "post", action: "/sessions/create" do
+== form method: "POST", action: "/sessions/create" do
   == csrf_tag
   div.form-group
     == text_field name: "email", value: email, placeholder: "Email", class: "form-control"

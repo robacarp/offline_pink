@@ -1,9 +1,11 @@
 -- +micrate Up
 CREATE TABLE checks (
   id BIGSERIAL PRIMARY KEY,
-  type VARCHAR,
-  reference VARCHAR,
   user_id BIGINT,
+  ping_check BOOL default false,
+  get_request BOOL default false,
+  host VARCHAR,
+  url VARCHAR,
   created_at TIMESTAMP,
   updated_at TIMESTAMP
 );

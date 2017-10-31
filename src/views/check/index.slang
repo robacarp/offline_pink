@@ -7,14 +7,18 @@ div.table-responsive
   table.table.table-striped
     thead
       tr
-        th Type
-        th Reference
+        th Get Request
+        th Ping Check
+        th Host
+        th Url
         th Actions
     tbody
     - checks.each do |check|
       tr
-        td = check.type
-        td = check.reference
+        td = check.get_request
+        td = check.ping_check
+        td = check.host
+        td = check.url
         td
           span
             a.btn.btn-primary.btn-xs href="/checks/#{ check.id }" read
