@@ -74,7 +74,7 @@ shards:
 
   slang:
     github: jeromegn/slang
-    commit: b817c89c7e5ae39562710c0d6c7f42cee685e14f
+    commit: 2c1fa6cc364e825e558ccab0462224c1ab9b9409
 
   smtp:
     github: raydf/smtp.cr
