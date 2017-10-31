@@ -7,7 +7,7 @@ class CheckController < ApplicationController
     end
   end
 
-  private def check_fields
+  private def check_params
     params.to_h.select [
       "ping_check",
       "get_request",
@@ -40,7 +40,7 @@ class CheckController < ApplicationController
   end
 
   def create
-    check = Check.new check_fields
+    check = Check.new check_params
     check.user = current_user
     authorize check
 
@@ -66,7 +66,7 @@ class CheckController < ApplicationController
   def update
     if check = Check.find params["id"]
       authorize check
-      check.set_attributes check_fields
+      check.set_attributes check_params
 
       if check.valid? && check.save
         flash["success"] = "Updated Check successfully."

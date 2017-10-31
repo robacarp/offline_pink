@@ -6,3 +6,4 @@
     == text_field name: "password", value: password, placeholder: "Password", class: "form-control"
   div.form-group
     == submit "Login"
+    a href="/users/new" Register

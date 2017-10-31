@@ -8,6 +8,6 @@
   div.form-group
     == text_field(name: "email", value: user.email, placeholder: "Email", class: "form-control")
   div.form-group
-    == text_field(name: "password", value: password, placeholder: "Password", class: "form-control")
+    == text_field(name: "password", value: user.password, placeholder: "Password", class: "form-control")
   div.form-group
     == submit("Submit", class: "btn btn-primary btn-xs")

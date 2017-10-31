@@ -11,7 +11,7 @@ class User < Granite::ORM::Base
 
   has_many :checks
 
-  def save_password(unencrypted_password : String)
+  def hash_password(unencrypted_password : String)
     @crypted_password = Crypto::Bcrypt::Password.create(unencrypted_password, cost: 10).to_s
   end
 
@@ -19,6 +19,10 @@ class User < Granite::ORM::Base
     if hash = @crypted_password
       Crypto::Bcrypt::Password.new(hash) == password_guess
     end
+  end
+
+  # for form views
+  def password
   end
 
   def self.guest_user
