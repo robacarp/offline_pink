@@ -4,8 +4,9 @@ class ApplicationController < Amber::Controller::Base
   include JasperHelpers
   LAYOUT = "application.slang"
 
-  def initialize(something)
-    @_current_user = User.new
+  def initialize(context)
+    super
+    @_current_user = User.guest_user
   end
 
   def logged_in?
@@ -13,12 +14,10 @@ class ApplicationController < Amber::Controller::Base
   end
 
   def current_user : User
-    # session.destroy
-
-    # unless @_current_user_loaded
-    #   @_current_user_loaded = true
-    #   @_current_user = User.find(session[:user_id]) || @_current_user
-    # end
+    unless @_current_user_loaded
+      @_current_user_loaded = true
+      @_current_user = User.find(session[:user_id]) || @_current_user
+    end
 
     @_current_user
   end

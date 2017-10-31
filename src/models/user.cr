@@ -20,4 +20,8 @@ class User < Granite::ORM::Base
       Crypto::Bcrypt::Password.new(hash) == password_guess
     end
   end
+
+  def self.guest_user
+    new
+  end
 end
