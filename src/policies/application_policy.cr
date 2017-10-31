@@ -29,11 +29,9 @@ class ApplicationPolicy
 
   macro default_policy_for(object_class)
     policy_for({{ object_class }},
-      :show,
-      new: :create,
-      create: :create,
-      edit: :edit,
-      update: :update
+      :show, :new, :create, :update, :destroy,
+      edit: :update,
+      delete: :destroy
     )
   end
 
@@ -55,7 +53,7 @@ class ApplicationPolicy
   end
 
   def user_is_owner?
-    object.user_id == current_user.id
+    logged_in? && object.user_id == current_user.id
   end
 
 end

@@ -41,8 +41,8 @@ class CheckController < ApplicationController
 
   def create
     check = Check.new check_fields
-
     check.user = current_user
+    authorize check
 
     if check.valid? && check.save
       flash["success"] = "Created Check successfully."
@@ -55,6 +55,7 @@ class CheckController < ApplicationController
 
   def edit
     if check = Check.find params["id"]
+      authorize check
       render "edit.slang"
     else
       flash["warning"] = "Check with ID #{params["id"]} Not Found"
@@ -64,7 +65,9 @@ class CheckController < ApplicationController
 
   def update
     if check = Check.find params["id"]
+      authorize check
       check.set_attributes check_fields
+
       if check.valid? && check.save
         flash["success"] = "Updated Check successfully."
         redirect_to "/checks"
@@ -80,6 +83,7 @@ class CheckController < ApplicationController
 
   def destroy
     if check = Check.find params["id"]
+      authorize check
       check.destroy
     else
       flash["warning"] = "Check with ID #{params["id"]} Not Found"

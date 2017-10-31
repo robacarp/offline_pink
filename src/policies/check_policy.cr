@@ -5,23 +5,23 @@ class CheckPolicy < ApplicationPolicy
     Check.all("WHERE user_id = ?", current_user.id)
   end
 
-  def new?
-    logged_in?
-  end
-
   def show?
     user_is_owner?
   end
 
-  def create?
+  def new?
     logged_in?
   end
 
-  def edit?
+  def create?
     user_is_owner?
   end
 
   def update?
+    user_is_owner?
+  end
+
+  def destroy?
     user_is_owner?
   end
 end
