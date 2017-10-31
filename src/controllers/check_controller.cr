@@ -15,13 +15,17 @@ class CheckController < ApplicationController
       "url"
     ]
   end
+
+  authorize_with CheckPolicy, Check
+
   def index
-    checks = current_user.checks
+    checks = policy_scope
     render "index.slang"
   end
 
   def show
     if check = Check.find params["id"]
+      authorize check
       render "show.slang"
     else
       flash["warning"] = "Check with ID #{params["id"]} Not Found"
@@ -31,6 +35,7 @@ class CheckController < ApplicationController
 
   def new
     check = Check.new
+    authorize check
     render "new.slang"
   end
 
