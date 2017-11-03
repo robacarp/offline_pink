@@ -10,4 +10,9 @@ require "./policies/**"
 require "./controllers/application_controller"
 require "./controllers/**"
 
+require "./mosquito/**"
+
+require "./jobs/config"
+require "./jobs/**"
+
 Amber::Server.start
