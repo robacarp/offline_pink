@@ -7,7 +7,6 @@ require "./handlers/**"
 
 require "./mosquito/**"
 
-require "./jobs/config"
 require "./jobs/**"
 
 Mosquito::Runner.start

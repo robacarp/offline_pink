@@ -1,4 +1,4 @@
-class PingJob < Mosquito::Job
+class PingJob < Mosquito::QueuedJob
   params(
     check : Check | Nil,
     str : String = "test",
@@ -6,6 +6,8 @@ class PingJob < Mosquito::Job
   )
 
   def perform
-    puts "Ping Job"
+    known_check = check
+    return unless known_check
+    puts "Pinging: #{known_check.host}"
   end
 end

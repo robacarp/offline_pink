@@ -1,22 +1,29 @@
+require "benchmark"
+
 module Mosquito
   class Runner
+    include Logger
+
     def self.start
       new.run
     end
 
     getter queues
+    @last_run_epoch : Int64
 
     def initialize
       @queues = [] of Queue
+      @last_run_epoch = Int64.new(0)
     end
 
     def run
-      puts "Mosquito is buzzing..."
+      log "Mosquito is buzzing..."
 
       while true
         fetch_queues
-        enqueue_scheduled
-        work
+        enqueue_periodic_tasks
+        enqueue_delayed_tasks
+        dequeue_and_run_tasks
       end
     end
 
@@ -25,54 +32,77 @@ module Mosquito
 
       if new_queues != @queues
         if new_queues.any?
-          # puts "Queues: #{new_queues.map(&.name).join(", ")}"
+          log "Queues: #{new_queues.map(&.name).join(", ")}"
         end
 
         @queues = new_queues
       end
     end
 
-    private def enqueue_scheduled
+    private def enqueue_periodic_tasks
+      now = Time.now.epoch
+      # only enqueue tasks at most once a minute
+      return unless now - @last_run_epoch > 60
+      @last_run_epoch = now
+
+      # roughly the number of minutes since the epoch
+      moment = now / 60
+
+      Base.scheduled_tasks.each do |scheduled_task|
+        if moment % scheduled_task.interval.minutes == 0
+          job = scheduled_task.class.new
+          task = job.build_task
+          task.store
+          scheduled_task.class.queue.enqueue task
+        end
+      end
+    end
+
+    private def enqueue_delayed_tasks
       queues.each do |q|
         overdue_tasks = q.dequeue_scheduled
         next unless overdue_tasks.any?
-        puts "Found #{overdue_tasks.size} overdue tasks:"
+        log "Found #{overdue_tasks.size} overdue tasks:"
 
         overdue_tasks.each do |task|
-          puts "\t Enqueueing #{task.id}"
+          log "\t Enqueueing #{task.id}"
           q.enqueue task
         end
       end
     end
 
-    private def work
+    private def dequeue_and_run_tasks
       queues.each do |q|
-        run_task q
+        run_next_task q
       end
     end
 
-    private def run_task(q : Queue)
+    private def run_next_task(q : Queue)
       task = q.dequeue
       return unless task
 
-      puts "Running task #{task.id} from #{q.name}"
+      log "Running task #{task.id} from #{q.name}"
 
-      task.run
+      bench = Benchmark.measure do
+        task.run
+      end
+
+      took = "took #{bench.total} seconds"
 
       if task.succeeded?
-        puts "#{task.id} succeeded"
+        log "task #{task.id} succeeded, #{took}"
         q.forget task
         task.delete
       else
-        print "#{task.id} failed, "
+        print "task #{task.id} failed, #{took}"
 
         if task.rescheduleable?
           interval = task.reschedule_interval
           next_execution = Time.now + interval
-          puts "rescheduling for #{next_execution} (#{interval})"
+          log "rescheduling for #{next_execution} (#{interval})"
           q.reschedule task, next_execution
         else
-          puts "cannot reschedule"
+          log "cannot reschedule"
           q.banish task
         end
       end

@@ -12,7 +12,6 @@ require "./controllers/**"
 
 require "./mosquito/**"
 
-require "./jobs/config"
 require "./jobs/**"
 
 Amber::Server.start

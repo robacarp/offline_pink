@@ -96,5 +96,9 @@ module Mosquito
         end
       end.uniq.flatten
     end
+
+    def ==(other : self)
+      name == other.name
+    end
   end
 end

@@ -25,7 +25,7 @@ module Mosquito
       @retry_count : Int32,
     )
       @config = {} of String => String
-      @job = Job.new
+      @job = NilJob.new
     end
 
     def store
@@ -50,8 +50,14 @@ module Mosquito
     end
 
     def run
-      @job = Base.job_for_type(type).new(config)
-      @job.as(Job).run
+      instance = Base.job_for_type(type).new
+
+      if instance.is_a? QueuedJob
+        instance.vars_from(config)
+      end
+
+      @job = instance
+      instance.run
 
       if failed?
         @retry_count += 1
@@ -67,7 +73,7 @@ module Mosquito
     end
 
     def rescheduleable?
-      @retry_count < 5
+      @job.is_a? QueuedJob && @retry_count < 5
     end
 
     def reschedule_interval

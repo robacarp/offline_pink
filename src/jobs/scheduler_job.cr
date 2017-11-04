@@ -1,6 +1,7 @@
-class SchedulerJob < Mosquito::Job
+ class SchedulerJob < Mosquito::PeriodicJob
+  run_every 1.minute
+
   def perform
-    puts "Scheduler Job"
-    fail
+    puts "I AM RUNNING"
   end
 end
