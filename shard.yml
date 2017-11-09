@@ -24,6 +24,8 @@ dependencies:
 
   quartz_mailer:
     github: amberframework/quartz-mailer
+  mosquito:
+    path: ../mosquito
 
   jasper_helpers:
     github: amberframework/jasper-helpers

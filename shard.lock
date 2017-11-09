@@ -40,6 +40,10 @@ shards:
     github: juanedi/micrate
     version: 0.3.0
 
+  mosquito:
+    path: ../mosquito
+    version: 0.1.0
+
   mysql:
     github: crystal-lang/crystal-mysql
     version: 0.3.2

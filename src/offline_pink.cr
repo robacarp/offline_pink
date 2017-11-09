@@ -1,4 +1,6 @@
 require "amber"
+require "mosquito"
+
 require "../config/*"
 require "./models/**"
 require "./mailers/**"
@@ -9,8 +11,6 @@ require "./policies/**"
 # load the application_controller before controllers which depend on it
 require "./controllers/application_controller"
 require "./controllers/**"
-
-require "./mosquito/**"
 
 require "./jobs/**"
 
