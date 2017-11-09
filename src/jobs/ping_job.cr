@@ -1,13 +1,25 @@
+require "icmp"
+
 class PingJob < Mosquito::QueuedJob
-  params(
-    check : Check | Nil,
-    str : String = "test",
-    number : Int32 = 3
-  )
+  params(check : Check | Nil)
 
   def perform
-    known_check = check
-    return unless known_check
-    puts "Pinging: #{known_check.host}"
+    puts "Pinging: Check##{check.id} #{check.host}"
+
+    if hostname = check.host
+      ip_addresses = Socket::Addrinfo.resolve(hostname, "http", type: Socket::Type::STREAM, protocol: Socket::Protocol::TCP).map(&.ip_address)
+
+      results = ip_addresses.map do |a|
+        next if a.address.includes? ":"
+        statistics = ICMP::Ping.ping(a.address)
+        Result.new(
+          check_id: check.id,
+          is_up: statistics[:success] > 0,
+          response_time: statistics[:average_response]
+        )
+      end.compact
+
+      results.each &.save
+    end
   end
 end

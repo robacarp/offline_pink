@@ -7,17 +7,13 @@ div.table-responsive
   table.table.table-striped
     thead
       tr
-        th Is_up
         th Check
-        th Actions
+        th Up?
+        th Response Time
     tbody
     - results.each do |result|
       tr
+        td = result.check.host
         td = result.is_up
-        td = result.check.id
-        td
-          span
-            a.btn.btn-primary.btn-xs href="/results/#{ result.id }" read
-            a.btn.btn-success.btn-xs href="/results/#{ result.id }/edit" edit
-            a.btn.btn-danger.btn-xs href="/results/#{ result.id }?_method=delete" onclick="return confirm('Are you sure?');" delete
+        td = result.response_time
 

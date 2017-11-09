@@ -6,7 +6,7 @@ shards:
 
   amber_spec:
     github: amberframework/amber-spec
-    version: 0.1.1
+    version: 0.1.2
 
   callback:
     github: mosop/callback
@@ -18,11 +18,15 @@ shards:
 
   db:
     github: crystal-lang/crystal-db
-    version: 0.4.2
+    version: 0.4.3
 
   granite_orm:
-    github: amberframework/granite-orm
-    version: 0.7.5
+    path: ../granite-orm
+    version: 0.7.6
+
+  icmp:
+    path: ../ping_cr
+    version: 0.1.0
 
   icr:
     github: TechMagister/crystal-icr
@@ -30,7 +34,7 @@ shards:
 
   jasper_helpers:
     github: amberframework/jasper-helpers
-    version: 0.1.5
+    commit: b69f1baf73081d12f34be493ff64d99bf7214fe7
 
   kilt:
     github: jeromegn/kilt
@@ -46,7 +50,7 @@ shards:
 
   mysql:
     github: crystal-lang/crystal-mysql
-    version: 0.3.2
+    version: 0.3.3
 
   optarg:
     github: mosop/optarg
@@ -56,10 +60,6 @@ shards:
     github: will/crystal-pg
     version: 0.13.4
 
-  quartz_mailer:
-    github: amberframework/quartz-mailer
-    version: 0.2.0
-
   radix:
     github: luislavena/radix
     commit: 905bd9e14b9996c793ac95e1e77d2809f7f79568
@@ -67,6 +67,10 @@ shards:
   redis:
     github: stefanwille/crystal-redis
     version: 1.8.0
+
+  selenium:
+    github: ysbaddaden/selenium-webdriver-crystal
+    commit: fff14e79de0cb8e7a4177868918a2601963f28b0
 
   sentry:
     github: TechMagister/sentry
@@ -80,17 +84,13 @@ shards:
     github: jeromegn/slang
     commit: 2c1fa6cc364e825e558ccab0462224c1ab9b9409
 
-  smtp:
-    github: raydf/smtp.cr
-    commit: 36854c38435ce104914cb6f44e08c23d8defd143
-
   spinner:
     github: askn/spinner
     version: 0.1.1
 
   sqlite3:
     github: crystal-lang/crystal-sqlite3
-    version: 0.8.2
+    version: 0.8.3
 
   string_inflection:
     github: mosop/string_inflection

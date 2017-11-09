@@ -8,12 +8,14 @@ class CheckController < ApplicationController
   end
 
   private def check_params
-    params.to_h.select [
-      "ping_check",
-      "get_request",
+    params_hash = params.to_h
+    params_hash.select([
       "host",
       "url"
-    ]
+    ]).merge({
+      "ping_check" => params_hash["ping_check"] == "1",
+      "check_params" => params_hash["get_request"] == "1"
+    })
   end
 
   authorize_with CheckPolicy, Check

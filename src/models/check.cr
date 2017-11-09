@@ -13,4 +13,12 @@ class Check < Granite::ORM::Base
   belongs_to :user
 
   VALID_TYPES = {1 => :ping, 2 => :get}
+
+  def ping_check?
+    ping_check
+  end
+
+  def get_request?
+    get_request
+  end
 end

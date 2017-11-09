@@ -5,7 +5,7 @@ class Result < Granite::ORM::Base
 
   belongs_to :check
 
-  # id : Int64 primary key is created for you
   field is_up : Bool
+  field response_time : Float32
   timestamps
 end

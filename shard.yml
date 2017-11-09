@@ -20,19 +20,21 @@ dependencies:
     github: amberframework/amber
 
   granite_orm:
-    github: amberframework/granite-orm
+    path: ../granite-orm
 
-  quartz_mailer:
-    github: amberframework/quartz-mailer
   mosquito:
     path: ../mosquito
 
+  icmp:
+    path: ../ping_cr
+
   jasper_helpers:
     github: amberframework/jasper-helpers
+    commit: b69f1ba
 
   pg:
     github: will/crystal-pg
- 
+
 development_dependencies:
   amber_spec:
     github: amberframework/amber-spec
