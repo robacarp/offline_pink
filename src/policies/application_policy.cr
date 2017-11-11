@@ -1,9 +1,20 @@
 class ApplicationPolicy
   macro policy_for(object_class, *methods, **method_map)
     getter current_user : User
-    getter object : {{ object_class }}
 
-    def initialize(@current_user : User, @object : {{ object_class }})
+    def object? : {{ object_class }} | Nil
+      @object
+    end
+
+    def object : {{ object_class }}
+      if value = object?
+        return value
+      else
+        raise "{{ object_class }} was Nil, unable to authorize"
+      end
+    end
+
+    def initialize(@current_user : User, @object : {{ object_class }} | Nil)
     end
 
     def self.policy_type

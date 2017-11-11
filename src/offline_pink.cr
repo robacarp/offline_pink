@@ -2,6 +2,7 @@ require "amber"
 require "mosquito"
 
 require "../config/*"
+require "./models/model_helpers"
 require "./models/**"
 require "./mailers/**"
 require "./handlers/**"

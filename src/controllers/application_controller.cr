@@ -5,6 +5,7 @@ class ApplicationController < Amber::Controller::Base
   LAYOUT = "application.slang"
 
   getter current_action : Symbol
+
   def initialize(context)
     super
     @current_action = context.route.payload.action
@@ -12,7 +13,7 @@ class ApplicationController < Amber::Controller::Base
   end
 
   def logged_in?
-    ! current_user.id.nil?
+    !current_user.id.nil?
   end
 
   def current_user : User
@@ -36,34 +37,46 @@ class ApplicationController < Amber::Controller::Base
     @_authorized = false
     @_scoped = false
 
-    def policy
+    private def policy
       {{ policy_class }}
     end
 
-    def current_user_object_policy(object)
+    private def current_user_object_policy(object)
       {{ policy_class }}.new current_user, object
     end
 
-    def current_user_policy
+    private def current_user_policy
       {{ policy_class }}.new current_user
     end
 
-    def policy_scope
+    private def policy_scope
       @_scoped = true
       {{ policy_class }}::Scope.new(current_user).resolve
     end
 
-    def authorize(object)
+    private def authorize(object)
       unless object.is_a? {{ protected_class }}
         raise "Invalid Authorization"
       end
-
-      @_authorized = true
 
       policy = current_user_object_policy object
       result = policy.can_user_act? current_action
 
       unless result
+        raise "Not Authorized"
+      end
+
+      @_authorized = true
+    end
+
+    private def authorize(object, *, with object_policy : ApplicationPolicy.class, for action : Symbol)
+      unless object.class == object_policy.policy_type
+        raise "Invalid Authorization"
+      end
+
+      policy = object_policy.new current_user, object
+
+      unless policy.can_user_act? action
         raise "Not Authorized"
       end
     end

@@ -33,8 +33,8 @@ shards:
     commit: b28bb938cc9e9e439424217c074a9168d253ba4b
 
   jasper_helpers:
-    github: amberframework/jasper-helpers
-    commit: b69f1baf73081d12f34be493ff64d99bf7214fe7
+    path: ../jasper-helpers
+    version: 0.1.6
 
   kilt:
     github: jeromegn/kilt

@@ -26,7 +26,7 @@ class CheckController < ApplicationController
   end
 
   def show
-    if check = Check.find params["id"]
+    if check = Check.find! params["id"]
       authorize check
       render "show.slang"
     else

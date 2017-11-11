@@ -29,8 +29,7 @@ dependencies:
     path: ../ping_cr
 
   jasper_helpers:
-    github: amberframework/jasper-helpers
-    commit: b69f1ba
+    path: ../jasper-helpers
 
   pg:
     github: will/crystal-pg

@@ -23,18 +23,17 @@ Amber::Server.configure do |app|
   end
 
   routes :web do
-    get "/sessions/new", SessionController, :new
+    get "/sessions/new",     SessionController, :new
     post "/sessions/create", SessionController, :create
     get "/sessions/destroy", SessionController, :destroy
 
-    get "/me/register", UserController, :new
-    post "/me/register", UserController, :create
-    get "/me/edit", UserController, :edit
-    post "/me/edit", UserController, :update
-    get "/me/destroy_account", UserController, :delete
+    get "/me/register",           UserController, :new
+    post "/me/register",          UserController, :create
+    get "/me/edit",               UserController, :edit
+    post "/me/edit",              UserController, :update
+    get "/me/destroy_account",    UserController, :delete
     delete "/me/destroy_account", UserController, :destroy
 
-    resources "/results", ResultController
     resources "/checks", CheckController
 
     get "/", HomeController, :index
