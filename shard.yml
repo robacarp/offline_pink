@@ -19,6 +19,9 @@ dependencies:
   amber:
     github: amberframework/amber
 
+  dotenv:
+    github: gdotdesign/cr-dotenv
+
   granite_orm:
     path: ../granite-orm
 

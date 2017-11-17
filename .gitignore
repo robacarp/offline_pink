@@ -7,5 +7,6 @@
 .amber_secret_key
 production.yml
 .DS_Store
+node_modules
 
 offline_pink

@@ -14,7 +14,7 @@ class CheckController < ApplicationController
       "url"
     ]).merge({
       "ping_check" => params_hash["ping_check"] == "1",
-      "check_params" => params_hash["get_request"] == "1"
+      "get_request" => params_hash["get_request"] == "1"
     })
   end
 
@@ -26,7 +26,7 @@ class CheckController < ApplicationController
   end
 
   def show
-    if check = Check.find! params["id"]
+    if check = Check.find params["id"]
       authorize check
       render "show.slang"
     else
@@ -72,7 +72,7 @@ class CheckController < ApplicationController
 
       if check.valid? && check.save
         flash["success"] = "Updated Check successfully."
-        redirect_to "/checks"
+        redirect_to "/checks/#{check.id}"
       else
         flash["danger"] = "Could not update Check!"
         render "edit.slang"

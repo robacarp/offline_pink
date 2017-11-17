@@ -1,7 +1,13 @@
 class SessionController < ApplicationController
   def new
-    email = "robert@robacarp.com"
-    password = "12345"
+    if Amber.env.development?
+      email = "robert@robacarp.com"
+      password = "12345"
+    else
+      email = ""
+      password = ""
+    end
+
     render "new.slang"
   end
 

@@ -12,9 +12,10 @@ class PingJob < Mosquito::QueuedJob
       results = ip_addresses.map do |a|
         next if a.address.includes? ":"
         statistics = ICMP::Ping.ping(a.address)
-        Result.new(
+        PingResult.new(
           check_id: check.id,
           is_up: statistics[:success] > 0,
+          kind: "ping",
           response_time: statistics[:average_response]
         )
       end.compact

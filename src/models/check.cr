@@ -1,8 +1,6 @@
 require "granite_orm/adapter/pg"
 
 class Check < Granite::ORM::Base
-  extend ModelHelpers
-
   adapter pg
 
   field get_request : Bool
@@ -13,7 +11,8 @@ class Check < Granite::ORM::Base
   timestamps
 
   belongs_to :user
-  has_many :results
+  has_many :ping_results
+  has_many :get_results
 
   VALID_TYPES = {1 => :ping, 2 => :get}
 
@@ -25,7 +24,17 @@ class Check < Granite::ORM::Base
     get_request
   end
 
-  def last_check
-    results.last
+  def last_ping : PingResult | Nil
+    result = PingResult.all("WHERE check_id = ? ORDER BY id DESC LIMIT 1", [id])
+    if result.any?
+      result.first
+    end
+  end
+
+  def last_get : GetResult | Nil
+    result = GetResult.all("WHERE check_id = ? ORDER BY id DESC LIMIT 1", [id])
+    if result.any?
+      result.first
+    end
   end
 end

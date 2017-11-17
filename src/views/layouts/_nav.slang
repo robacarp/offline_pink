@@ -12,8 +12,6 @@ nav.navbar.navbar-expand-lg.bg-dark
       li.nav-item
         a.nav-link href="/checks" Checks
       li.nav-item
-        a.nav-link href="/results" Results
-      li.nav-item
         a.nav-link href="/sessions/destroy" Log out
     - else
       li.nav-item

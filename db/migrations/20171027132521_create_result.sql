@@ -1,5 +1,5 @@
 -- +micrate Up
-CREATE TABLE results (
+CREATE TABLE ping_results (
   id BIGSERIAL PRIMARY KEY,
   is_up BOOL,
   response_time REAL,
@@ -7,7 +7,7 @@ CREATE TABLE results (
   created_at TIMESTAMP,
   updated_at TIMESTAMP
 );
-CREATE INDEX check_id_idx ON results (check_id);
+CREATE INDEX ping_results_check_id_idx ON ping_results (check_id);
 
 -- +micrate Down
-DROP TABLE IF EXISTS results;
+DROP TABLE IF EXISTS ping_results;
