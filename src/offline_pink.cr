@@ -1,8 +1,3 @@
-require "dotenv"
-Dotenv.load "development.env"
-
-require "./offline_pink/**"
-
 require "amber"
 require "mosquito"
 

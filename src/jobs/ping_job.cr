@@ -15,7 +15,6 @@ class PingJob < Mosquito::QueuedJob
         PingResult.new(
           check_id: check.id,
           is_up: statistics[:success] > 0,
-          kind: "ping",
           response_time: statistics[:average_response]
         )
       end.compact

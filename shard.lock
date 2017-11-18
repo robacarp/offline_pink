@@ -2,7 +2,7 @@ version: 1.0
 shards:
   amber:
     github: amberframework/amber
-    version: 0.3.5
+    version: 0.3.6
 
   amber_spec:
     github: amberframework/amber-spec
@@ -25,19 +25,19 @@ shards:
     version: 0.1.0
 
   granite_orm:
-    path: ../granite-orm
-    version: 0.7.6
+    github: robacarp/granite-orm
+    commit: 7561150a6647facb36a93551fe688dc948cb64f1
 
   icmp:
-    path: ../ping_cr
-    version: 0.1.0
+    github: robacarp/icmp.cr
+    commit: 1f6480296a0caca00e20940167c8c3b78f94c0d4
 
   icr:
     github: crystal-community/icr
     version: 0.3.0
 
   jasper_helpers:
-    path: ../jasper-helpers
+    github: amberframework/jasper-helpers
     version: 0.1.6
 
   kilt:
@@ -49,8 +49,8 @@ shards:
     version: 0.3.0
 
   mosquito:
-    path: ../mosquito
-    version: 0.1.0
+    github: robacarp/mosquito
+    commit: 30013e17614cca6d3273953365c63b0876558cf7
 
   mysql:
     github: crystal-lang/crystal-mysql

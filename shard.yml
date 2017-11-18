@@ -12,8 +12,8 @@ targets:
   offline_pink:
     main: src/offline_pink.cr
 
-  amber:
-    main: lib/amber/src/amber/cli.cr
+  worker:
+    main: src/worker.cr
 
 dependencies:
   amber:
@@ -23,16 +23,21 @@ dependencies:
     github: gdotdesign/cr-dotenv
 
   granite_orm:
-    path: ../granite-orm
+    # path: ../granite-orm
+    github: robacarp/granite-orm
+    branch: integration
 
   mosquito:
-    path: ../mosquito
+    # path: ../mosquito
+    github: robacarp/mosquito
 
   icmp:
-    path: ../ping_cr
+    # path: ../ping_cr
+    github: robacarp/icmp.cr
 
   jasper_helpers:
-    path: ../jasper-helpers
+    #    path: ../jasper-helpers
+    github: amberframework/jasper-helpers
 
   pg:
     github: will/crystal-pg

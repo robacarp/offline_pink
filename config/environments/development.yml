@@ -15,5 +15,4 @@ session:
   store: :signed_cookie
   expires: 0
 secrets:
-  description: Store your development secrets credentials and settings here.
   database: postgres://postgres:@pg:5432/offline_pink_development
