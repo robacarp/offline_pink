@@ -1,10 +1,4 @@
-FROM crystallang/crystal:0.23.1
-
-ARG DEBIAN_FRONTEND=noninteractive
-RUN apt-get update -qq && apt-get install -y --no-install-recommends libpq-dev libsqlite3-dev libmysqlclient-dev libreadline-dev git curl
-
-RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
-RUN apt-get install -y nodejs
+FROM robacarp/amber_build:latest
 
 COPY config /offline-pink/config
 COPY db /offline-pink/db
@@ -20,8 +14,8 @@ WORKDIR /offline-pink
 RUN shards install
 RUN npm install
 RUN npm run release
-RUN shards build worker --production
-RUN shards build offline_pink --production
+
+RUN shards build offline_pink worker --production
 
 ENV AMBER_ENV production
 ENV DATABASE_URL postgres://offline_pink:@docker.for.mac.localhost:5432/offline_pink_development
@@ -39,4 +33,5 @@ EXPOSE 3000
 # COPY --from=0 /offline-pink/deps /
 # COPY --from=0 /offline-pink/bin /offline-pink/bin/
 
-ENTRYPOINT ["/offline-pink/bin/offline_pink"]
+ENTRYPOINT ["/bin/sh","-c"]
+CMD ["/offline-pink/bin/offline_pink"]
