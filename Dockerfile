@@ -9,9 +9,11 @@ COPY package.json /offline-pink
 
 COPY shard.yml /offline-pink
 COPY shard.lock /offline-pink
+COPY app.json /offline-pink
 
 WORKDIR /offline-pink
 RUN shards install
+
 RUN npm install
 RUN npm run release
 
