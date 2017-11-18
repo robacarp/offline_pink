@@ -10,10 +10,8 @@ COPY config /offline-pink/config
 COPY db /offline-pink/db
 COPY public /offline-pink/public
 COPY src /offline-pink/src
-COPY support /offline-pink/support
 
 COPY package.json /offline-pink
-COPY package-lock.json /offline-pink
 
 COPY shard.yml /offline-pink
 COPY shard.lock /offline-pink
