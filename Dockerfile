@@ -21,6 +21,7 @@ RUN shards build offline_pink worker --production
 
 ENV AMBER_ENV production
 ENV DATABASE_URL postgres://offline_pink:@docker.for.mac.localhost:5432/offline_pink_development
+ENV REDIS_URL redis://docker.for.mac.localhost:6379/1
 
 EXPOSE 3000
 
@@ -36,4 +37,4 @@ EXPOSE 3000
 # COPY --from=0 /offline-pink/bin /offline-pink/bin/
 
 ENTRYPOINT ["/bin/sh","-c"]
-CMD ["/offline-pink/bin/offline_pink"]
+CMD ["bin/offline_pink"]
