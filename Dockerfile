@@ -10,7 +10,9 @@ COPY package.json /offline-pink
 COPY shard.yml /offline-pink
 COPY shard.lock /offline-pink
 COPY app.json /offline-pink
+
 COPY Procfile /offline-pink
+COPY DOCKER_OPTIONS_RUN /offline-pink
 
 WORKDIR /offline-pink
 RUN shards install
