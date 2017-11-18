@@ -8,5 +8,7 @@
 production.yml
 .DS_Store
 node_modules
+bin
+public/dist
 
 offline_pink
