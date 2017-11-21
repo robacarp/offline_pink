@@ -30,7 +30,7 @@ shards:
 
   icmp:
     github: robacarp/icmp.cr
-    commit: 1f6480296a0caca00e20940167c8c3b78f94c0d4
+    commit: e75950f32daf9148a1a6505157b974dd01ae4fe6
 
   jasper_helpers:
     github: amberframework/jasper-helpers
