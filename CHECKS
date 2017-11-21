@@ -1,1 +1,4 @@
-/                       Offline.pink
+WAIT=2
+TIMEOUT=10
+ATTEMPTS=10
+/
