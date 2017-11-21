@@ -1,6 +1,6 @@
 FROM robacarp/amber_build:latest
 
-WORKDIR .
+WORKDIR /app
 COPY package.json .
 RUN npm install
 
@@ -13,20 +13,19 @@ COPY shard.yml .
 COPY shard.lock .
 COPY app.json .
 
-COPY Procfile .
-COPY DOCKER_OPTIONS_RUN .
-COPY DOCKER_OPTIONS_BUILD .
-COPY CHECKS .
-
 RUN shards install
 RUN npm run release
 
 RUN shards build offline_pink worker --production
-RUN setcap cap_net_raw+ep bin/worker
 
 ENV AMBER_ENV production
 ENV DATABASE_URL postgres://offline_pink:@docker.for.mac.localhost:5432/offline_pink_development
 ENV REDIS_URL redis://docker.for.mac.localhost:6379/1
+
+COPY Procfile .
+COPY DOCKER_OPTIONS_RUN .
+COPY DOCKER_OPTIONS_BUILD .
+COPY CHECKS .
 
 EXPOSE 3000
 
