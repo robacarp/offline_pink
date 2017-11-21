@@ -14,6 +14,8 @@ class GetJob < Mosquito::QueuedJob
     response = HTTP::Client.get url
     response_time = Time.now - start_time
 
+    puts "response code: #{response.status_code}"
+
     GetResult.new(
       check_id: check.id,
       is_up: response.status_code == 200,
