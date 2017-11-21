@@ -22,5 +22,11 @@ class GetJob < Mosquito::QueuedJob
       response_code: response.status_code,
       response_time: response_time.milliseconds.to_f32
     ).save
+  rescue e : Socket::Error
+    GetResult.new(
+      check_id: check.id,
+      is_up: false,
+      response_time: -1.0
+    ).save
   end
 end

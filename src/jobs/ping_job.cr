@@ -21,5 +21,11 @@ class PingJob < Mosquito::QueuedJob
 
       results.each &.save
     end
+  rescue e : Socket::Error
+    PingResult.new(
+      check_id: check.id,
+      is_up: false,
+      response_time: -1.0
+    ).save
   end
 end
