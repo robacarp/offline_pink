@@ -34,4 +34,8 @@ class GetResult < Granite::ORM::Base
       "too long ago"
     end
   end
+
+  def is_up?
+    is_up
+  end
 end

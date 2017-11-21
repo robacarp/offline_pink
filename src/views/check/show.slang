@@ -12,7 +12,11 @@
           th scope="row" Last Ping
           td
             - if ping_result = check.last_ping
-              | #{ping_result.relative_time_since}, #{ping_result.response_time}ms
+              - if ping_result.is_up?
+                span title="#{ping_result.created_at}" #{ping_result.relative_time_since}
+                | , #{ping_result.response_time}ms
+              - else
+                span.pink DEAD
             - else
               | No recent ping :<
 
@@ -21,7 +25,12 @@
           th scope="row" Last Get
           td
             - if get_result = check.last_get
-              | #{get_result.relative_time_since}, #{get_result.response_time}ms
+              - if get_result.is_up?
+                span title="#{get_result.created_at}" #{get_result.relative_time_since}
+                | , #{get_result.response_code}, #{get_result.response_time}ms
+              - else
+                span.pink DEAD
+                | (#{get_result.response_code})
             - else
               | No recent GET :<
 
