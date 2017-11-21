@@ -16,6 +16,7 @@ COPY app.json .
 COPY Procfile .
 COPY DOCKER_OPTIONS_RUN .
 COPY DOCKER_OPTIONS_BUILD .
+COPY CHECKS .
 
 RUN shards install
 RUN npm run release
