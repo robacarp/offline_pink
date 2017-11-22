@@ -6,9 +6,7 @@
 == form action: "/checks/#{check.id.to_s}", method: check.id ? :patch : :post do
   == csrf_tag
   div.form-group
-    == text_field name: "host", value: check.host, placeholder: "Host, e.g. google.com", class: "form-control"
-  div.form-group
-    == text_field name: "url", value: check.url, placeholder: "Route, e.g. /", class: "form-control"
+    == text_field name: "uri", value: check.uri, placeholder: "http://offline.pink/", class: "form-control"
   div.form-group
     == check_box name: "get_request", checked: check.get_request
     == label :get_request, "Send GET request"

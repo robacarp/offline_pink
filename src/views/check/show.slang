@@ -1,6 +1,6 @@
 .row
   .col-md-6
-    h3 = "#{check.host}#{check.url}"
+    h3 = "#{check.uri}"
     - if check.ping_check?
       | [PING]
     - if check.get_request?

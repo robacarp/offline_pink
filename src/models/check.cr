@@ -6,7 +6,7 @@ class Check < Granite::ORM::Base
   field get_request : Bool
   field ping_check : Bool
   field host : String
-  field url : String
+  field uri : String
 
   timestamps
 

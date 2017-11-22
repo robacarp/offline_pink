@@ -6,7 +6,10 @@ class PingJob < Mosquito::QueuedJob
   def perform
     puts "Pinging: Check##{check.id} #{check.host}"
 
-    if hostname = check.host
+    return unless uri = check.uri
+    parsed_uri = URI.parse uri
+
+    if hostname = parsed_uri.host
       ip_addresses = Socket::Addrinfo.resolve(hostname, "http", type: Socket::Type::STREAM, protocol: Socket::Protocol::TCP).map(&.ip_address)
 
       results = ip_addresses.map do |a|

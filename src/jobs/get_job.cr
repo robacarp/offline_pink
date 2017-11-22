@@ -3,10 +3,7 @@ class GetJob < Mosquito::QueuedJob
 
   def perform
     return unless known_check = check
-    return unless host = known_check.host
-    return unless path = known_check.url
-
-    url = host + path
+    return unless url = check.uri
 
     puts "GETing Check##{check.id} : #{url}"
 
