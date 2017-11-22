@@ -1,30 +1,29 @@
 require "icmp"
 
 class PingJob < Mosquito::QueuedJob
-  params(check : Check | Nil)
+  params(domain : Domain | Nil)
 
   @hosts = [] of Socket::IPAddress
   @status = :none
 
   def ping_result(**args)
-    PingResult.new(**args, check_id: check.id).tap(&.save)
+    PingResult.new(**args, check_id: domain.id).tap(&.save)
   end
 
   def perform
-    puts "Pinging: Check##{check.id} #{check.uri}"
+    puts "Pinging: Domain##{domain.id} #{domain.name}"
     resolve_hosts && send_pings
 
     case @status
     when :success
       puts "Ping successful. #{@hosts.size} addresses found."
-    when :no_uri_present
-      puts "Could not find URI on Check"
-      ping_result is_up: false
+    when :no_name_present
+      puts "Invalid domain"
     when :no_host_present
       puts "Could not determine Hostname"
       ping_result is_up: false
     else
-      puts "Could not translate status: #{@status}"
+      puts "Non translateable status: #{@status}"
     end
 
   rescue e : Socket::Error
@@ -32,20 +31,12 @@ class PingJob < Mosquito::QueuedJob
   end
 
   def resolve_hosts : Bool
-    unless uri = check.uri
-      @status = :no_uri_present
+    unless name = domain.name
+      @status = :no_name_present
       return false
     end
 
-    parsed_uri = URI.parse uri
-
-    unless hostname = parsed_uri.host
-      p parsed_uri
-      @status = :no_host_present
-      return false
-    end
-
-    @hosts = Socket::Addrinfo.resolve(hostname, "http", type: Socket::Type::STREAM, protocol: Socket::Protocol::TCP).map(&.ip_address)
+    @hosts = Socket::Addrinfo.resolve(name, "http", type: Socket::Type::STREAM, protocol: Socket::Protocol::TCP).map(&.ip_address)
     true
   end
 

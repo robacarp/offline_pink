@@ -1,6 +1,4 @@
 .row
-  .col-md-6
-.row
   .col-md-6.offset-md-3
     .container
       .row
@@ -36,4 +34,4 @@
                     .pink
                       | Dead
                 - else
-                  | Not requested yet
+                  | Not Pinged yet

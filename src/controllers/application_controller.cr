@@ -63,7 +63,7 @@ class ApplicationController < Amber::Controller::Base
       result = policy.can_user_act? current_action
 
       unless result
-        raise "Not Authorized"
+        raise "Not Authorized. User(#{current_user.id}) cannot perform #{current_action}"
       end
 
       @_authorized = true

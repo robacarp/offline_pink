@@ -13,4 +13,24 @@ class DomainController < ApplicationController
     domains = policy_scope
     render "index.slang"
   end
+
+  def new
+    domain = Domain.new
+    authorize domain
+    render "new.slang"
+  end
+
+  def create
+    domain = Domain.new domain_params
+    domain.user = current_user
+    authorize domain
+
+    if domain.valid? && domain.save
+      flash["success"] = "Domain monitoring will begin shortly."
+      redirect_to "/my/domains"
+    else
+      flash["danger"] = "Domain could not be created."
+      render "new.slang"
+    end
+  end
 end
