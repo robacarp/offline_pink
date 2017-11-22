@@ -10,8 +10,7 @@ class CheckController < ApplicationController
   private def check_params
     params_hash = params.to_h
     params_hash.select([
-      "host",
-      "url"
+      "uri"
     ]).merge({
       "ping_check" => params_hash["ping_check"] == "1",
       "get_request" => params_hash["get_request"] == "1"
