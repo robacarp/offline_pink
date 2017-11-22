@@ -36,6 +36,8 @@ Amber::Server.configure do |app|
 
     resources "/checks", CheckController
 
+    resources "/domains", DomainController, only: [:index]
+
     get "/", HomeController, :index
   end
 end

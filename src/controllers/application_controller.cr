@@ -89,4 +89,14 @@ class ApplicationController < Amber::Controller::Base
       }
     end
   end
+
+  macro require_logged_in
+    before_action do
+      all do
+        unless logged_in?
+          redirect_to "/"
+        end
+      end
+    end
+  end
 end
