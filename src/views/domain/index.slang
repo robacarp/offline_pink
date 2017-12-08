@@ -1,2 +1,3 @@
 - domains.each do |domain|
-  = domain.name
+  a href="/domain/#{domain.id}" = domain.name
+  br

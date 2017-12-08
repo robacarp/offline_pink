@@ -1,8 +1,12 @@
 version: 1.0
 shards:
   amber:
-    github: amberframework/amber
-    version: 0.3.6
+    github: robacarp/amber
+    commit: 87ce5649623d9493875c4e8a0d30a880eeff24e9
+
+  amber_router:
+    github: amberframework/router
+    version: 0.0.1
 
   amber_spec:
     github: amberframework/amber-spec
@@ -59,10 +63,6 @@ shards:
   pg:
     github: will/crystal-pg
     version: 0.13.4
-
-  radix:
-    github: luislavena/radix
-    version: 0.3.8
 
   redis:
     github: stefanwille/crystal-redis

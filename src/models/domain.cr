@@ -7,4 +7,5 @@ class Domain < Granite::ORM::Base
   timestamps
 
   belongs_to :user
+  has_many :routes
 end

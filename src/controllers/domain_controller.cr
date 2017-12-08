@@ -14,6 +14,16 @@ class DomainController < ApplicationController
     render "index.slang"
   end
 
+  def show
+    if domain = Domain.find params["id"]
+      authorize domain
+      render "show.slang"
+    else
+      flash["warning"] = "Domain doesnt exist."
+      redirect_to "/domains"
+    end
+  end
+
   def new
     domain = Domain.new
     authorize domain

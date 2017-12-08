@@ -4,7 +4,7 @@ CREATE TABLE routes(
   domain_id BIGINT NOT NULL,
   path VARCHAR NOT NULL DEFAULT null,
   expected_content VARCHAR,
-  expected_code INT,
+  expected_code BIGINT,
   use_ssl BOOL DEFAULT true,
   created_at TIMESTAMP,
   updated_at TIMESTAMP

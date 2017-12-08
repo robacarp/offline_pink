@@ -20,7 +20,9 @@ targets:
 
 dependencies:
   amber:
-    github: amberframework/amber
+    # path: ../amber
+    github: robacarp/amber
+    branch: amber_router
 
   dotenv:
     github: gdotdesign/cr-dotenv

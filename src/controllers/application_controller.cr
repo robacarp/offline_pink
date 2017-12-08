@@ -8,7 +8,7 @@ class ApplicationController < Amber::Controller::Base
 
   def initialize(context)
     super
-    @current_action = context.route.payload.action
+    @current_action = action_name
     @_current_user = User.guest_user
   end
 

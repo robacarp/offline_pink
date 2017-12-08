@@ -13,4 +13,7 @@ class DomainPolicy < ApplicationPolicy
     user_is_owner?
   end
 
+  def show?
+    user_is_owner?
+  end
 end
