@@ -1,19 +1,19 @@
-secret_key_base: yA-ArtwQzpobeIY4GjWWRixBiNhkBqx9DT39r9-uWhI
+secret_key_base: QkcN4y_xnLvg1Oz5CckxgkOpESJiD824q8Ch47m1C4k
 port: 3000
 name: offline_pink
-log: "::Logger.new(STDOUT)"
-log_level: "::Logger::INFO"
-color: true
+colorize_logging: true
 host: 0.0.0.0
 port_reuse: false
-process_count: (ENV[%(AMBER_PROCESS_COUNT)]? || 1).to_i
-ssl_key_file:
-ssl_cert_file:
+process_count: 1
+# ssl_key_file:
+# ssl_cert_file:
 redis_url: "redis://localhost:6379"
+database_url: postgres://postgres:@pg:5432/offline_pink_test
 session:
   key: amber.session
-  store: :signed_cookie
+  store: signed_cookie
   expires: 0
+
 secrets:
-  description: Store your test secrets credentials and settings here.
+  description: Store your development secrets credentials and settings here.
   database: postgres://postgres:@pg:5432/offline_pink_test
