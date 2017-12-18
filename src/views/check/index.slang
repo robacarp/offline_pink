@@ -14,7 +14,7 @@
         - checks.each do |check|
           tr
             td
-              == link_to check.host.to_s, "checks/#{check.id}"
+              == link_to check.uri.to_s, "checks/#{check.id}"
             - if check.ping_check?
               td [PING]
               td
@@ -26,6 +26,9 @@
                       | Dead
                 - else
                   | Not Pinged yet
+            - else
+              td
+              td
             - if check.get_request?
               td [GET]
               td
@@ -37,3 +40,6 @@
                       | Dead
                 - else
                   | Not requested yet
+            - else
+              td
+              td
