@@ -12,14 +12,9 @@ Amber::Server.configure do |app|
   # All static content will run these transformations
   pipeline :static do
     plug Amber::Pipe::Error.new
+    plug Amber::Pipe::Logger.new
     plug HTTP::StaticFileHandler.new("./public")
     plug HTTP::CompressHandler.new
-  end
-
-  routes :static do
-    # Each route is defined as follow
-    # verb resource : String, controller : Symbol, action : Symbol
-    get "/*", StaticController, :index
   end
 
   routes :web do
@@ -38,4 +33,9 @@ Amber::Server.configure do |app|
 
     get "/", HomeController, :index
   end
+
+  routes :static do
+    get "/*", Amber::Controller::Static, :index
+  end
+
 end

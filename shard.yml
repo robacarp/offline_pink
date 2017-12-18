@@ -20,15 +20,15 @@ targets:
 
 dependencies:
   amber:
-    github: amberframework/amber
+    github: robacarp/amber
+    branch: amber_router
 
   dotenv:
     github: gdotdesign/cr-dotenv
 
   granite_orm:
     # path: ../granite-orm
-    github: robacarp/granite-orm
-    branch: integration
+    github: amberframework/granite-orm
 
   mosquito:
     # path: ../mosquito
