@@ -3,7 +3,7 @@ require "icmp"
 class PingJob < Mosquito::QueuedJob
   params(domain : Domain | Nil)
 
-  @hosts = [] of Socket::IPAddress
+  @ip_addresses = [] of IpAddress
   @status = :none
 
   def ping_result(**args)
@@ -16,7 +16,7 @@ class PingJob < Mosquito::QueuedJob
 
     case @status
     when :success
-      puts "Ping successful. #{@hosts.size} addresses found."
+      puts "Ping successful. #{@ip_addresses.size} addresses found."
     when :no_name_present
       puts "Invalid domain"
     when :no_host_present
@@ -36,13 +36,31 @@ class PingJob < Mosquito::QueuedJob
       return false
     end
 
-    @hosts = Socket::Addrinfo.resolve(name, "http", type: Socket::Type::STREAM, protocol: Socket::Protocol::TCP).map(&.ip_address)
+    saved_addresses = domain.ip_addresses
+
+    hosts = Socket::Addrinfo.resolve(name, "http", type: Socket::Type::STREAM, protocol: Socket::Protocol::TCP).map(&.ip_address)
+    p hosts
+    hosts.each do |host|
+      existing_address_index = saved_addresses.index do |ip_address|
+        host.address == ip_address.address
+      end
+
+      @ip_addresses << if existing_address_index
+        saved_addresses.delete_at(existing_address_index, 1).first
+      else
+        address = IpAddress.new domain_id: domain.id, address: host.address, version: "ipv4"
+        address.version = "ipv6" if host.address.includes? ":"
+        address.save
+      end
+    end
+
     true
   end
 
   def send_pings
-    results = @hosts.map do |a|
-      if a.address.includes? ":"
+    return
+    results = @ip_addresses.map do |a|
+      if a.v4?
         puts "Skipping ipv6 address #{a.address}"
         next
       end

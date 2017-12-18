@@ -33,7 +33,7 @@ Amber::Server.configure do |app|
     get  "/my/domains",     DomainController, :index
     get  "/my/domains/new", DomainController, :new
     post "/my/domains/new", DomainController, :create
-    get "/domain/:id", DomainController, :show
+    get  "/domain/:id",     DomainController, :show
 
     # Routes
     get  "/domain/:domain_id/routes/new", RouteController, :new

@@ -4,11 +4,8 @@ class ApplicationController < Amber::Controller::Base
   include JasperHelpers
   LAYOUT = "application.slang"
 
-  getter current_action : Symbol
-
   def initialize(context)
     super
-    @current_action = action_name
     @_current_user = User.guest_user
   end
 
@@ -60,10 +57,10 @@ class ApplicationController < Amber::Controller::Base
       end
 
       policy = current_user_object_policy object
-      result = policy.can_user_act? current_action
+      result = policy.can_user_act? action_name
 
       unless result
-        raise "Not Authorized. User(#{current_user.id}) cannot perform #{current_action}"
+        raise "Not Authorized. User(#{current_user.id}) cannot perform #{action_name}"
       end
 
       @_authorized = true

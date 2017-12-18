@@ -8,4 +8,6 @@ class Domain < Granite::ORM::Base
 
   belongs_to :user
   has_many :routes
+  has_many :ip_addresses, class: IpAddress
+  has_many :ping_results, through: :ip_addresses
 end
