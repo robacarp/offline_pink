@@ -50,7 +50,7 @@ shards:
 
   mosquito:
     github: robacarp/mosquito
-    commit: 1dcc78f339e102354144f8b2187aaea60d2e0a82
+    commit: 2df3226bf9f69c261dc610cae4d984b379704bc2
 
   mysql:
     github: crystal-lang/crystal-mysql
