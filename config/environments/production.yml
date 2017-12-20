@@ -1,4 +1,4 @@
-secret_key_base: 2LMqiWnO_adAJy6kaFZZ2qaghaaR-kFdJve7WtqFvpk
+secret_key_base: QcwfjmlsPPtHCiTq3DgCXom9eubVnxI18t019IZPsMw
 port: 3000
 name: offline_pink
 colorize_logging: true
@@ -8,12 +8,12 @@ process_count: 1
 # ssl_key_file:
 # ssl_cert_file:
 redis_url: "redis://localhost:6379"
+database_url: postgres://postgres:@pg:5432/offline_pink_development
 session:
   key: amber.session
   store: signed_cookie
   expires: 0
 
-database_url: postgres://localhost:5432/offline_pink_development
 secrets:
   description: Store your development secrets credentials and settings here.
 

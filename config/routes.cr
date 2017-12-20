@@ -11,6 +11,7 @@ Amber::Server.configure do |app|
 
   pipeline :static do
     plug Amber::Pipe::Error.new
+    plug Amber::Pipe::Logger.new
     plug HTTP::StaticFileHandler.new("./public")
     plug HTTP::CompressHandler.new
   end
@@ -43,6 +44,6 @@ Amber::Server.configure do |app|
   end
 
   routes :static do
-    get "/*", StaticController, :index
+    get "/*", Amber::Controller::Static, :index
   end
 end

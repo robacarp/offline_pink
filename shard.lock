@@ -2,7 +2,7 @@ version: 1.0
 shards:
   amber:
     github: robacarp/amber
-    commit: a3e650c8524fd4510e2cb3307c052f81b55910c4
+    commit: 5b0518103531505813c7e4d82599baae7555dbd8
 
   amber_router:
     github: amberframework/router
@@ -50,7 +50,7 @@ shards:
 
   mosquito:
     github: robacarp/mosquito
-    commit: dd5a94ba6d6ca24a93bca3c238f00afb2feda970
+    commit: 2c33038193d8a97766d3ee4eeae0fa8ea2185320
 
   mysql:
     github: crystal-lang/crystal-mysql
