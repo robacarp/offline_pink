@@ -5,7 +5,7 @@
       div.form-group
         == text_field name: "email", value: email, placeholder: "Email", class: "form-control"
       div.form-group
-        == text_field name: "password", value: password, placeholder: "Password", class: "form-control"
+        == input_field type: "password", name: "password", value: password, placeholder: "Password", class: "form-control"
       div.form-group
-        == submit "Login"
+        == submit "Login", class: "btn btn-primary"
         a href="/me/register" Register
