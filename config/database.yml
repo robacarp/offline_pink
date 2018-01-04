@@ -1,2 +1,0 @@
-pg:
-  database: postgres://localhost:5432/offline_pink_development

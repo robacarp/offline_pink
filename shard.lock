@@ -2,7 +2,7 @@ version: 1.0
 shards:
   amber:
     github: robacarp/amber
-    commit: 5b0518103531505813c7e4d82599baae7555dbd8
+    commit: 2c55434aae8a32364f6d60b1d84fd1a19eaf8053
 
   amber_router:
     github: amberframework/router
@@ -17,20 +17,20 @@ shards:
     version: 0.6.3
 
   cli:
-    github: mosop/cli
-    version: 0.6.10
+    github: amberframework/cli
+    version: 0.7.0
 
   db:
     github: crystal-lang/crystal-db
-    version: 0.4.3
+    version: 0.5.0
 
   dotenv:
     github: gdotdesign/cr-dotenv
     version: 0.1.0
 
   granite_orm:
-    path: ../granite-orm
-    version: 0.7.8
+    github: amberframework/granite-orm
+    version: 0.8.0
 
   icmp:
     github: robacarp/icmp.cr
@@ -38,7 +38,7 @@ shards:
 
   jasper_helpers:
     github: amberframework/jasper-helpers
-    version: 0.1.6
+    version: 0.1.7
 
   kilt:
     github: jeromegn/kilt
@@ -50,11 +50,11 @@ shards:
 
   mosquito:
     github: robacarp/mosquito
-    commit: 2c33038193d8a97766d3ee4eeae0fa8ea2185320
+    commit: 6cacffca682f90928291d71694f728f422f32623
 
   mysql:
     github: crystal-lang/crystal-mysql
-    version: 0.3.3
+    version: 0.4.0
 
   optarg:
     github: mosop/optarg
@@ -62,7 +62,7 @@ shards:
 
   pg:
     github: will/crystal-pg
-    version: 0.13.4
+    version: 0.14.1
 
   redis:
     github: stefanwille/crystal-redis
@@ -82,7 +82,7 @@ shards:
 
   slang:
     github: jeromegn/slang
-    version: 1.7.0
+    commit: 33d5c2c2075460094784904e7ecdd3cd21c8d36e
 
   spinner:
     github: askn/spinner
@@ -90,13 +90,13 @@ shards:
 
   sqlite3:
     github: crystal-lang/crystal-sqlite3
-    version: 0.8.3
+    version: 0.9.0
 
   string_inflection:
     github: mosop/string_inflection
     version: 0.2.1
 
   teeplate:
-    github: mosop/teeplate
-    version: 0.4.5
+    github: amberframework/teeplate
+    version: 0.5.0
 
