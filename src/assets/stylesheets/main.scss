@@ -7,10 +7,11 @@ $nav-item-color: #CF593C;
 $foreground_grey: #868686;
 $background_grey: #141414;
 $bright_pink: #ED03FF;
-$electric_blue: #0CFFF7;
+$electric_blue: #02ffee;
 $light_brown: #C7C76D;
 $warm_yellow: #FACE43;
 $dark_red: #CF593C;
+$green: #13ff02;
 
 
 /*
@@ -28,6 +29,8 @@ a {
 }
 
 .pink { color: $bright_pink }
+.green { color: $green }
+.red { color: $dark_red }
 
 .navbar-brand {
   color: #868686;

@@ -15,7 +15,7 @@ class PingResult < Granite::ORM::Base
 
   def relative_time_since : String
     unless timestamp = created_at
-      raise "Cannot compute timestamp for unsaved results"
+      return "never"
     end
 
     now = Time.now.to_utc
@@ -37,5 +37,9 @@ class PingResult < Granite::ORM::Base
 
   def is_up?
     is_up
+  end
+
+  def checked?
+    ! created_at.nil?
   end
 end

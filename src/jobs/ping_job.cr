@@ -38,12 +38,16 @@ class PingJob < Mosquito::QueuedJob
 
     saved_addresses = domain.ip_addresses
 
+    # Resolve a list of host addresses for the domain
     hosts = Socket::Addrinfo.resolve(name, "http", type: Socket::Type::STREAM, protocol: Socket::Protocol::TCP).map(&.ip_address)
+
     hosts.each do |host|
+      # Search for each host address in the database
       existing_address_index = saved_addresses.index do |ip_address|
         host.address == ip_address.address
       end
 
+      # TODO handle when a host is removed from the domain
       @ip_addresses << if existing_address_index
         saved_addresses.delete_at(existing_address_index, 1).first
       else
