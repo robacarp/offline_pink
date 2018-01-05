@@ -12,6 +12,7 @@ session:
   expires: 0
 
 database_url: postgres://localhost:5432/offline_pink_development
+
 secrets:
   description: Store your development secrets credentials and settings here.
 

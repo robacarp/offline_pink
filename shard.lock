@@ -30,7 +30,7 @@ shards:
 
   granite_orm:
     github: amberframework/granite-orm
-    version: 0.8.0
+    version: 0.8.1
 
   icmp:
     github: robacarp/icmp.cr
@@ -38,7 +38,7 @@ shards:
 
   jasper_helpers:
     github: amberframework/jasper-helpers
-    version: 0.1.7
+    version: 0.1.8
 
   kilt:
     github: jeromegn/kilt

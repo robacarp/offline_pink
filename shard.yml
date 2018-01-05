@@ -15,9 +15,6 @@ targets:
   worker:
     main: src/worker.cr
 
-  amber:
-    main: lib/amber/src/amber/cli.cr
-
 dependencies:
   amber:
     # path: ../amber
@@ -28,9 +25,8 @@ dependencies:
     github: gdotdesign/cr-dotenv
 
   granite_orm:
-    path: ../granite-orm
-    #    github: robacarp/granite-orm
-    #branch: integration
+    # path: ../granite-orm
+    github: amberframework/granite-orm
 
   mosquito:
     # path: ../mosquito
