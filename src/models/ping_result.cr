@@ -7,6 +7,7 @@ class PingResult < Granite::ORM::Base
 
   field is_up : Bool
   field response_time : Float32
+  field ip_address_id : Int64
 
   timestamps
 

@@ -3,7 +3,7 @@ CREATE TABLE ip_addresses(
   id BIGSERIAL PRIMARY KEY,
   domain_id BIGINT NOT NULL,
   address VARCHAR NOT NULL DEFAULT null,
-  verison VARCHAR NOT NULL DEFAULT null,
+  version VARCHAR NOT NULL DEFAULT null,
   created_at TIMESTAMP,
   updated_at TIMESTAMP
 );

@@ -11,3 +11,4 @@ bin
 public/dist
 
 offline_pink
+package-lock.json
