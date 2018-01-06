@@ -7,6 +7,10 @@ class SchedulerJob < Mosquito::PeriodicJob
 
     Domain.find_each do |domain|
       PingJob.new(domain: domain).enqueue
+
+      domain.routes.each do |route|
+        GetJob.new(route: route).enqueue
+      end
     end
   end
 end

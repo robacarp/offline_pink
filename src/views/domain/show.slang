@@ -3,10 +3,30 @@ h3 == domain.name
 | Checking #{domain.routes.size} routes:
 
 - if domain.routes.any?
-  ul
+  table.table.table-dark
+    tr
+      th scope="col" Path
+      th scope="col" Status
+      th scope="col" Last Checked
+      th scope="col" Response Time
     - domain.routes.each do |route|
-      li
-        a href="/route/#{route.id}" == route.path
+      tr
+        th scope="row"
+          a href="/routes/#{route.id}/edit" = route.full_path
+        td
+          - if route.last_result.is_up?
+            .greet [UP]
+          - else
+            - if route.last_result.checked?
+              .red [DOWN]
+            - else
+              .pink [UNCHECKED]
+        td = route.last_result.relative_time_since
+        td
+          = route.last_result.response_time
+          | ms
+
+a href="/domain/#{domain.id}/routes/new" Create a route
 
 h4 Most recent pings:
 
@@ -14,7 +34,7 @@ h4 Most recent pings:
   table.table.table-dark
     tr
       th scope="col" Address
-      th scope="col"
+      th scope="col" Status
       th scope="col" Last Ping
       th scope="col" Latency
     - domain.ip_addresses.each do |address|
@@ -29,6 +49,6 @@ h4 Most recent pings:
             - else
               .pink [UNCHECKED]
         td == address.last_result.relative_time_since
-        td == address.last_result.response_time
-
-a href="/domain/#{domain.id}/routes/new" Create a route
+        td
+          == address.last_result.response_time
+          | ms
