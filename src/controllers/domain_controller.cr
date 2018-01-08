@@ -9,6 +9,10 @@ class DomainController < ApplicationController
     ])
   end
 
+  private def redirect_to_domains
+    redirect_to "/my/domains"
+  end
+
   def index
     domains = policy_scope
     render "index.slang"
@@ -20,7 +24,7 @@ class DomainController < ApplicationController
       render "show.slang"
     else
       flash["warning"] = "Domain doesnt exist."
-      redirect_to "/domains"
+      redirect_to_domains
     end
   end
 
@@ -37,10 +41,40 @@ class DomainController < ApplicationController
 
     if domain.valid? && domain.save
       flash["success"] = "Domain monitoring will begin shortly."
-      redirect_to "/my/domains"
+      redirect_to_domains
     else
       flash["danger"] = "Domain could not be created."
       render "new.slang"
+    end
+  end
+
+  def delete
+    if domain = Domain.find params["id"]
+      authorize domain
+      render "delete.slang"
+    else
+      skip_authorization
+      flash["warning"] = "Domain doesnt exist."
+      redirect_to_domains
+    end
+  end
+
+  def destroy
+    unless domain = Domain.find params["id"]
+      flash["warning"] = "Domain doesnt exist."
+      skip_authorization
+      redirect_to_domains
+      return
+    end
+
+    authorize domain
+
+    if domain.destroy
+      flash["info"] = "Domain deleted."
+      redirect_to_domains
+    else
+      flash["error"] = "Unable to delete domain."
+      redirect_to_domains
     end
   end
 end

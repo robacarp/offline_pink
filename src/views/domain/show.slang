@@ -1,4 +1,8 @@
-h3 == domain.name
+.row
+  .col-md-6
+    h3 == domain.name
+  .col-md-6.text-right
+    a href="/domain/#{domain.id}/delete" stop tracking this domain
 
 | Checking #{domain.routes.size} routes:
 
@@ -15,12 +19,12 @@ h3 == domain.name
           a href="/routes/#{route.id}/edit" = route.full_path
         td
           - if route.last_result.is_up?
-            .greet [UP]
+            .green [up]
           - else
             - if route.last_result.checked?
-              .red [DOWN]
+              .red [down]
             - else
-              .pink [UNCHECKED]
+              .pink [unchecked]
         td = route.last_result.relative_time_since
         td
           = route.last_result.response_time
@@ -42,12 +46,12 @@ h4 Most recent pings:
         th scope="row" == address.address
         td
           - if address.last_result.is_up?
-            .green [UP]
+            .green [up]
           - else
             - if address.last_result.checked?
-              .red [DOWN]
+              .red [down]
             - else
-              .pink [UNCHECKED]
+              .pink [unchecked]
         td == address.last_result.relative_time_since
         td
           == address.last_result.response_time

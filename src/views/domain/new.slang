@@ -1,6 +1,6 @@
 .row
   .col-md-6.offset-md-3
-    h1 Monitor New Domain
+    h3 Monitor New Domain
     - if domain.errors
       ul.errors
         - domain.errors.each do |error|

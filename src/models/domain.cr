@@ -24,4 +24,12 @@ class Domain < Granite::ORM::Base
 
     PingResult.all query
   end
+
+  def up?
+    true
+  end
+
+  def checked?
+    ping_results.any?
+  end
 end
