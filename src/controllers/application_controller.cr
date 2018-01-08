@@ -32,6 +32,7 @@ class ApplicationController < Amber::Controller::Base
 
   macro authorize_with(policy_class, protected_class)
     @_authorized = false
+    @_authorization_skipped = false
     @_scoped = false
 
     private def policy
@@ -78,9 +79,13 @@ class ApplicationController < Amber::Controller::Base
       end
     end
 
+    def skip_authorization
+      @_authorization_skipped = true
+    end
+
     after_action do
       all {
-        if ! @_authorized && ! @_scoped
+        if ! @_authorization_skipped && ! redirecting && ! @_authorized && ! @_scoped
           raise "Authorization for action not triggered"
         end
       }
