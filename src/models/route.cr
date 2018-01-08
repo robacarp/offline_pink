@@ -11,16 +11,15 @@ class Route < Granite::ORM::Base
 
   belongs_to :domain
 
+  before_save :enforce_leading_slash
+
   def use_ssl?
     use_ssl
   end
 
   def full_path
-    parts = [] of String?
-    parts << (use_ssl? ? "https:/" : "http:/")
-    parts << domain.name
-    parts << path
-    parts.compact.join "/"
+    protocol = use_ssl? ? "https://" : "http://"
+    [protocol, domain.name, path].compact.join
   end
 
   def last_result
@@ -36,6 +35,14 @@ class Route < Granite::ORM::Base
         results.first
       else
         GetResult.new
+      end
+    end
+  end
+
+  private def enforce_leading_slash
+    if path = @path
+      if path[0] != '/'
+        @path = "/" + path
       end
     end
   end
