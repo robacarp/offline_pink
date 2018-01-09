@@ -53,7 +53,6 @@ class DomainController < ApplicationController
       authorize domain
       render "delete.slang"
     else
-      skip_authorization
       flash["warning"] = "Domain doesnt exist."
       redirect_to_domains
     end
@@ -62,7 +61,6 @@ class DomainController < ApplicationController
   def destroy
     unless domain = Domain.find params["id"]
       flash["warning"] = "Domain doesnt exist."
-      skip_authorization
       redirect_to_domains
       return
     end

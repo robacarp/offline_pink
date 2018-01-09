@@ -18,7 +18,7 @@
         == label :expected_code, "Expected HTTP Status Code"
         == text_field name: :expected_code, value: route.expected_code, placeholder: "200", class: "form-control"
       .form_group
-        == check_box name: :use_ssl, value: route.use_ssl
+        == check_box name: :use_ssl, checked: route.use_ssl?
         == label :use_ssl, "Use SSL?"
       .form_group
         == submit "Submit", class: "btn"

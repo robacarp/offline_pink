@@ -1,8 +1,8 @@
 .row
   .col-md-6
-    h3 == domain.name
+    h3 = domain.name
   .col-md-6.text-right
-    a href="/domain/#{domain.id}/delete" stop tracking this domain
+    a href="/domain/#{domain.id}/delete" stop monitoring this domain
 
 | Checking #{domain.routes.size} routes:
 
@@ -16,7 +16,7 @@
     - domain.routes.each do |route|
       tr
         th scope="row"
-          a href="/routes/#{route.id}/edit" = route.full_path
+          a href="/route/#{route.id}" = route.full_path
         td
           - if route.last_result.is_up?
             .green [up]

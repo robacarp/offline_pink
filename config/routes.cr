@@ -41,6 +41,9 @@ Amber::Server.configure do |app|
     # Routes
     get  "/domain/:domain_id/routes/new", RouteController, :new
     post "/domain/:domain_id/routes/new", RouteController, :create
+    get "/route/:id",                    RouteController, :show
+    get "/route/:id/delete", RouteController, :delete
+    delete "/route/:id", RouteController, :destroy
 
     get "/", HomeController, :index
   end

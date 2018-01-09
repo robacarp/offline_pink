@@ -61,7 +61,7 @@ class ApplicationController < Amber::Controller::Base
       result = policy.can_user_act? action_name
 
       unless result
-        raise "Not Authorized. User(#{current_user.id}) cannot perform #{action_name}"
+        raise "Not Authorized. User(#{current_user.id}) cannot perform #{action_name} on #{object.class}##{object.id}"
       end
 
       @_authorized = true
@@ -86,7 +86,7 @@ class ApplicationController < Amber::Controller::Base
     after_action do
       all {
         if ! @_authorization_skipped && ! redirecting && ! @_authorized && ! @_scoped
-          raise "Authorization for action not triggered"
+          raise "Authorization for action not triggered: #{controller_name}.#{action_name}"
         end
       }
     end

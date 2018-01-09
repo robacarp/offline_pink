@@ -17,6 +17,11 @@ class Route < Granite::ORM::Base
     use_ssl
   end
 
+  def search_for_content?
+    search_text = expected_content
+    search_text && ! search_text.blank?
+  end
+
   def full_path
     protocol = use_ssl? ? "https://" : "http://"
     [protocol, domain.name, path].compact.join
