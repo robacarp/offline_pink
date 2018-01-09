@@ -9,6 +9,7 @@ class GetResult < Granite::ORM::Base
   field is_up : Bool
   field response_time : Float32
   field response_code : Int32
+  field found_expected_content : Bool
 
   belongs_to :route
   timestamps
@@ -23,5 +24,9 @@ class GetResult < Granite::ORM::Base
 
   def checked?
     ! created_at.nil?
+  end
+
+  def found_expected_content?
+    found_expected_content
   end
 end
