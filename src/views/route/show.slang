@@ -7,6 +7,14 @@
 .row
   .col-md-8.offset-md-2
     table.table.table-dark
+      - if result.checked?
+        tr
+          th scope="row" Status
+          td
+            - if result.is_up?
+              .green [up]
+            - else
+              .red [down]
       tr
         th scope="row" Last Checked
         td = result.relative_time_since
