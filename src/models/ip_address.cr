@@ -11,6 +11,8 @@ class IpAddress < Granite::ORM::Base
   belongs_to :domain
   has_many :ping_results
 
+  before_destroy :destroy_associations
+
   @last_result : PingResult?
 
   def v4?
@@ -35,5 +37,9 @@ class IpAddress < Granite::ORM::Base
         PingResult.new
       end
     end
+  end
+
+  def destroy_associations
+    ping_results.map(&.destroy)
   end
 end

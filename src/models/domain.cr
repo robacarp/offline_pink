@@ -9,6 +9,8 @@ class Domain < Granite::ORM::Base
   belongs_to :user
   has_many :routes
 
+  before_destroy :destroy_associations
+
   def validate : Nil
     blank_name = true
     if name = @name
@@ -51,5 +53,10 @@ class Domain < Granite::ORM::Base
 
   def checked?
     ping_results.any?
+  end
+
+  def destroy_associations
+    ip_addresses.map(&.destroy)
+    routes.map(&.destroy)
   end
 end

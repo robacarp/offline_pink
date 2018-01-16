@@ -10,8 +10,10 @@ class Route < Granite::ORM::Base
   timestamps
 
   belongs_to :domain
+  has_many :get_results
 
   before_save :enforce_leading_slash
+  before_destroy :destroy_associations
 
   def validate : Nil
     # status code shoud be a number 100-550
@@ -61,5 +63,9 @@ class Route < Granite::ORM::Base
         @path = "/" + path
       end
     end
+  end
+
+  def destroy_associations
+    get_results.map(&.destroy)
   end
 end
