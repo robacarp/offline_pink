@@ -9,10 +9,6 @@ class DomainController < ApplicationController
     ])
   end
 
-  private def redirect_to_domains
-    redirect_to "/my/domains"
-  end
-
   def index
     domains = policy_scope
     render "index.slang"

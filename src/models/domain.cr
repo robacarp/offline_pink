@@ -11,18 +11,18 @@ class Domain < Granite::ORM::Base
 
   # has_many :ip_addresses, class: IpAddress
   def ip_addresses : Array(IpAddress)
-    IpAddress.all("WHERE domain_id = ?", id)
+    IpAddress.all "WHERE domain_id = ?", id
   end
 
   # has_many :ping_results, through: :ip_addresses
   def ping_results : Array(PingResult)
     query = <<-SQL
-      JOIN ip_addresses ON ip_addresses.id = ping_result.ip_address_id
+      JOIN ip_addresses ON ip_addresses.id = ping_results.ip_address_id
       WHERE
         ip_addresses.domain_id = ?
     SQL
 
-    PingResult.all query
+    PingResult.all query, id
   end
 
   def up?
