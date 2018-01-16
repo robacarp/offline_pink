@@ -11,6 +11,18 @@ session:
   store: signed_cookie
   expires: 0
 
+logging:
+  severity: debug
+  colorize: true
+  filter:
+    - password
+    - confirm_password
+  skip:
+    -
+  context:
+    - request
+    - params
+
 database_url: postgres://localhost:5432/offline_pink_development
 
 secrets:
