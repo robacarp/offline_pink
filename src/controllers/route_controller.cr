@@ -8,26 +8,34 @@ class RouteController < ApplicationController
       "path",
       "expected_content"
     ]).merge({
-      "use_ssl" => params_hash["use_ssl"] == "1",
+      "use_ssl" => params_hash["use_ssl"] == "1"
     })
   end
 
-  def expected_code
+  private def find_domain
+    if domain = Domain.find params["domain_id"]?
+      domain.not_nil!
+    else
+      flash["warning"] = "Domain could not be found"
+      redirect_to_domains
+      nil
+    end
+  end
+
+  private def redirect_to_domain(domain_id : Int64?) : Nil
+    if domain_id
+      redirect_to "/domain/#{domain_id}"
+    else
+      redirect_to_domains
+    end
+  end
+
+  private def expected_code
     code = params["expected_code"]?
     if code.nil? || code == ""
       200_i64
     else
       code.to_i64
-    end
-  end
-
-  def find_domain
-    if domain = Domain.find params["domain_id"]
-      domain.not_nil!
-    else
-      flash["warning"] = "Domain could not be found"
-      redirect_to "/my/domains"
-      nil
     end
   end
 
@@ -50,7 +58,7 @@ class RouteController < ApplicationController
 
     if route.valid? && route.save
       flash["success"] = "Route monitoring will begin shortly."
-      redirect_to "/domain/#{domain.id}"
+      redirect_to_domain domain.id
     else
       flash["danger"] = "Route could not be created."
       render "new.slang"
@@ -64,7 +72,7 @@ class RouteController < ApplicationController
       render "show.slang"
     else
       flash["warning"] = "Route doesnt exist"
-      redirect_to "/my/domains"
+      redirect_to_domains
     end
   end
 
@@ -74,14 +82,14 @@ class RouteController < ApplicationController
       render "delete.slang"
     else
       flash["warning"] = "Route doesnt exist."
-      redirect_to "/my/domains"
+      redirect_to_domains
     end
   end
 
   def destroy
     unless route = Route.find params["id"]
       flash["warning"] = "Route doesnt exist."
-      redirect_to "/my/domains"
+      redirect_to_domains
       return
     end
 
@@ -89,10 +97,10 @@ class RouteController < ApplicationController
 
     if route.destroy
       flash["info"] = "Route deleted."
-      redirect_to "/my/domains"
+      redirect_to_domain route.domain_id
     else
       flash["error"] = "Unable to delete route."
-      redirect_to "/my/domains"
+      redirect_to_domain route.domain_id
     end
   end
 end

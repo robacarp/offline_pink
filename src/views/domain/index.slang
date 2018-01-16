@@ -4,14 +4,15 @@ h3 Monitored Domains
     - domains.each do |domain|
       tr
         td
-          a href="/domain/#{domain.id}" = domain.name
+          a href="/domain/#{domain.id}"
+            = domain.name
         td
-          - if domain.up?
-            .green [up]
-          - else
-            - if domain.checked?
-              .red [down]
+          - if domain.checked?
+            - if domain.up?
+              .green [up]
             - else
-              .pink [unchecked]
+              .red [down]
+          - else
+            .pink [unchecked]
   br
 a href="/my/domains/new" Monitor a new domain

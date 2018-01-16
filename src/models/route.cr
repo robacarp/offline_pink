@@ -13,6 +13,15 @@ class Route < Granite::ORM::Base
 
   before_save :enforce_leading_slash
 
+  def validate : Nil
+    # status code shoud be a number 100-550
+    if code = expected_code
+      unless 100 < code < 550
+        add_error :expected_code, "Status code should be a number between 100 and 550"
+      end
+    end
+  end
+
   def use_ssl?
     use_ssl
   end
@@ -46,7 +55,9 @@ class Route < Granite::ORM::Base
 
   private def enforce_leading_slash
     if path = @path
-      if path[0] != '/'
+      if path.blank?
+        @path = "/"
+      elsif path[0] != '/'
         @path = "/" + path
       end
     end

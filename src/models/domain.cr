@@ -9,6 +9,26 @@ class Domain < Granite::ORM::Base
   belongs_to :user
   has_many :routes
 
+  def validate : Nil
+    blank_name = true
+    if name = @name
+      blank_name = name.blank?
+    end
+
+    add_error :name, "cannot be blank" if blank_name
+    return if blank_name
+
+    malformed_name = true
+    if name = @name
+      malformed_name = ! name.index("/").nil?
+      malformed_name ||= name[0...4] == "http"
+    end
+
+    if malformed_name
+      add_error :name, "should be the DNS name to be checked. For example: google.com instead of http://google.com/gmail"
+    end
+  end
+
   # has_many :ip_addresses, class: IpAddress
   def ip_addresses : Array(IpAddress)
     IpAddress.all "WHERE domain_id = ?", id
