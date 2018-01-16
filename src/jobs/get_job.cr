@@ -1,7 +1,14 @@
 class GetJob < Mosquito::QueuedJob
   params(route : Route?)
 
+  def ensure_route_exists
+    unless route?
+      fail
+    end
+  end
+
   def perform
+    ensure_route_exists
     return unless known_route = route
     return unless url = route.full_path
 

@@ -10,7 +10,14 @@ class PingJob < Mosquito::QueuedJob
     PingResult.new(**args, check_id: domain.id).tap(&.save)
   end
 
+  def ensure_domain_exists
+    unless domain?
+      fail
+    end
+  end
+
   def perform
+    ensure_domain_exists
     puts "Pinging: Domain##{domain.id} #{domain.name}"
     resolve_hosts && send_pings
 
