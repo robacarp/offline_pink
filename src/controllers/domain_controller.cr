@@ -37,6 +37,7 @@ class DomainController < ApplicationController
 
     if domain.valid? && domain.save
       flash["success"] = "Domain monitoring will begin shortly."
+      PingJob.new(domain: domain).enqueue
       redirect_to_domains
     else
       flash["danger"] = "Domain could not be created."

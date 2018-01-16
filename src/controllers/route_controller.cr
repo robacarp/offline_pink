@@ -58,6 +58,7 @@ class RouteController < ApplicationController
 
     if route.valid? && route.save
       flash["success"] = "Route monitoring will begin shortly."
+      GetJob.new(route: route).enqueue
       redirect_to_domain domain.id
     else
       flash["danger"] = "Route could not be created."
