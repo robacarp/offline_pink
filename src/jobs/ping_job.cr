@@ -30,7 +30,7 @@ class PingJob < Mosquito::QueuedJob
       puts "Could not determine Hostname"
       ping_result is_up: false
     else
-      puts "Non translateable status: #{@status}"
+      puts "Non translatable status: #{@status}"
     end
 
   rescue e : Socket::Error
