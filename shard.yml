@@ -15,11 +15,9 @@ targets:
   worker:
     main: src/worker.cr
 
-  amber:
-    main: lib/amber/src/amber/cli.cr
-
 dependencies:
   amber:
+    # path: ../amber
     github: robacarp/amber
     branch: amber_router
 

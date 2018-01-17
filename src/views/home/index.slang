@@ -1,9 +1,13 @@
 .row
-  div#logo.col-md-6
-  div.col-md-6
-    h2 Welcome to Amber Framework!
-    p Thank you for trying out the Amber Framework.  We are working hard to provide a super fast and reliable framework that provides all the productivity tools you are used too but not sacrificing the speed.
-    div.list-group
-      a.list-group-item.list-group-item-action target="_blank" href="https://docs.amberframework.org" Getting Started with Amber Framework
-      a.list-group-item.list-group-item-action target="_blank" href="https://github.com/veelenga/awesome-crystal" List of Awesome Crystal projects and shards
-      a.list-group-item.list-group-item-action target="_blank" href="https://crystalshards.xyz" What's hot in Crystal right now
+  .col-md-6.offset-md-3
+    p Offline pink monitors domain and service connectivity with a few simple principals:
+    ul
+      li
+        strong No data warehousing.
+        | I don't want to monitor the entire internet and inspect it to see what's happening around the globe.
+      li
+        strong No Soft Delete.
+        | If the monitor is no longer necessary, neither is the record of it having been monitored.
+      li
+        strong Monitoring should be cheap.
+        | I may eventually put up paid plans but paying $100+/mo is ridiculous.

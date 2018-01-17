@@ -10,7 +10,7 @@ nav.navbar.navbar-expand-lg.bg-dark
     li.nav-item
     - if logged_in?
       li.nav-item
-        a.nav-link href="/checks" Checks
+        a.nav-link href="/my/domains" Domains
       li.nav-item
         a.nav-link href="/sessions/destroy" Log out
     - else

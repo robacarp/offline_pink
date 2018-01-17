@@ -5,13 +5,11 @@ class SchedulerJob < Mosquito::PeriodicJob
     u = User.first
     return unless u
 
-    Check.find_each do |check|
-      if check.ping_check?
-        PingJob.new(check: check).enqueue
-      end
+    Domain.find_each do |domain|
+      PingJob.new(domain: domain).enqueue
 
-      if check.get_request?
-        GetJob.new(check: check).enqueue
+      domain.routes.each do |route|
+        GetJob.new(route: route).enqueue
       end
     end
   end

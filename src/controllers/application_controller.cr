@@ -1,14 +1,14 @@
 require "jasper_helpers"
+require "./application_controller/pundit_authorization"
 
 class ApplicationController < Amber::Controller::Base
   include JasperHelpers
-  LAYOUT = "application.slang"
+  include PunditAuthorization
 
-  getter current_action : Symbol
+  LAYOUT = "application.slang"
 
   def initialize(context)
     super
-    @current_action = context.route.payload.action
     @_current_user = User.guest_user
   end
 
@@ -33,60 +33,9 @@ class ApplicationController < Amber::Controller::Base
     session.destroy
   end
 
-  macro authorize_with(policy_class, protected_class)
-    @_authorized = false
-    @_scoped = false
-
-    private def policy
-      {{ policy_class }}
-    end
-
-    private def current_user_object_policy(object)
-      {{ policy_class }}.new current_user, object
-    end
-
-    private def current_user_policy
-      {{ policy_class }}.new current_user
-    end
-
-    private def policy_scope
-      @_scoped = true
-      {{ policy_class }}::Scope.new(current_user).resolve
-    end
-
-    private def authorize(object)
-      unless object.is_a? {{ protected_class }}
-        raise "Invalid Authorization"
-      end
-
-      policy = current_user_object_policy object
-      result = policy.can_user_act? current_action
-
-      unless result
-        raise "Not Authorized"
-      end
-
-      @_authorized = true
-    end
-
-    private def authorize(object, *, with object_policy : ApplicationPolicy.class, for action : Symbol)
-      unless object.class == object_policy.policy_type
-        raise "Invalid Authorization"
-      end
-
-      policy = object_policy.new current_user, object
-
-      unless policy.can_user_act? action
-        raise "Not Authorized"
-      end
-    end
-
-    after_action do
-      all {
-        if ! @_authorized && ! @_scoped
-          raise "Authorization for action not triggered"
-        end
-      }
-    end
+  private def redirect_to_domains
+    redirect_to "/my/domains"
   end
+
+
 end

@@ -9,7 +9,6 @@ Amber::Server.configure do |app|
     # plug Amber::Pipe::CSRF.new
   end
 
-  # All static content will run these transformations
   pipeline :static do
     plug Amber::Pipe::Error.new
     plug Amber::Pipe::Logger.new
@@ -18,10 +17,12 @@ Amber::Server.configure do |app|
   end
 
   routes :web do
+    # Sessions
     get "/sessions/new",     SessionController, :new
     post "/sessions/create", SessionController, :create
     get "/sessions/destroy", SessionController, :destroy
 
+    # Registration
     get "/me/register",           UserController, :new
     post "/me/register",          UserController, :create
     get "/me/edit",               UserController, :edit
@@ -29,7 +30,20 @@ Amber::Server.configure do |app|
     get "/me/destroy_account",    UserController, :delete
     delete "/me/destroy_account", UserController, :destroy
 
-    resources "/checks", CheckController
+    # Domains
+    get  "/my/domains",        DomainController, :index
+    get  "/my/domains/new",    DomainController, :new
+    post "/my/domains/new",    DomainController, :create
+    get  "/domain/:id",        DomainController, :show
+    get  "/domain/:id/delete", DomainController, :delete
+    delete "/domain/:id",      DomainController, :destroy
+
+    # Routes
+    get  "/domain/:domain_id/routes/new", RouteController, :new
+    post "/domain/:domain_id/routes/new", RouteController, :create
+    get "/route/:id",                     RouteController, :show
+    get "/route/:id/delete",              RouteController, :delete
+    delete "/route/:id",                  RouteController, :destroy
 
     get "/", HomeController, :index
   end
@@ -37,5 +51,4 @@ Amber::Server.configure do |app|
   routes :static do
     get "/*", Amber::Controller::Static, :index
   end
-
 end

@@ -67,4 +67,12 @@ class ApplicationPolicy
     logged_in? && object.user_id == current_user.id
   end
 
+  def show?; false; end
+  def create?; false; end
+  def edit?; false; end
+  def update?; false; end
+  def destroy?; false; end
+  def delete?; false; end
+
+  def new?; logged_in?; end
 end

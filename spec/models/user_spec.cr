@@ -1,8 +1,4 @@
-require "./spec_helper"
-require "../../src/models/user.cr"
+require "../spec_helper"
 
 describe User do
-  Spec.before_each do
-    User.clear
-  end
 end
