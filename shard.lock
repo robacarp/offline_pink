@@ -28,6 +28,10 @@ shards:
     github: gdotdesign/cr-dotenv
     version: 0.1.0
 
+  email:
+    github: arcage/crystal-email
+    version: 0.2.3
+
   granite_orm:
     github: amberframework/granite-orm
     version: 0.8.2

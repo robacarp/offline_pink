@@ -43,6 +43,9 @@ dependencies:
   pg:
     github: will/crystal-pg
 
+  email:
+    github: arcage/crystal-email
+
 development_dependencies:
   amber_spec:
     github: amberframework/amber-spec
