@@ -5,9 +5,13 @@ class PingJob < Mosquito::QueuedJob
 
   @ip_addresses = [] of IpAddress
   @status = :none
+  @alive = true
 
-  def ping_result(**args)
-    PingResult.new(**args, check_id: domain.id).tap(&.save)
+  def ping_result(**args) : PingResult
+    PingResult.new(**args, check_id: domain.id).tap do |result|
+      result.save
+      @alive &&= (result.is_up? || false)
+    end
   end
 
   def ensure_domain_exists
@@ -35,6 +39,12 @@ class PingJob < Mosquito::QueuedJob
 
   rescue e : Socket::Error
     ping_result is_up: false
+  ensure
+    unless @alive
+      # TODO hold onto and use the result object instead of querying it
+      # TODO don't send an email every time a check happens
+      DomainOfflineJob.new(result: domain.last_result).enqueue
+    end
   end
 
   def resolve_hosts : Bool

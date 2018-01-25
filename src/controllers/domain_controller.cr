@@ -16,7 +16,6 @@ class DomainController < ApplicationController
 
   def show
     if domain = Domain.find params["id"]
-      DomainOfflineNotificationMailer.new(domain.user, domain).deliver
       authorize domain
       render "show.slang"
     else

@@ -1,6 +1,8 @@
 require "amber"
 require "mosquito"
 
+require "./ext/extensions"
+
 require "../config/application"
 
 require "./models/**"
