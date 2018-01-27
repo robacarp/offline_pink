@@ -54,5 +54,6 @@ h4 Most recent pings:
               .pink [unchecked]
         td = address.last_result.relative_time_since
         td
-          = address.last_result.response_time
-          | ms
+          = "#{address.last_result.response_time}ms"
+        td
+          a href="/ip_address/#{address.id}/delete" forget
