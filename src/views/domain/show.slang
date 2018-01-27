@@ -52,7 +52,8 @@ h4 Most recent pings:
               .red [down]
             - else
               .pink [unchecked]
-        td == address.last_result.relative_time_since
+          = address.last_result.id
+        td = address.last_result.relative_time_since
         td
-          == address.last_result.response_time
+          = address.last_result.response_time
           | ms
