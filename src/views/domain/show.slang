@@ -44,7 +44,7 @@ h4 Most recent pings:
     - domain.ip_addresses.each do |address|
       tr
         th scope="row" == address.address
-        td
+        td title="Result##{address.last_result.id}"
           - if address.last_result.is_up?
             .green [up]
           - else
@@ -52,7 +52,6 @@ h4 Most recent pings:
               .red [down]
             - else
               .pink [unchecked]
-          = address.last_result.id
         td = address.last_result.relative_time_since
         td
           = address.last_result.response_time
