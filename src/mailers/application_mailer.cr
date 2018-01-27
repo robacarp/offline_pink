@@ -1,6 +1,6 @@
-require "email"
+require "quartz_mailer"
 
-class ApplicationMailer < Amber::Mailer
+class ApplicationMailer < Quartz::Composer
   def sender
     address "Offline.pink", "notification-monkey@offline.pink"
   end
