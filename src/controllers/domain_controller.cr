@@ -64,6 +64,12 @@ class DomainController < ApplicationController
 
     authorize domain
 
+    unless params["confirm"] == "1"
+      flash["info"] = "You must check the confirm box"
+      skip_authorization
+      return render "delete.slang"
+    end
+
     if domain.destroy
       flash["info"] = "Domain deleted."
       redirect_to_domains
