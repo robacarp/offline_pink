@@ -11,13 +11,13 @@ html
     .container
       == render partial: "layouts/_nav.slang"
 
-    div.container
-      div.row
+    .container
+      .row
       - flash.each do |key, value|
         div class="alert alert-#{ key }"
           p = flash[key]
-      div.row
-        div.col-md-12.main
+      .row
+        .col-md-12.main
           == content
 
     script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"
