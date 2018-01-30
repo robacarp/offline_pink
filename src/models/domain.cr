@@ -10,6 +10,7 @@ class Domain < Granite::ORM::Base
   belongs_to :user
   has_many :routes
 
+  before_create  :pre_create
   before_destroy :destroy_associations
 
   def validate : Nil
@@ -62,6 +63,10 @@ class Domain < Granite::ORM::Base
 
   def is_invalid?
     ! is_valid?
+  end
+
+  def pre_create
+    @is_valid = true
   end
 
   def destroy_associations

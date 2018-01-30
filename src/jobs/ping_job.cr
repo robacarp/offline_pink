@@ -106,4 +106,8 @@ class PingJob < Mosquito::QueuedJob
     @status = :success
     true
   end
+
+  def rescheduleable?
+    false
+  end
 end
