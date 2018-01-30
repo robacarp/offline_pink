@@ -15,23 +15,19 @@ class Domain < Granite::ORM::Base
   @is_valid = true
 
   def validate : Nil
-    blank_name = true
-    if name = @name
-      blank_name = name.blank?
-    end
+    messages = {
+      blank:      "cannot be blank",
+      dns_format: "should be the DNS name to be checked. For example: google.com instead of http://google.com/gmail",
+      assigned:   "must be assigned",
+      duplicate:  "is already being checked"
+    }
 
-    add_error :name, "cannot be blank" if blank_name
-    return if blank_name
+    (add_error :name, messages[:blank];      return) if @name.try(&.blank?)
+    (add_error :name, messages[:dns_format]; return) if @name.try { |n| ! n.index("/").nil? || n[0...4] == "http" }
+    (add_error :user, messages[:assigned];   return) unless @user_id
 
-    malformed_name = true
-    if name = @name
-      malformed_name = ! name.index("/").nil?
-      malformed_name ||= name[0...4] == "http"
-    end
-
-    if malformed_name
-      add_error :name, "should be the DNS name to be checked. For example: google.com instead of http://google.com/gmail"
-    end
+    duplicate_domains = Domain.all("WHERE user_id = ? AND name = ?", [@user_id, @name])
+    (add_error :name, messages[:duplicate];  return) if duplicate_domains.any?
   end
 
   # has_many :ip_addresses, class: IpAddress
