@@ -78,4 +78,24 @@ class DomainController < ApplicationController
       redirect_to_domains
     end
   end
+
+  def revalidate
+    unless domain = Domain.find params["id"]
+      flash["warning"] = "Domain doesnt exist."
+      redirect_to_domains
+      return
+    end
+
+    authorize domain
+
+    domain.is_valid = true
+    if domain.save
+      flash["info"] = "Domain will be re-checked."
+      PingJob.new(domain: domain).enqueue
+      redirect_to "/domain/#{domain.id}"
+    else
+      flash["error"] = "Could not set domain for re-check."
+      redirect_to "/domain/#{domain.id}"
+    end
+  end
 end

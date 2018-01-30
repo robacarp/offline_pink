@@ -4,6 +4,7 @@ class Domain < Granite::ORM::Base
   adapter pg
 
   field name : String
+  field is_valid : Bool
   timestamps
 
   belongs_to :user
@@ -53,6 +54,14 @@ class Domain < Granite::ORM::Base
 
   def checked?
     ping_results.any?
+  end
+
+  def is_valid?
+    is_valid
+  end
+
+  def is_invalid?
+    ! is_valid?
   end
 
   def destroy_associations

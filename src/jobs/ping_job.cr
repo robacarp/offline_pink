@@ -10,6 +10,11 @@ class PingJob < Mosquito::QueuedJob
     PingResult.new(**args, check_id: domain.id).tap(&.save)
   end
 
+  def invalidate_domain : Nil
+    domain.is_valid = false
+    domain.save
+  end
+
   def ensure_domain_exists
     unless domain?
       fail
@@ -26,15 +31,17 @@ class PingJob < Mosquito::QueuedJob
       log "Ping successful. #{@ip_addresses.size} addresses found."
     when :no_name_present
       log "Invalid domain"
+      invalidate_domain
     when :no_host_present
-      ping_result is_up: false
       log "Could not determine Hostname"
+      invalidate_domain
     else
       log "Non translatable status: #{@status}"
     end
 
   rescue e : Socket::Error
-    ping_result is_up: false
+    log "Socket Error while pinging domain"
+    invalidate_domain
   end
 
   def resolve_hosts : Bool
