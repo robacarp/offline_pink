@@ -18,19 +18,19 @@ class PingJob < Mosquito::QueuedJob
 
   def perform
     ensure_domain_exists
-    puts "Pinging: Domain##{domain.id} #{domain.name}"
+    print "Pinging: Domain##{domain.id} #{domain.name}"
     resolve_hosts && send_pings
 
     case @status
     when :success
-      puts "Ping successful. #{@ip_addresses.size} addresses found."
+      print "Ping successful. #{@ip_addresses.size} addresses found."
     when :no_name_present
-      puts "Invalid domain"
+      print "Invalid domain"
     when :no_host_present
-      puts "Could not determine Hostname"
+      print "Could not determine Hostname"
       ping_result is_up: false
     else
-      puts "Non translatable status: #{@status}"
+      print "Non translatable status: #{@status}"
     end
 
   rescue e : Socket::Error
@@ -59,7 +59,12 @@ class PingJob < Mosquito::QueuedJob
         saved_addresses.delete_at(existing_address_index, 1).first
       else
         address = IpAddress.new domain_id: domain.id, address: host.address, version: "ipv4"
-        address.version = "ipv6" if host.address.includes? ":"
+
+        if host.address.includes? ":"
+          print "not adding ipv6 address to database: #{host.address}"
+          next
+        end
+
         address.save
         address
       end
@@ -71,13 +76,13 @@ class PingJob < Mosquito::QueuedJob
   def send_pings
     results = @ip_addresses.map do |a|
       if a.v6?
-        puts "Skipping ipv6 address #{a.address}"
+        print "Skipping ipv6 address #{a.address}"
         next
       end
 
       next unless address = a.address
 
-      puts "Pinging #{address}"
+      print "Pinging #{address}"
 
       statistics = ICMP::Ping.ping(address)
 
