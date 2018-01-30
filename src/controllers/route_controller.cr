@@ -106,7 +106,7 @@ class RouteController < ApplicationController
       flash["info"] = "Route deleted."
       redirect_to_domain route.domain_id
     else
-      flash["error"] = "Unable to delete route."
+      flash["danger"] = "Unable to delete route."
       redirect_to_domain route.domain_id
     end
   end

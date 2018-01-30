@@ -74,7 +74,7 @@ class DomainController < ApplicationController
       flash["info"] = "Domain deleted."
       redirect_to_domains
     else
-      flash["error"] = "Unable to delete domain."
+      flash["danger"] = "Unable to delete domain."
       redirect_to_domains
     end
   end
@@ -94,7 +94,7 @@ class DomainController < ApplicationController
       PingJob.new(domain: domain).enqueue
       redirect_to "/domain/#{domain.id}"
     else
-      flash["error"] = "Could not set domain for re-check."
+      flash["danger"] = "Could not set domain for re-check."
       redirect_to "/domain/#{domain.id}"
     end
   end
