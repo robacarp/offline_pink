@@ -26,8 +26,10 @@ class Domain < Granite::ORM::Base
     (add_error :name, messages[:dns_format]; return) if @name.try { |n| ! n.index("/").nil? || n[0...4] == "http" }
     (add_error :user, messages[:assigned];   return) unless @user_id
 
-    duplicate_domains = Domain.all("WHERE user_id = ? AND name = ?", [@user_id, @name])
-    (add_error :name, messages[:duplicate];  return) if duplicate_domains.any?
+    if new_record?
+      duplicate_domains = Domain.all("WHERE user_id = ? AND name = ?", [@user_id, @name])
+      (add_error :name, messages[:duplicate];  return) if duplicate_domains.any?
+    end
   end
 
   # has_many :ip_addresses, class: IpAddress
