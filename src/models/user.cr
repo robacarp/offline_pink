@@ -7,6 +7,10 @@ class User < Granite::ORM::Base
   field name : String
   field email : String
   field crypted_password : String
+
+  field admin : Bool
+  @admin = false
+
   timestamps
 
   has_many :checks
@@ -29,7 +33,7 @@ class User < Granite::ORM::Base
     new
   end
 
-  def admin?
-    false
+  def admin? : Bool
+    @admin
   end
 end
