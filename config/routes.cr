@@ -49,6 +49,8 @@ Amber::Server.configure do |app|
     get "/ip_address/:id/delete", IpAddressController, :delete
     delete "/ip_address/:id",     IpAddressController, :destroy
 
+    get "/admin", Admin::HomeController, :show
+
     get "/", HomeController, :index
   end
 

@@ -28,4 +28,8 @@ class User < Granite::ORM::Base
   def self.guest_user
     new
   end
+
+  def admin?
+    false
+  end
 end
