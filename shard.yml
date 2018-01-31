@@ -20,6 +20,7 @@ dependencies:
     # path: ../amber
     github: robacarp/amber
     branch: amber_router
+    # version: ~> 0.6.4
 
   dotenv:
     github: gdotdesign/cr-dotenv
@@ -31,6 +32,7 @@ dependencies:
   mosquito:
     # path: ../mosquito
     github: robacarp/mosquito
+    version: ~> 0.0.4
 
   icmp:
     # path: ../ping_cr

@@ -44,4 +44,8 @@ class GetJob < Mosquito::QueuedJob
       response_time: -1.0
     ).save
   end
+
+  def rescheduleable?
+    false
+  end
 end

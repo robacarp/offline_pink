@@ -2,7 +2,7 @@ version: 1.0
 shards:
   amber:
     github: robacarp/amber
-    commit: 9e64965d839d1f7287de5068dd9c8d05560f8c46
+    commit: d044b146ee5a1c2fd9ecab68dc9cc676b4188c49
 
   amber_router:
     github: amberframework/router
