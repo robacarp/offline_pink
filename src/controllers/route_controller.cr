@@ -96,11 +96,17 @@ class RouteController < ApplicationController
 
     authorize route
 
+    unless params["confirm"] == "1"
+      flash["info"] = "You must check the confirm box"
+      skip_authorization
+      return render "delete.slang"
+    end
+
     if route.destroy
       flash["info"] = "Route deleted."
       redirect_to_domain route.domain_id
     else
-      flash["error"] = "Unable to delete route."
+      flash["danger"] = "Unable to delete route."
       redirect_to_domain route.domain_id
     end
   end

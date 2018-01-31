@@ -16,12 +16,22 @@ class Route < Granite::ORM::Base
   before_destroy :destroy_associations
 
   def validate : Nil
+    messages = {
+      invalid_code: "Status code should be a number between 100 and 550",
+      assigned:     "must be assigned",
+      duplicate:    "is already being checked",
+      blank:        "must be present"
+    }
+
+    enforce_leading_slash
+
     # status code shoud be a number 100-550
-    if code = expected_code
-      unless 100 < code < 550
-        add_error :expected_code, "Status code should be a number between 100 and 550"
-      end
-    end
+    (add_error :code,   messages[:invalid_code]; return) if @expected_code.try { |c| ! (100 <= c < 550) }
+    (add_error :domain, messages[:assigned];     return) unless @domain_id
+    (add_error :path,   messages[:blank];        return) unless @path && ! @path.try(&.blank?)
+
+    duplicate_routes = Route.all("WHERE domain_id = ? AND path = ?", [@domain_id, @path])
+    (add_error :route,  messages[:duplicate];  return) if duplicate_routes.any?
   end
 
   def use_ssl?

@@ -4,6 +4,19 @@
   .col-md-6.text-right
     a href="/domain/#{domain.id}/delete" stop monitoring this domain
 
+- if domain.is_invalid?
+  .alert.alert-danger
+    | This domain has been marked as invalid and monitoring has stopped.
+    br
+    | Options:
+    ul
+      li
+        a href="/domain/#{domain.id}/revalidate" Try again
+        | if you think the error was temporary or
+      li
+        a href="/domain/#{domain.id}/delete" Stop monitoring
+        | if the domain is incorrect.
+
 | Checking #{domain.routes.size} routes:
 
 - if domain.routes.any?

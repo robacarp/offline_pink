@@ -1,7 +1,6 @@
 nav.navbar.navbar-expand-lg.bg-dark
   a.navbar-brand href="/"
-    | Offline
-    span.pink .pink
+    == %(Offline<span class="pink">.pink</span>)
   button.navbar-toggler type="button" data-toggle="collapse" data-target="#mainNavigation" aria-controls="mainNavigation" aria-expanded="false" aria-label="Toggle Navigation"
     span.navbar-toggler-icon
 
