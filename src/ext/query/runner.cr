@@ -1,3 +1,5 @@
+# Query runner which finalizes a query and runs it.
+# This will likely require adapter specific subclassing :[.
 class Query::Runner(T)
   def initialize(@query : Compiled(T))
   end

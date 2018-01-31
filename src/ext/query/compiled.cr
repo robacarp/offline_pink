@@ -1,3 +1,4 @@
+# Represents all the parts of a SQL command
 class Query::Compiled(T)
   getter table
   getter where
@@ -30,11 +31,12 @@ class Query::Compiled(T)
     @fields += fields
     @data += data
 
-    # Something like a visitor...
+    # Something like a visitor is due here for nested where clauses...
     # builder = @builder
     # while builder.next_clause?
-    #   @where, fields = builder.next_clause
+    #   @where, fields = builder.next_clause parameter_count
     #   @data += fields
+    #   parameter_count += data.size
     #   if builder.next_clause?
     #     builder = builder.next_clause
     #   else
