@@ -64,12 +64,38 @@ class DomainController < ApplicationController
 
     authorize domain
 
+    unless params["confirm"] == "1"
+      flash["info"] = "You must check the confirm box"
+      skip_authorization
+      return render "delete.slang"
+    end
+
     if domain.destroy
       flash["info"] = "Domain deleted."
       redirect_to_domains
     else
-      flash["error"] = "Unable to delete domain."
+      flash["danger"] = "Unable to delete domain."
       redirect_to_domains
+    end
+  end
+
+  def revalidate
+    unless domain = Domain.find params["id"]
+      flash["warning"] = "Domain doesnt exist."
+      redirect_to_domains
+      return
+    end
+
+    authorize domain
+
+    domain.is_valid = true
+    if domain.save
+      flash["info"] = "Domain will be re-checked."
+      PingJob.new(domain: domain).enqueue
+      redirect_to "/domain/#{domain.id}"
+    else
+      flash["danger"] = "Could not set domain for re-check."
+      redirect_to "/domain/#{domain.id}"
     end
   end
 end

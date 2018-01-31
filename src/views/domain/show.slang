@@ -4,6 +4,19 @@
   .col-md-6.text-right
     a href="/domain/#{domain.id}/delete" stop monitoring this domain
 
+- if domain.is_invalid?
+  .alert.alert-danger
+    | This domain has been marked as invalid and monitoring has stopped.
+    br
+    | Options:
+    ul
+      li
+        a href="/domain/#{domain.id}/revalidate" Try again
+        | if you think the error was temporary or
+      li
+        a href="/domain/#{domain.id}/delete" Stop monitoring
+        | if the domain is incorrect.
+
 | Checking #{domain.routes.size} routes:
 
 - if domain.routes.any?
@@ -44,7 +57,7 @@ h4 Most recent pings:
     - domain.ip_addresses.each do |address|
       tr
         th scope="row" == address.address
-        td
+        td title="Result##{address.last_result.id}"
           - if address.last_result.is_up?
             .green [up]
           - else
@@ -52,7 +65,8 @@ h4 Most recent pings:
               .red [down]
             - else
               .pink [unchecked]
-        td == address.last_result.relative_time_since
+        td = address.last_result.relative_time_since
         td
-          == address.last_result.response_time
-          | ms
+          = "#{address.last_result.response_time}ms"
+        td
+          a href="/ip_address/#{address.id}/delete" forget

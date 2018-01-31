@@ -1,4 +1,9 @@
 class Granite::ORM::Base
+  def new_record?
+    # todo other primary key support
+    @id.nil?
+  end
+
   def validate : Nil
   end
 

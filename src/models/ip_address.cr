@@ -9,7 +9,6 @@ class IpAddress < Granite::ORM::Base
   timestamps
 
   belongs_to :domain
-  has_many :ping_results
 
   before_destroy :destroy_associations
 
@@ -39,7 +38,23 @@ class IpAddress < Granite::ORM::Base
     end
   end
 
+  def ping_results
+    query = <<-SQL
+      WHERE ip_address_id = ?
+    SQL
+
+    PingResult.all(query, [id])
+  end
+
+  def destroy_ping_results
+    query = <<-SQL
+    DELETE FROM ping_results WHERE ip_address_id = #{id}
+    SQL
+
+    PingResult.exec query
+  end
+
   def destroy_associations
-    ping_results.map(&.destroy)
+    destroy_ping_results
   end
 end

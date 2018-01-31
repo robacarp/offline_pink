@@ -31,12 +31,13 @@ Amber::Server.configure do |app|
     delete "/me/destroy_account", UserController, :destroy
 
     # Domains
-    get  "/my/domains",        DomainController, :index
-    get  "/my/domains/new",    DomainController, :new
-    post "/my/domains/new",    DomainController, :create
-    get  "/domain/:id",        DomainController, :show
-    get  "/domain/:id/delete", DomainController, :delete
-    delete "/domain/:id",      DomainController, :destroy
+    get  "/my/domains",           DomainController, :index
+    get  "/my/domains/new",       DomainController, :new
+    post "/my/domains/new",       DomainController, :create
+    get  "/domain/:id",           DomainController, :show
+    get  "/domain/:id/delete",    DomainController, :delete
+    delete "/domain/:id",         DomainController, :destroy
+    get "/domain/:id/revalidate", DomainController, :revalidate
 
     # Routes
     get  "/domain/:domain_id/routes/new", RouteController, :new
@@ -44,6 +45,10 @@ Amber::Server.configure do |app|
     get "/route/:id",                     RouteController, :show
     get "/route/:id/delete",              RouteController, :delete
     delete "/route/:id",                  RouteController, :destroy
+
+    # IpAddresses
+    get "/ip_address/:id/delete", IpAddressController, :delete
+    delete "/ip_address/:id",     IpAddressController, :destroy
 
     get "/", HomeController, :index
   end

@@ -2,7 +2,7 @@ version: 1.0
 shards:
   amber:
     github: robacarp/amber
-    commit: 8e82d38093b49a8aedb3b1235778fc5fa597997a
+    commit: d044b146ee5a1c2fd9ecab68dc9cc676b4188c49
 
   amber_router:
     github: amberframework/router
@@ -34,7 +34,7 @@ shards:
 
   granite_orm:
     github: amberframework/granite-orm
-    version: 0.8.2
+    version: 0.8.4
 
   icmp:
     github: robacarp/icmp.cr
@@ -54,7 +54,7 @@ shards:
 
   mosquito:
     github: robacarp/mosquito
-    version: 0.0.3
+    version: 0.0.4
 
   mysql:
     github: crystal-lang/crystal-mysql
@@ -86,7 +86,7 @@ shards:
 
   slang:
     github: jeromegn/slang
-    commit: 777e2fc3e63daf5cfe9bd4475257905903b78542
+    version: 1.7.1
 
   spinner:
     github: askn/spinner

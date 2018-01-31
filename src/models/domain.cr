@@ -4,6 +4,7 @@ class Domain < Granite::ORM::Base
   adapter pg
 
   field name : String
+  field is_valid : Bool
   timestamps
 
   belongs_to :user
@@ -11,23 +12,23 @@ class Domain < Granite::ORM::Base
 
   before_destroy :destroy_associations
 
+  @is_valid = true
+
   def validate : Nil
-    blank_name = true
-    if name = @name
-      blank_name = name.blank?
-    end
+    messages = {
+      blank:      "cannot be blank",
+      dns_format: "should be the DNS name to be checked. For example: google.com instead of http://google.com/gmail",
+      assigned:   "must be assigned",
+      duplicate:  "is already being checked"
+    }
 
-    add_error :name, "cannot be blank" if blank_name
-    return if blank_name
+    (add_error :name, messages[:blank];      return) if @name.try(&.blank?)
+    (add_error :name, messages[:dns_format]; return) if @name.try { |n| ! n.index("/").nil? || n[0...4] == "http" }
+    (add_error :user, messages[:assigned];   return) unless @user_id
 
-    malformed_name = true
-    if name = @name
-      malformed_name = ! name.index("/").nil?
-      malformed_name ||= name[0...4] == "http"
-    end
-
-    if malformed_name
-      add_error :name, "should be the DNS name to be checked. For example: google.com instead of http://google.com/gmail"
+    if new_record?
+      duplicate_domains = Domain.all("WHERE user_id = ? AND name = ?", [@user_id, @name])
+      (add_error :name, messages[:duplicate];  return) if duplicate_domains.any?
     end
   end
 
@@ -68,6 +69,14 @@ class Domain < Granite::ORM::Base
 
   def checked?
     ping_results.any?
+  end
+
+  def is_valid?
+    is_valid
+  end
+
+  def is_invalid?
+    ! is_valid?
   end
 
   def destroy_associations

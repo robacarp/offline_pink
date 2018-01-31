@@ -14,6 +14,11 @@ class PingJob < Mosquito::QueuedJob
     end
   end
 
+  def invalidate_domain : Nil
+    domain.is_valid = false
+    domain.save
+  end
+
   def ensure_domain_exists
     unless domain?
       fail
@@ -22,23 +27,25 @@ class PingJob < Mosquito::QueuedJob
 
   def perform
     ensure_domain_exists
-    puts "Pinging: Domain##{domain.id} #{domain.name}"
+    log "Pinging: Domain##{domain.id} #{domain.name}"
     resolve_hosts && send_pings
 
     case @status
     when :success
-      puts "Ping successful. #{@ip_addresses.size} addresses found."
+      log "Ping successful. #{@ip_addresses.size} addresses found."
     when :no_name_present
-      puts "Invalid domain"
+      log "Invalid domain"
+      invalidate_domain
     when :no_host_present
-      puts "Could not determine Hostname"
-      ping_result is_up: false
+      log "Could not determine Hostname"
+      invalidate_domain
     else
-      puts "Non translatable status: #{@status}"
+      log "Non translatable status: #{@status}"
     end
 
   rescue e : Socket::Error
-    ping_result is_up: false
+    log "Socket Error while pinging domain"
+    invalidate_domain
   ensure
     unless @alive
       # TODO hold onto and use the result object instead of querying it
@@ -58,7 +65,10 @@ class PingJob < Mosquito::QueuedJob
     # Resolve a list of host addresses for the domain
     hosts = Socket::Addrinfo.resolve(name, "http", type: Socket::Type::STREAM, protocol: Socket::Protocol::TCP).map(&.ip_address)
 
+    log "Found #{hosts.size} hosts"
+
     hosts.each do |host|
+      log "found #{host}, saving"
       # Search for each host address in the database
       existing_address_index = saved_addresses.index do |ip_address|
         host.address == ip_address.address
@@ -69,7 +79,12 @@ class PingJob < Mosquito::QueuedJob
         saved_addresses.delete_at(existing_address_index, 1).first
       else
         address = IpAddress.new domain_id: domain.id, address: host.address, version: "ipv4"
-        address.version = "ipv6" if host.address.includes? ":"
+
+        if host.address.includes? ":"
+          log "not adding ipv6 address to database: #{host.address}"
+          next
+        end
+
         address.save
         address
       end
@@ -81,13 +96,13 @@ class PingJob < Mosquito::QueuedJob
   def send_pings
     results = @ip_addresses.map do |a|
       if a.v6?
-        puts "Skipping ipv6 address #{a.address}"
+        log "Skipping ipv6 address #{a.address}"
         next
       end
 
       next unless address = a.address
 
-      puts "Pinging #{address}"
+      log "Pinging #{address}"
 
       statistics = ICMP::Ping.ping(address)
 
@@ -100,5 +115,9 @@ class PingJob < Mosquito::QueuedJob
 
     @status = :success
     true
+  end
+
+  def rescheduleable?
+    false
   end
 end

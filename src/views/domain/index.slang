@@ -7,7 +7,9 @@ h3 Monitored Domains
           a href="/domain/#{domain.id}"
             = domain.name
         td
-          - if domain.checked?
+          - if domain.is_invalid?
+            .red [invalid]
+          - elsif domain.checked?
             - if domain.up?
               .green [up]
             - else
