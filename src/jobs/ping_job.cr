@@ -50,7 +50,7 @@ class PingJob < Mosquito::QueuedJob
     unless @alive
       # TODO hold onto and use the result object instead of querying it
       # TODO don't send an email every time a check happens
-      DomainOfflineJob.new(result: domain.last_result).enqueue
+      # TODO DomainOfflineJob.new(result: domain.last_result).enqueue
     end
   end
 
