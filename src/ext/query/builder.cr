@@ -2,9 +2,7 @@ class Query::Builder(T)
   alias FieldName = String
   alias FieldData = DB::Any
 
-  getter model
-
-  def initialize(@model : Granite::ORM::Base.class, @boolean_operator = :and)
+  def initialize(@boolean_operator = :and)
     @fields = {} of FieldName => FieldData
   end
 
@@ -13,7 +11,7 @@ class Query::Builder(T)
   end
 
   def runner
-    Runner(T).new compile, @model.adapter.as(Granite::Adapter::Base)
+    Runner(T).new compile
   end
 
   def where(**matches)
@@ -32,14 +30,18 @@ class Query::Builder(T)
       "#{field} = $#{parameter_count}"
     end.join " AND "
 
-    { clause, @model.fields, data }
+    { clause, T.fields, data }
   end
 
   def count : Int64
     runner.count
   end
 
-  def first : T
-    runner.first.as(T)
+  def first : T?
+    first(1).first?
+  end
+
+  def first(n : Int32) : Array(T)
+    runner.first(n)
   end
 end
