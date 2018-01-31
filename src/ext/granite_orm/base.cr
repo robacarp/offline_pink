@@ -16,11 +16,18 @@ class Granite::ORM::Base
       ""
     end
 
+    def self.primary_name
+      ""
+    end
+
     def self.adapter : Nil | Granite::Adapter::Base
     end
 
     def self.fields : Array(String)
       [] of String
+    end
+
+    def self.from_sql(result)
     end
   end
 

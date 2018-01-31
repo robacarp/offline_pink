@@ -1,5 +1,5 @@
-class Query::Runner
-  def initialize(@query : Compiled, @model : Granite::ORM::Base.class, @adapter : Granite::Adapter::Base)
+class Query::Runner(T)
+  def initialize(@query : Compiled(T), @adapter : Granite::Adapter::Base)
   end
 
   def log(*args)
@@ -35,10 +35,16 @@ class Query::Runner
     SQL
 
     log sql, @query.data
+    results = [] of T
+
     @adapter.open do |db|
-      db.query_one sql, @query.data do |record_set|
-        puts record_set
+      db.query sql, @query.data do |record_set|
+        record_set.each do
+          results << T.from_sql record_set
+        end
       end
     end
+
+    results.first?
   end
 end

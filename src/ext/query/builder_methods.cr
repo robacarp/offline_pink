@@ -1,6 +1,6 @@
 module Query::BuilderMethods
   def __builder
-    Builder.new(self)
+    Builder(self).new(self)
   end
 
   def count : Int32

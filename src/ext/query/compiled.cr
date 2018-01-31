@@ -1,4 +1,4 @@
-class Query::Compiled
+class Query::Compiled(T)
   getter table
   getter where
   getter limit
@@ -7,8 +7,10 @@ class Query::Compiled
   getter data
 
   @table : String
+  @primary_key : String
 
-  def initialize(@builder : Builder)
+  def initialize(@builder : Builder(T))
+    @primary_key = builder.model.primary_name
     @table = builder.model.table_name
     @where = ""
     @limit = ""
@@ -42,7 +44,7 @@ class Query::Compiled
   end
 
   def field_list
-    @fields.join ", "
+    [@primary_key, @fields].flatten.join ", "
   end
 
   def where?

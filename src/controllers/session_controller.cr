@@ -12,7 +12,7 @@ class SessionController < ApplicationController
   end
 
   def create
-    user = User.find_by :email, params["email"]
+    user = User.where(email: params["email"]).first
 
     if user && user.check_password params["password"]
       login_user user

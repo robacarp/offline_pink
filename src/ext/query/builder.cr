@@ -1,4 +1,4 @@
-class Query::Builder
+class Query::Builder(T)
   alias FieldName = String
   alias FieldData = DB::Any
 
@@ -9,11 +9,11 @@ class Query::Builder
   end
 
   def compile
-    Compiled.new self
+    Compiled(T).new self
   end
 
   def runner
-    Runner.new compile, @model, @model.adapter.as(Granite::Adapter::Base)
+    Runner(T).new compile, @model.adapter.as(Granite::Adapter::Base)
   end
 
   def where(**matches)
@@ -39,7 +39,7 @@ class Query::Builder
     runner.count
   end
 
-  def first
-    runner.first
+  def first : T
+    runner.first.as(T)
   end
 end
