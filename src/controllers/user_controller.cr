@@ -12,7 +12,7 @@ class UserController < ApplicationController
       authorize user
       render "show.slang"
     else
-      flash["warning"] = "User with ID #{params["id"]} Not Found"
+      flash["warning"] = "User not found."
       redirect_to "/users"
     end
   end
@@ -25,7 +25,10 @@ class UserController < ApplicationController
 
   def create
     user = User.new user_params
-    user.hash_password params["password"]
+
+    unless params["password"].blank?
+      user.hash_password params["password"]
+    end
 
     authorize user
 
@@ -35,7 +38,7 @@ class UserController < ApplicationController
       login_user user
       redirect_to "/"
     else
-      flash["danger"] = "Could not create User!"
+      flash["danger"] = "Registration unsuccessful, check for errors and retry."
       render "new.slang"
     end
   end
@@ -46,7 +49,7 @@ class UserController < ApplicationController
     authorize user
 
     unless user
-      flash["warning"] = "User with ID #{params["id"]} Not Found"
+      flash["warning"] = "User not found."
       redirect_to "/users"
       return
     end
@@ -60,7 +63,7 @@ class UserController < ApplicationController
     authorize user
 
     unless user
-      flash["warning"] = "User with ID #{params["id"]} Not Found"
+      flash["warning"] = "User not found."
       redirect_to "/users"
       return
     end
@@ -72,26 +75,11 @@ class UserController < ApplicationController
     end
 
     if user.valid? && user.save
-      flash["success"] = "Updated User successfully."
+      flash["success"] = "Updated successfully."
       redirect_to "/users"
     else
-      flash["danger"] = "Could not update User!"
+      flash["danger"] = "Could not update!"
       render "edit.slang"
     end
-  end
-
-  def delete
-    render "delete.slang"
-  end
-
-  def destroy
-    if user = User.find params["id"]
-      authorize user
-      user.destroy
-    else
-      flash["warning"] = "User with ID #{params["id"]} Not Found"
-    end
-
-    redirect_to "/users"
   end
 end

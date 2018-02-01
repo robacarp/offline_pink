@@ -23,6 +23,7 @@ class Domain < Granite::ORM::Base
       duplicate:  "is already being checked"
     }
 
+    (add_error :name, messages[:blank];      return) unless @name
     (add_error :name, messages[:blank];      return) if @name.try(&.blank?)
     (add_error :name, messages[:dns_format]; return) if @name.try { |n| ! n.index("/").nil? || n[0...4] == "http" }
     (add_error :user, messages[:assigned];   return) unless @user_id

@@ -27,8 +27,6 @@ Amber::Server.configure do |app|
     post "/me/register",          UserController, :create
     get "/me/edit",               UserController, :edit
     post "/me/edit",              UserController, :update
-    get "/me/destroy_account",    UserController, :delete
-    delete "/me/destroy_account", UserController, :destroy
 
     # Domains
     get  "/my/domains",           DomainController, :index

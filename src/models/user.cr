@@ -19,6 +19,26 @@ class User < Granite::ORM::Base
 
   has_many :domains
 
+  def validate : Nil
+    messages = {
+      blank: "cannot be blank",
+      unique: "is already registered"
+    }
+
+    (add_error :email, messages[:blank]; return) unless @email
+    (add_error :email, messages[:blank]; return) if @email.try &.blank?
+
+    unless password_hash = @crypted_password
+      add_error :password, messages[:blank]
+      return
+    end
+
+    if new_record? && User.where(email: @email).count > 0
+      add_error :email, messages[:unique]
+      return
+    end
+  end
+
   def hash_password(unencrypted_password : String)
     @crypted_password = Crypto::Bcrypt::Password.create(unencrypted_password, cost: 10).to_s
   end
