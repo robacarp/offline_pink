@@ -1,6 +1,7 @@
 require "granite_orm/adapter/pg"
 
 class Domain < Granite::ORM::Base
+  extend Query::BuilderMethods
   adapter pg
 
   field name : String

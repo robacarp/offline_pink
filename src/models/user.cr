@@ -2,14 +2,22 @@ require "granite_orm/adapter/pg"
 require "crypto/bcrypt/password"
 
 class User < Granite::ORM::Base
+  extend Query::BuilderMethods
+  include RelativeTime
+
   adapter pg
 
   field name : String
   field email : String
   field crypted_password : String
+
+  field admin : Bool
+
+  @admin = false
+
   timestamps
 
-  has_many :checks
+  has_many :domains
 
   def hash_password(unencrypted_password : String)
     @crypted_password = Crypto::Bcrypt::Password.create(unencrypted_password, cost: 10).to_s
@@ -27,5 +35,9 @@ class User < Granite::ORM::Base
 
   def self.guest_user
     new
+  end
+
+  def admin? : Bool
+    @admin
   end
 end

@@ -1,25 +1,5 @@
 class Granite::ORM::Base
-  def new_record?
-    # todo other primary key support
-    @id.nil?
-  end
-
-  def validate : Nil
-  end
-
-  def valid? : Bool
-    clean_errors
-    validate
-    errors.none?
-  end
-
-  def clean_errors
-    errors = [] of Error
-  end
-
-  def add_error(field : Symbol, message : String)
-    errors << Error.new(field, message)
-  end
+  include Pink::Validator
 
   macro __field_bang
     {% for name, type in FIELDS %}
