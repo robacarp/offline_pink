@@ -5,5 +5,4 @@ jobs:
       - image: robacarp/amber_build:latest
     steps:
       - checkout
-      - run:
-          command: ls 
+      - run: shards install
