@@ -15,6 +15,7 @@ class GetJob < Mosquito::QueuedJob
     puts "GETing Check##{route.id} : #{url}"
 
     # TODO prevent big pages from taking down the worker? Limit to 1KB or so?
+    # TODO handle OpenSSL::SSL::Error: SSL_connect: error:14090086:SSL routines:ssl3_get_server_certificate:certificate verify failed
 
     start_time = Time.now
     response = HTTP::Client.get url

@@ -30,6 +30,7 @@ class UserController < ApplicationController
     authorize user
 
     if user.valid? && user.save
+      UserSignupMailer.new(user).deliver
       flash["success"] = "Successfully registered and logged in."
       login_user user
       redirect_to "/"

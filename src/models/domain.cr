@@ -49,6 +49,21 @@ class Domain < Granite::ORM::Base
     PingResult.all query, id
   end
 
+  def last_result : PingResult?
+    query = <<-SQL
+      JOIN ip_addresses ON ip_addresses.id = ping_results.ip_address_id
+      WHERE
+        ip_addresses.domain_id = ?
+      ORDER BY created_at DESC
+      LIMIT 1
+    SQL
+
+    result_set = PingResult.all query, id
+    if result_set.any?
+      result_set.first
+    end
+  end
+
   def up?
     true
   end
