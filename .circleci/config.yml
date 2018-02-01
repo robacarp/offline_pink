@@ -7,3 +7,8 @@ jobs:
       - checkout
       - run: shards install
       - run: shards build offline_pink worker
+      - save_cache:
+          key: vi-{{ checksum shard.lock }}
+          paths:
+            - .shards
+            - lib
