@@ -5,10 +5,13 @@ jobs:
       - image: robacarp/amber_build:latest
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            - i-{{ checksum shard.lock }}
       - run: shards install
       - run: shards build offline_pink worker
       - save_cache:
-          key: vi-{{ checksum shard.lock }}
+          key: i-{{ checksum shard.lock }}
           paths:
             - .shards
             - lib
