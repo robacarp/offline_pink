@@ -79,19 +79,4 @@ class UserController < ApplicationController
       render "edit.slang"
     end
   end
-
-  def delete
-    render "delete.slang"
-  end
-
-  def destroy
-    if user = User.find params["id"]
-      authorize user
-      user.destroy
-    else
-      flash["warning"] = "User with ID #{params["id"]} Not Found"
-    end
-
-    redirect_to "/users"
-  end
 end
