@@ -38,7 +38,7 @@ class UserController < ApplicationController
       login_user user
       redirect_to "/"
     else
-      flash["danger"] = "Registration not successful, check for errors and retry."
+      flash["danger"] = "Registration unsuccessful, check for errors and retry."
       render "new.slang"
     end
   end
