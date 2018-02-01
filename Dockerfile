@@ -17,14 +17,8 @@ RUN npm run release
 
 RUN shards build offline_pink worker --production
 
-ENV AMBER_ENV production
-ENV DATABASE_URL postgres://offline_pink:@docker.for.mac.localhost:5432/offline_pink_development
-ENV REDIS_URL redis://docker.for.mac.localhost:6379/1
-
 COPY Procfile .
 COPY CHECKS .
-
-EXPOSE 3000
 
 # Extract and copy the shared libraries that are needed to run the app
 # https://gist.github.com/bcardiff/85ae47e66ff0df35a78697508fcb49af
@@ -36,6 +30,12 @@ EXPOSE 3000
 # FROM scratch
 # COPY --from=0 /offline-pink/deps /
 # COPY --from=0 /offline-pink/bin /offline-pink/bin/
+
+ENV AMBER_ENV production
+ENV DATABASE_URL postgres://robert@docker.for.mac.localhost:5432/offline_pink_development
+ENV REDIS_URL redis://docker.for.mac.localhost:6379/1
+
+EXPOSE 3000
 
 ENTRYPOINT ["/bin/sh","-c"]
 CMD ["bin/offline_pink"]
