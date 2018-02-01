@@ -25,6 +25,7 @@ class PingJob < Mosquito::QueuedJob
     end
   end
 
+  # TODO handle OpenSSL::SSL::Error: SSL_connect: error:14090086:SSL routines:ssl3_get_server_certificate:certificate verify failed
   def perform
     ensure_domain_exists
     log "Pinging: Domain##{domain.id} #{domain.name}"
