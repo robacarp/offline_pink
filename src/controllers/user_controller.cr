@@ -25,7 +25,10 @@ class UserController < ApplicationController
 
   def create
     user = User.new user_params
-    user.hash_password params["password"]
+
+    unless params["password"].blank?
+      user.hash_password params["password"]
+    end
 
     authorize user
 
