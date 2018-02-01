@@ -30,7 +30,7 @@ shards:
 
   email:
     github: arcage/crystal-email
-    version: 0.2.4
+    version: 0.2.5
 
   granite_orm:
     github: amberframework/granite-orm
@@ -69,8 +69,8 @@ shards:
     version: 0.14.1
 
   quartz_mailer:
-    path: ../quartz-mailer
-    version: 0.4.0
+    github: amberframework/quartz-mailer
+    version: 0.5.0
 
   redis:
     github: stefanwille/crystal-redis

@@ -9,11 +9,10 @@ COPY db ./db
 COPY public ./public
 COPY src ./src
 
-COPY shard.yml .
-COPY shard.lock .
-COPY app.json .
+COPY shard.yml shard.lock app.json ./
 
 RUN shards install
+
 RUN npm run release
 
 RUN shards build offline_pink worker --production
