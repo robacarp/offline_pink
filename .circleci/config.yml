@@ -1,0 +1,9 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: robacarp/amber:latest
+    steps:
+      - checkout
+      - run:
+          command: ls 
