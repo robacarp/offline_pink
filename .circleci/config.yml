@@ -6,3 +6,4 @@ jobs:
     steps:
       - checkout
       - run: shards install
+      - run: shards build offline_pink worker
