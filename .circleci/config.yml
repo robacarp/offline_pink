@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: robacarp/amber:latest
+      - image: robacarp/amber_build:latest
     steps:
       - checkout
       - run:
