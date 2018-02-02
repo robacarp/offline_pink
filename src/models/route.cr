@@ -51,15 +51,8 @@ class Route < Granite::ORM::Base
 
   def last_result
     @last_result ||= begin
-      query = <<-SQL
-        WHERE get_results.route_id = ?
-        ORDER BY created_at DESC
-        LIMIT 1
-      SQL
-
-      results = GetResult.all query, [id]
-      if results.any?
-        results.first
+      if result = GetResult.where(route_id: id).order(created_at: :desc).first
+        result
       else
         GetResult.new
       end

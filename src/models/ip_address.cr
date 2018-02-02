@@ -24,14 +24,8 @@ class IpAddress < Granite::ORM::Base
 
   def last_result
     @last_result ||= begin
-      query = <<-SQL
-        WHERE ping_results.ip_address_id = ?
-        ORDER BY created_at DESC
-        LIMIT 1
-      SQL
-      results = PingResult.all(query, [id])
-      if results.any?
-        results.first
+      if result = ping_results.order(created_at: :desc).first
+        result
       else
         PingResult.new
       end
