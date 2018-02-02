@@ -102,4 +102,7 @@ class Query::Builder(T)
     ! first.nil?
   end
 
+  def delete
+    runner.delete
+  end
 end

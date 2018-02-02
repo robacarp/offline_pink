@@ -33,19 +33,11 @@ class IpAddress < Granite::ORM::Base
   end
 
   def ping_results
-    query = <<-SQL
-      WHERE ip_address_id = ?
-    SQL
-
-    PingResult.all(query, [id])
+    PingResult.where(ip_address_id: id)
   end
 
   def destroy_ping_results
-    query = <<-SQL
-    DELETE FROM ping_results WHERE ip_address_id = #{id}
-    SQL
-
-    PingResult.exec query
+    ping_results.delete
   end
 
   def destroy_associations
