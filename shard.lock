@@ -69,7 +69,7 @@ shards:
     version: 0.14.1
 
   quartz_mailer:
-    github: amberframework/quartz-mailer
+    path: ../quartz-mailer
     version: 0.5.0
 
   redis:
