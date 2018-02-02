@@ -1,0 +1,16 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: robacarp/amber_build:latest
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - i-{{ checksum "shard.lock" }}
+      - run: shards build offline_pink worker
+      - save_cache:
+          key: i-{{ checksum "shard.lock" }}
+          paths:
+            - .shards
+            - lib
