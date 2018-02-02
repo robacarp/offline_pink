@@ -97,4 +97,9 @@ class Query::Builder(T)
   def first(n : Int32) : Array(T)
     runner.first(n)
   end
+
+  def any? : Bool
+    ! first.nil?
+  end
+
 end
