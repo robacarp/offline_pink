@@ -2,6 +2,9 @@ require "granite_orm/adapter/pg"
 require "./relative_time"
 
 class GetResult < Granite::ORM::Base
+  extend Query::BuilderMethods
+  include RelativeTime
+
   adapter pg
 
   belongs_to :check
@@ -15,8 +18,6 @@ class GetResult < Granite::ORM::Base
   timestamps
 
   table_name "get_results"
-
-  include RelativeTime
 
   def is_up?
     is_up

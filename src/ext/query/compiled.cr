@@ -25,8 +25,8 @@ class Query::Compiled(T)
   end
 
   private def build_where
-    parameter_count = 0
-    @where, fields, data = @builder.build_where(0)
+    parameter_count = 1
+    @where, fields, data = @builder._build_where(parameter_count)
     parameter_count += data.size
     @fields += fields
     @data += data
@@ -61,6 +61,7 @@ class Query::Compiled(T)
   end
 
   private def build_order
+    @order = @builder._build_order
   end
 
   def order?

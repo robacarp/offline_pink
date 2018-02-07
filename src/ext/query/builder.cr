@@ -21,6 +21,7 @@ class Query::Builder(T)
 
   def initialize(@boolean_operator = :and)
     @fields = {} of FieldName => FieldData
+    @order  = [] of NamedTuple(field: String, direction: String)
   end
 
   def compile
@@ -39,13 +40,48 @@ class Query::Builder(T)
     self
   end
 
+  def order(field : Symbol)
+    @order << { field: field, direction: :ascending }
+
+    self
+  end
+
+  def order(**dsl)
+    dsl.each do |field, dsl_direction|
+      direction = "ASC"
+
+      if dsl_direction == "desc" || dsl_direction == :desc
+        direction = "DESC"
+      end
+
+      @order << { field: field.to_s, direction: direction }
+    end
+
+    self
+  end
+
+  def _build_order
+    if @order.none?
+      default_order
+    end
+
+    @order.map do |expression|
+      "#{expression[:field]} #{expression[:direction]}"
+    end.join ", "
+  end
+
+  def default_order
+    @order = [{ field: T.primary_name, direction: "ASC" }]
+  end
+
   # TODO maybe move this logic into the Runner(?)
-  def build_where(parameter_count = 1) : { String, Array(FieldName), Array(FieldData) }
+  def _build_where(parameter_count = 1) : { String, Array(FieldName), Array(FieldData) }
     data = [] of FieldData
-    parameter_count += 1
     clause = @fields.map do |field, value|
       data << value
-      "#{field} = $#{parameter_count}"
+      "#{field} = $#{parameter_count}".tap do
+        parameter_count += 1
+      end
     end.join " AND "
 
     { clause, T.fields, data }
@@ -61,5 +97,13 @@ class Query::Builder(T)
 
   def first(n : Int32) : Array(T)
     runner.first(n)
+  end
+
+  def any? : Bool
+    ! first.nil?
+  end
+
+  def delete
+    runner.delete
   end
 end

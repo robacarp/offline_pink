@@ -1,6 +1,8 @@
 require "granite_orm/adapter/pg"
 
 class PingResult < Granite::ORM::Base
+  extend Query::BuilderMethods
+
   adapter pg
 
   belongs_to :ip_address

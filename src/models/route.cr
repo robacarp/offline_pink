@@ -31,8 +31,7 @@ class Route < Granite::ORM::Base
     (add_error :domain, messages[:assigned];     return) unless @domain_id
     (add_error :path,   messages[:blank];        return) unless @path && ! @path.try(&.blank?)
 
-    duplicate_routes = Route.all("WHERE domain_id = ? AND path = ?", [@domain_id, @path])
-    (add_error :route,  messages[:duplicate];  return) if duplicate_routes.any?
+    (add_error :route,  messages[:duplicate];  return) if Route.where(domain_id: @domain_id, path: @path).any?
   end
 
   def use_ssl?
@@ -51,15 +50,8 @@ class Route < Granite::ORM::Base
 
   def last_result
     @last_result ||= begin
-      query = <<-SQL
-        WHERE get_results.route_id = ?
-        ORDER BY created_at DESC
-        LIMIT 1
-      SQL
-
-      results = GetResult.all query, [id]
-      if results.any?
-        results.first
+      if result = GetResult.where(route_id: id).order(created_at: :desc).first
+        result
       else
         GetResult.new
       end

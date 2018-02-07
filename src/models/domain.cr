@@ -29,8 +29,7 @@ class Domain < Granite::ORM::Base
     (add_error :user, messages[:assigned];   return) unless @user_id
 
     if new_record?
-      duplicate_domains = Domain.all("WHERE user_id = ? AND name = ?", [@user_id, @name])
-      (add_error :name, messages[:duplicate];  return) if duplicate_domains.any?
+      (add_error :name, messages[:duplicate];  return) if Domain.where(user_id: @user_id, name: @name).any?
     end
   end
 
