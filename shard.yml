@@ -49,8 +49,9 @@ dependencies:
     github: will/crystal-pg
 
   quartz_mailer:
-    # github: amberframework/quartz-mailer
-    path: ../quartz-mailer
+    github: amberframework/quartz-mailer
+    commit: c16fd94
+    # path: ../quartz-mailer
 
 development_dependencies:
   amber_spec:

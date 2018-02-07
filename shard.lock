@@ -2,7 +2,7 @@ version: 1.0
 shards:
   amber:
     github: robacarp/amber
-    commit: d044b146ee5a1c2fd9ecab68dc9cc676b4188c49
+    commit: c8393c927c5b153973af338c0ce630ff8bb6ece5
 
   amber_router:
     github: amberframework/router
@@ -69,8 +69,8 @@ shards:
     version: 0.14.1
 
   quartz_mailer:
-    path: ../quartz-mailer
-    version: 0.5.0
+    github: amberframework/quartz-mailer
+    commit: c16fd9459a904799ff616e5336cb8d1244fe1ef0
 
   redis:
     github: stefanwille/crystal-redis
