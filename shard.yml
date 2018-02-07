@@ -50,6 +50,7 @@ dependencies:
 
   quartz_mailer:
     github: amberframework/quartz-mailer
+    commit: c16fd94
     # path: ../quartz-mailer
 
 development_dependencies:
