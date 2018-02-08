@@ -1,16 +1,4 @@
-require "amber"
-require "mosquito"
-
-require "./ext/extensions"
-
-require "../config/application"
-
-require "./models/**"
-require "./mailers/**"
-require "./handlers/**"
-
-require "./jobs/**"
-
+require "../config/*"
 Granite::ORM.settings.logger = Mosquito::Base.logger
-Quartz.config.logger = Mosquito::Base.logger
+Quartz.config.logger         = Mosquito::Base.logger
 Mosquito::Runner.start
