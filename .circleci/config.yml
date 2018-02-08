@@ -8,7 +8,7 @@ jobs:
       - restore_cache:
           keys:
             - i-{{ checksum "shard.lock" }}
-      - run: shards build offline_pink worker
+      - run: shards build --no-color offline_pink worker
       - run: crystal spec
       - save_cache:
           key: i-{{ checksum "shard.lock" }}
