@@ -7,6 +7,7 @@ require "./initializers/*"
 require "./routes"
 
 Amber::Server.configure do |settings|
+  settings.database_url = ENV["DATABASE_URL"] if ENV["DATABASE_URL"]?
 end
 
 # load the application_ files before those which depend on them

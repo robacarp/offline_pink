@@ -8,16 +8,11 @@ require "../config/*"
 require "micrate"
 require "pg"
 
+p Amber.settings.database_url
+
 Granite::ORM.settings.logger = Logger.new nil
 Micrate::DB.connection_url = Amber.settings.database_url
 Micrate::Cli.run_up
-
-require "../src/ext/extensions"
-require "../src/controllers/application_controller"
-require "../src/controllers/**"
-require "../src/mailers/**"
-require "../src/models/**"
-require "../src/policies/**"
 
 Spec.before_each do
   Domain.clear

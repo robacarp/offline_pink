@@ -4,7 +4,7 @@ jobs:
     docker:
       - image: robacarp/amber_build:latest
         environment:
-          DATABASE_URL: postgres://ubuntu:@127.0.0.1:5432/circle_test
+          DATABASE_URL: postgres://postgres:@127.0.0.1:5432/postgres
       - image: postgres:9.6.5
     steps:
       - checkout
@@ -12,8 +12,9 @@ jobs:
       - restore_cache:
           keys:
             - i-{{ checksum "shard.lock" }}
-      - run: shards build offline_pink worker
+      - run: crystal deps
       - run: crystal spec
+      - run: shards build offline_pink worker
       - save_cache:
           key: i-{{ checksum "shard.lock" }}
           paths:
