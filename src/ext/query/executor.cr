@@ -10,9 +10,13 @@ class Query::Executor(T,K)
     new Method::Query, sql, args
   end
 
-  def self.value(sql : String, args = [] of DB::Any)
-    new Method::Value, sql, args
+  def self.value(sql : String, args = [] of DB::Any, *, default : K? = nil)
+    new(Method::Value, sql, args).tap do |inst|
+      inst.default = default
+    end
   end
+
+  property default : K?
 
   def initialize(@execute_as : Method, @query : String, @args = [] of DB::Any)
   end
@@ -44,6 +48,8 @@ class Query::Executor(T,K)
         return record_set.read.as K
       end
     end
+
+    return default if default
   end
 
   def run_query
