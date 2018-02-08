@@ -1,37 +1,4 @@
-# .count
-# .where(field: value).count
-# .where(field: value).order(...).count
 require "../spec_helper"
-require "spec"
-
-require "db"
-require "../../../../src/ext/query_builder"
-
-class Model
-  def self.table_name
-    "table"
-  end
-
-  def self.fields
-    ["name", "age"]
-  end
-
-  def self.primary_name
-    "id"
-  end
-end
-
-def query_fields
-  [Model.primary_name, Model.fields].flatten.join ", "
-end
-
-def builder
-  builder = Query::Builder(Model).new
-end
-
-def assembler
-  Query::Assembler::Postgresql(Model).new builder
-end
 
 def ignore_whitespace(expected : String)
   whitespace = "\\s+"
@@ -54,7 +21,12 @@ describe Query::Assembler::Postgresql(Model) do
   context "where" do
     it "properly numbers fields" do
       sql = "select #{query_fields} from table where name = $1 and age = $2 order by id desc"
-      builder.where(name: "bob", age: "23").raw_sql.should match ignore_whitespace sql
+      query = builder.where(name: "bob", age: "23")
+      query.raw_sql.should match ignore_whitespace sql
+
+      assembler = query.assembler
+      assembler.build_where
+      assembler.numbered_parameters.should eq ["bob", "23"]
     end
   end
 

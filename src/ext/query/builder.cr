@@ -32,10 +32,6 @@ class Query::Builder(T)
     @order_fields  = [] of NamedTuple(field: String, direction: Sort)
   end
 
-  def compile
-    Compiled(T).new self
-  end
-
   def assembler
     # when adapter.postgresql?
     Assembler::Postgresql(T).new self
