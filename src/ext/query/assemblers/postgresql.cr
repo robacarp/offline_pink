@@ -52,7 +52,7 @@ module Query::Assembler
       end
     end
 
-    def count : Executor(T, Int32)
+    def count : Executor(T, Int64)
       where = build_where
       order = build_order(use_default_order = false)
       group = build_group_by
@@ -65,7 +65,7 @@ module Query::Assembler
          #{order}
       SQL
 
-      Executor(T, Int32).value sql, numbered_parameters
+      Executor(T, Int64).value sql, numbered_parameters, default: 0_i64
     end
 
     def first(n : Int32 = 1) : Executor(T, Array(T))

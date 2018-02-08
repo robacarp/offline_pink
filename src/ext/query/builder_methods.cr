@@ -9,7 +9,7 @@ module Query::BuilderMethods
     Builder(self).new
   end
 
-  def count : Executor(self, Int32)
+  def count : Executor(self, Int64)
     __builder.count
   end
 
