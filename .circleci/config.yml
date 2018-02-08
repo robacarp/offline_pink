@@ -3,11 +3,17 @@ jobs:
   build:
     docker:
       - image: robacarp/amber_build:latest
+        environment:
+          DATABASE_URL: postgres://postgres:@127.0.0.1:5432/postgres
+      - image: postgres:9.6.5
     steps:
       - checkout
+      - run: printenv
       - restore_cache:
           keys:
             - i-{{ checksum "shard.lock" }}
+      - run: crystal deps
+      - run: crystal spec
       - run: shards build offline_pink worker
       - save_cache:
           key: i-{{ checksum "shard.lock" }}

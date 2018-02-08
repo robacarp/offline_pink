@@ -7,22 +7,18 @@ require "../config/*"
 
 require "micrate"
 require "pg"
-require "sqlite"
-require "mysql"
+
+p Amber.settings.database_url
+
+Granite::ORM.settings.logger = Logger.new nil
 Micrate::DB.connection_url = Amber.settings.database_url
 Micrate::Cli.run_up
 
-require "../src/ext/extensions"
-require "../src/controllers/application_controller"
-require "../src/controllers/**"
-require "../src/mailers/**"
-require "../src/models/**"
-require "../src/policies/**"
-
 Spec.before_each do
+  Domain.clear
+  GetResult.clear
+  IpAddress.clear
+  PingResult.clear
   Route.clear
   User.clear
-  PingResult.clear
-  GetResult.clear
-  Check.clear
 end
