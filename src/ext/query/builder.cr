@@ -71,6 +71,10 @@ class Query::Builder(T)
     self
   end
 
+  def raw_sql
+    assembler.select.raw_sql
+  end
+
   def count : Executor(T, Int32)
     assembler.count
   end

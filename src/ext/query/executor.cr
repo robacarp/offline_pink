@@ -72,7 +72,7 @@ class Query::Executor(T,K)
   end
 
   def as_number
-    raise "#{K} is not numberish" unless K.is_a? Int32
+    raise "#{K} is not numberish" unless K == Int32
     run_value.as K
   end
 

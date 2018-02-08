@@ -8,6 +8,8 @@ module Query::Assembler
         "#{field} = #{add_parameter value}"
       end
 
+      return "" if clauses.none?
+
       "WHERE #{clauses.join " AND "}"
     end
 
@@ -85,6 +87,17 @@ module Query::Assembler
       T.adapter.open do |db|
         db.exec sql, numbered_parameters
       end
+    end
+
+    def select
+      sql = <<-SQL
+        SELECT #{field_list}
+          FROM #{table_name}
+          #{build_where}
+          #{build_order}
+      SQL
+
+      Executor(T, Array(T)).query sql, numbered_parameters
     end
   end
 end

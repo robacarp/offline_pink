@@ -23,7 +23,7 @@ module Query::Assembler
     end
 
     def field_list
-      [T.primary_name, T.fields].flatten.join ","
+      [T.primary_name, T.fields].flatten.join ", "
     end
 
     abstract def count : Int64
