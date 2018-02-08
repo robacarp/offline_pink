@@ -84,4 +84,5 @@ class Query::Executor(T,K)
 
   delegate :[], :first?, :first, :each, to: :as_array
   delegate :<, :>, :<=, :>=, to: :as_number
+  delegate :to_s, to: :run
 end
