@@ -17,35 +17,24 @@
         a href="/domain/#{domain.id}/delete" Stop monitoring
         | if the domain is incorrect.
 
-| Checking #{domain.routes.size} routes:
+- if domain.monitors.any?
+  | #{domain.monitors.count} monitors:
 
-- if domain.routes.any?
-  table.table.table-dark
-    tr
-      th scope="col" Path
-      th scope="col" Status
-      th scope="col" Last Checked
-      th scope="col" Response Time
-    - domain.routes.each do |route|
-      tr
-        th scope="row"
-          a href="/route/#{route.id}" = route.full_path
-        td
-          - if route.last_result.is_up?
-            .green [up]
-          - else
-            - if route.last_result.checked?
-              .red [down]
-            - else
-              .pink [unchecked]
-        td = route.last_result.relative_time_since
-        td
-          = route.last_result.response_time
-          | ms
+  - domain.grouped_monitors.each do |type, monitors|
+    h4 type
+    ul
+      - monitors.each do |monitor|
+        li
+          a href="/monitor/#{monitor.id}"
+            = monitor.id
+            = monitor.type
 
-a href="/domain/#{domain.id}/routes/new" Create a route
+br
+a href="/domain/#{domain.id}/monitors/new" Create a new monitor
 
-h4 Most recent pings:
+hr
+
+h4 Most recent results:
 
 - if domain.ip_addresses.any?
   table.table.table-dark

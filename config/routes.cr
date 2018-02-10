@@ -37,6 +37,13 @@ Amber::Server.configure do |app|
     delete "/domain/:id",         DomainController, :destroy
     get "/domain/:id/revalidate", DomainController, :revalidate
 
+    # Monitors
+    get "/domain/:domain_id/monitors/new",  MonitorController, :new
+    post "/domain/:domain_id/monitors/new", MonitorController, :create
+    get "/monitor/:id",              MonitorController, :show
+    get "/monitor/:id/delete",       MonitorController, :delete
+    delete "/monitor/:id",           MonitorController, :destroy
+
     # Routes
     get  "/domain/:domain_id/routes/new", RouteController, :new
     post "/domain/:domain_id/routes/new", RouteController, :create

@@ -22,3 +22,10 @@ Spec.before_each do
   Route.clear
   User.clear
 end
+
+require "garnet_spec"
+
+module SystemTest
+  DRIVER = :chrome
+  PATH = "/usr/local/bin/chromedriver"
+end

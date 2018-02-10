@@ -15,7 +15,7 @@
 # - Model.where(field: value).or( Model.where(field3: value3) )
 # or
 # - Model.where(field: value).or { whehre(field3: value3) }
-class Query::Builder(T)
+class Query::Builder(Model)
   alias FieldName = String
   alias FieldData = DB::Any
 
@@ -34,7 +34,7 @@ class Query::Builder(T)
 
   def assembler
     # when adapter.postgresql?
-    Assembler::Postgresql(T).new self
+    Assembler::Postgresql(Model).new self
     # when adapter.mysql?
     # etc
   end
@@ -48,7 +48,15 @@ class Query::Builder(T)
   end
 
   def order(field : Symbol)
-    @order_fields << { field: field, direction: :ascending }
+    @order_fields << { field: field.to_s, direction: Sort::Ascending }
+
+    self
+  end
+
+  def order(fields : Array(Symbol))
+    fields.each do |field|
+      order field
+    end
 
     self
   end
@@ -71,15 +79,15 @@ class Query::Builder(T)
     assembler.select.raw_sql
   end
 
-  def count : Executor(T, Int64)
+  def count : Executor::Value(Model, Int64)
     assembler.count
   end
 
-  def first : T?
+  def first : Model?
     first(1).first?
   end
 
-  def first(n : Int32) : Executor(T, Array(T))
+  def first(n : Int32) : Executor::List(Model)
     assembler.first(n)
   end
 
@@ -89,5 +97,13 @@ class Query::Builder(T)
 
   def delete
     assembler.delete
+  end
+
+  def each(&block)
+    assembler.select.tap do |record_set|
+      record_set.each do |record|
+        yield record
+      end
+    end
   end
 end

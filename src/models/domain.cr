@@ -1,15 +1,14 @@
-require "granite_orm/adapter/pg"
-
 class Domain < Granite::ORM::Base
   extend Query::BuilderMethods
   adapter pg
 
   field name : String
   field is_valid : Bool
+
   timestamps
 
   belongs_to :user
-  has_many :routes
+  has_many :monitors
 
   before_destroy :destroy_associations
 
@@ -31,6 +30,14 @@ class Domain < Granite::ORM::Base
     if new_record?
       (add_error :name, messages[:duplicate];  return) if Domain.where(user_id: @user_id, name: @name).any?
     end
+  end
+
+  def monitors
+    Monitor.where(domain_id: id)
+  end
+
+  def grouped_monitors
+    {} of String => Array(Monitor)
   end
 
   # has_many :ip_addresses, class: IpAddress
@@ -82,6 +89,5 @@ class Domain < Granite::ORM::Base
 
   def destroy_associations
     ip_addresses.map(&.destroy)
-    routes.map(&.destroy)
   end
 end

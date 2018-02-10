@@ -32,6 +32,9 @@ dependencies:
     # path: ../granite-orm
     github: amberframework/granite-orm
 
+  garnet_spec:
+    github: amberframework/garnet-spec
+
   mosquito:
     # path: ../mosquito
     github: robacarp/mosquito

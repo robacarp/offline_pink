@@ -10,5 +10,6 @@
       == csrf_tag
       .form_group
         == text_field name: "name", value: domain.name, placeholder: "offline.pink", class: "form-control"
+
       .form-group
         == submit "Submit", class: "btn"

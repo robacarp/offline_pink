@@ -35,14 +35,13 @@ class DomainController < ApplicationController
     domain.user = current_user
     authorize domain
 
-    if domain.valid? && domain.save
-      flash["success"] = "Domain monitoring will begin shortly."
-      PingJob.new(domain: domain).enqueue
-      redirect_to "/domain/#{domain.id}"
-    else
+    unless domain.save
       flash["danger"] = "Domain could not be created."
-      render "new.slang"
+      return render "new.slang"
     end
+
+    flash["success"] = "Domain monitoring will begin shortly."
+    redirect_to "/domain/#{domain.id}"
   end
 
   def delete
