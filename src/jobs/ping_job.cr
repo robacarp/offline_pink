@@ -43,7 +43,6 @@ class PingJob < Mosquito::QueuedJob
     else
       log "Non translatable status: #{@status}"
     end
-
   rescue e : Socket::Error
     log "Socket Error while pinging domain"
     invalidate_domain

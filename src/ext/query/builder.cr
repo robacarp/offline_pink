@@ -29,7 +29,7 @@ class Query::Builder(Model)
 
   def initialize(@boolean_operator = :and)
     @where_fields = {} of FieldName => FieldData
-    @order_fields  = [] of NamedTuple(field: String, direction: Sort)
+    @order_fields = [] of NamedTuple(field: String, direction: Sort)
   end
 
   def assembler

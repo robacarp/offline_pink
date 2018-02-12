@@ -2,11 +2,10 @@ class DomainOfflineNotificationMailer < ApplicationMailer
   @ip_address : IpAddress
 
   def initialize(
-      @user : User,
-      @domain : Domain,
-      @result : PingResult
+    @user : User,
+    @domain : Domain,
+    @result : PingResult
   )
-
     @ip_address = @result.ip_address.not_nil!
 
     to @user.email.not_nil!

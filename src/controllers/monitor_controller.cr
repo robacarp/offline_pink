@@ -34,7 +34,7 @@ class MonitorController < ApplicationController
       "http_path",
       "http_expected_content",
     ]).merge({
-      "http_use_ssl" => params_hash["http_use_ssl"] == "1",
+      "http_use_ssl"              => params_hash["http_use_ssl"] == "1",
       "http_expected_status_code" => params_hash["http_expected_status_code"].to_i32?,
     })
   end

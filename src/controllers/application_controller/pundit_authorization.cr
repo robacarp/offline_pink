@@ -72,5 +72,4 @@ module PunditAuthorization
       end
     end
   end
-
 end

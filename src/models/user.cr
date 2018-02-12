@@ -21,8 +21,8 @@ class User < Granite::ORM::Base
 
   def validate : Nil
     messages = {
-      blank: "cannot be blank",
       unique: "is already registered"
+      blank:  "cannot be blank",
     }
 
     (add_error :email, messages[:blank]; return) unless @email

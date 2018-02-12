@@ -12,5 +12,4 @@ class Admin::Controller < ApplicationController
       end
     end
   end
-
 end

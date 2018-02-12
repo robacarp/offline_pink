@@ -1,5 +1,4 @@
 module Amber::Controller
-
   module Helpers
     private class Redirector
       def redirect(controller)
