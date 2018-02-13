@@ -1,5 +1,7 @@
 module Query::Executor
-  class List(Model) < Base
+  class List(Model)
+    include Shared
+
     def initialize(@sql : String, @args = [] of DB::Any)
     end
 

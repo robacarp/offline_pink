@@ -1,5 +1,7 @@
 module Query::Executor
-  class Value(Model, Scalar) < Base
+  class Value(Model, Scalar)
+    include Shared
+
     def initialize(@sql : String, @args = [] of DB::Any, @default : Scalar = nil)
     end
 
@@ -19,15 +21,7 @@ module Query::Executor
       @default.not_nil!
     end
 
-    def <(other)
-      true
-    end
-
-    def >(other)
-      true
-    end
-
-    # delegate :<, :>, :<=, :>=, to: :run
+    delegate :<, :>, :<=, :>=, to: :run
     delegate :to_s, to: :run
   end
 end
