@@ -45,6 +45,11 @@ class Monitor < Granite::ORM::Base
 
       (add_error :monitor, messages[:duplicate]; return) if duplicate_monitors.any?
     end
+
+    if @monitor_type == VALID_TYPES[:ping]
+      duplicate_monitors = Monitor.where(domain_id: @domain_id, monitor_type: VALID_TYPES[:ping])
+      (add_error :monitor, messages[:duplicate]; return) if duplicate_monitors.any?
+    end
   end
 
   def type

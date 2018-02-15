@@ -4,7 +4,7 @@ class MonitorPolicy < ApplicationPolicy
     create: :new,
     show: :user_owns_domain,
     delete: :user_owns_domain,
-    destroy: :delete
+    destroy: :user_owns_domain
 
   def user_owns_domain?
     return unless domain_id = object.domain_id

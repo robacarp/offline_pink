@@ -81,10 +81,37 @@ class MonitorController < ApplicationController
   end
 
   def delete
-    ""
+    if monitor = Monitor.find params[:id]
+      authorize monitor
+      domain = monitor.domain
+      render "delete.slang"
+    else
+      flash["danger"] = "Monitor not found"
+      redirect_to_domains
+    end
   end
 
   def destroy
-    ""
+    unless monitor = Monitor.find params[:id]
+      flash["danger"] = "Monitor not found"
+      redirect_to_domains
+      return
+    end
+
+    authorize monitor
+    domain = monitor.domain
+
+    unless params["confirm"] == "1"
+      flash["info"] = "You must check the confirm box"
+      return render "delete.slang"
+    end
+
+    if monitor.destroy
+      flash["info"] = "Monitor deleted."
+      redirect_to_domain domain.id
+    else
+      flash["danger"] = "Unable to delete monitor."
+      redirect_to_domains
+    end
   end
 end

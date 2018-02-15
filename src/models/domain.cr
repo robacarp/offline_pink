@@ -37,7 +37,10 @@ class Domain < Granite::ORM::Base
   end
 
   def grouped_monitors
-    {} of String => Array(Monitor)
+    monitors.order(monitor_type: :desc, id: :asc)
+            .select
+            .group_by(&.monitor_type)
+    # {} of String => Array(Monitor)
   end
 
   # has_many :ip_addresses, class: IpAddress

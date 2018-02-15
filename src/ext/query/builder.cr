@@ -99,6 +99,10 @@ class Query::Builder(Model)
     assembler.delete
   end
 
+  def select
+    assembler.select.run
+  end
+
   def each(&block)
     assembler.select.tap do |record_set|
       record_set.each do |record|
