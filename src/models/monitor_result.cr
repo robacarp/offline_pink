@@ -1,5 +1,6 @@
 class MonitorResult < Granite::ORM::Base
   extend Query::BuilderMethods
+
   adapter pg
 
   belongs_to :domain
@@ -12,6 +13,7 @@ class MonitorResult < Granite::ORM::Base
 
   field ok : Bool
 
+  field host_resolution_failure : Bool
   field connect_failure : Bool
 
   field ping_response_time : Float32
@@ -21,4 +23,10 @@ class MonitorResult < Granite::ORM::Base
   field http_content_found : Bool
 
   timestamps
+
+  VALID_TYPES = {
+    :ping => "ping",
+    :http => "http",
+    :host => "host"
+  }
 end

@@ -9,6 +9,7 @@ class Domain < Granite::ORM::Base
 
   belongs_to :user
   has_many :monitors
+  has_many :hosts
 
   before_destroy :destroy_associations
 
@@ -43,22 +44,6 @@ class Domain < Granite::ORM::Base
     # {} of String => Array(Monitor)
   end
 
-  # has_many :ip_addresses, class: IpAddress
-  def ip_addresses : Array(IpAddress)
-    IpAddress.all "WHERE domain_id = ?", id
-  end
-
-  # has_many :ping_results, through: :ip_addresses
-  def ping_results : Array(PingResult)
-    query = <<-SQL
-      JOIN ip_addresses ON ip_addresses.id = ping_results.ip_address_id
-      WHERE
-        ip_addresses.domain_id = ?
-    SQL
-
-    PingResult.all query, id
-  end
-
   def last_result : PingResult?
     query = <<-SQL
       JOIN ip_addresses ON ip_addresses.id = ping_results.ip_address_id
@@ -79,7 +64,7 @@ class Domain < Granite::ORM::Base
   end
 
   def checked?
-    ping_results.any?
+    false #ping_results.any?
   end
 
   def is_valid?
@@ -91,6 +76,6 @@ class Domain < Granite::ORM::Base
   end
 
   def destroy_associations
-    ip_addresses.map(&.destroy)
+    hosts.map(&.destroy)
   end
 end

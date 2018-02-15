@@ -16,6 +16,12 @@ CREATE TABLE monitor_results(
   -- to signal that a monitor couldnt even connect to the address
   connect_failure BOOL,
 
+  -- when the host lookup fails
+  host_resolution_failure BOOL,
+
+  -- when the address has been removed from the domain
+  missing_host BOOL,
+
   -- for ping result
   ping_response_time REAL,
 

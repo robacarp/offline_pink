@@ -33,30 +33,3 @@ br
 a href="/domain/#{domain.id}/monitors/new" Create a new monitor
 
 /
-  hr
-
-  h4 Most recent results:
-
-  - if domain.ip_addresses.any?
-    table.table.table-dark
-      tr
-        th scope="col" Address
-        th scope="col" Status
-        th scope="col" Last Ping
-        th scope="col" Latency
-      - domain.ip_addresses.each do |address|
-        tr
-          th scope="row" == address.address
-          td title="Result##{address.last_result.id}"
-            - if address.last_result.is_up?
-              .green [up]
-            - else
-              - if address.last_result.checked?
-                .red [down]
-              - else
-                .pink [unchecked]
-          td = address.last_result.relative_time_since
-          td
-            = "#{address.last_result.response_time}ms"
-          td
-            a href="/ip_address/#{address.id}/delete" forget

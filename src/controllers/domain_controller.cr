@@ -65,7 +65,6 @@ class DomainController < ApplicationController
 
     unless params["confirm"] == "1"
       flash["info"] = "You must check the confirm box"
-      skip_authorization
       return render "delete.slang"
     end
 
@@ -90,7 +89,7 @@ class DomainController < ApplicationController
     domain.is_valid = true
     if domain.save
       flash["info"] = "Domain will be re-checked."
-      PingJob.new(domain: domain).enqueue
+      # PingJob.new(domain: domain).enqueue
       redirect_to "/domain/#{domain.id}"
     else
       flash["danger"] = "Could not set domain for re-check."

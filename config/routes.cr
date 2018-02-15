@@ -44,16 +44,16 @@ Amber::Server.configure do |app|
     get "/monitor/:id/delete",       MonitorController, :delete
     delete "/monitor/:id",           MonitorController, :destroy
 
-    # Routes
-    get  "/domain/:domain_id/routes/new", RouteController, :new
-    post "/domain/:domain_id/routes/new", RouteController, :create
-    get "/route/:id",                     RouteController, :show
-    get "/route/:id/delete",              RouteController, :delete
-    delete "/route/:id",                  RouteController, :destroy
+    # # Routes
+    # get  "/domain/:domain_id/routes/new", RouteController, :new
+    # post "/domain/:domain_id/routes/new", RouteController, :create
+    # get "/route/:id",                     RouteController, :show
+    # get "/route/:id/delete",              RouteController, :delete
+    # delete "/route/:id",                  RouteController, :destroy
 
     # IpAddresses
-    get "/ip_address/:id/delete", IpAddressController, :delete
-    delete "/ip_address/:id",     IpAddressController, :destroy
+    # get "/ip_address/:id/delete", IpAddressController, :delete
+    # delete "/ip_address/:id",     IpAddressController, :destroy
 
     # Admin panel
     get "/admin", Admin::HomeController, :show
