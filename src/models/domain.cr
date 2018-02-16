@@ -37,11 +37,14 @@ class Domain < Granite::ORM::Base
     Monitor.where(domain_id: id)
   end
 
+  def hosts
+    Host.where(domain_id: id)
+  end
+
   def grouped_monitors
     monitors.order(monitor_type: :desc, id: :asc)
             .select
             .group_by(&.monitor_type)
-    # {} of String => Array(Monitor)
   end
 
   def last_result : PingResult?
@@ -76,6 +79,7 @@ class Domain < Granite::ORM::Base
   end
 
   def destroy_associations
-    hosts.map(&.destroy)
+    hosts.delete
+    monitors.delete
   end
 end

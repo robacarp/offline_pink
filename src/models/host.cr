@@ -1,6 +1,8 @@
 require "granite_orm/adapter/pg"
 
 class Host < Granite::ORM::Base
+  extend Query::BuilderMethods
+
   adapter pg
   table_name :hosts
 
@@ -9,6 +11,7 @@ class Host < Granite::ORM::Base
   timestamps
 
   belongs_to :domain
+  has_many :monitor_results
 
   before_create :guess_version
   before_destroy :destroy_associations
@@ -17,8 +20,16 @@ class Host < Granite::ORM::Base
     version == "ipv4"
   end
 
+  def v5?
+    false
+  end
+
   def v6?
     version == "ipv6"
+  end
+
+  def monitor_results
+    MonitorResult.where(host_id: id)
   end
 
   def last_result
@@ -31,16 +42,8 @@ class Host < Granite::ORM::Base
     end
   end
 
-  def ping_results
-    # PingResult.where(ip_address_id: id)
-  end
-
-  def destroy_ping_results
-    # ping_results.delete
-  end
-
   def destroy_associations
-    # destroy_ping_results
+    monitor_results.delete
   end
 
   def guess_version
