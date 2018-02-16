@@ -4,7 +4,7 @@ class MonitorResult < Granite::ORM::Base
   adapter pg
 
   belongs_to :domain
-  belongs_to :ip_address
+  belongs_to :host
 
   field monitor_type : String
 
@@ -15,6 +15,7 @@ class MonitorResult < Granite::ORM::Base
 
   field host_resolution_failure : Bool
   field connect_failure : Bool
+  field missing_host : Bool
 
   field ping_response_time : Float32
 

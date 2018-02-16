@@ -110,4 +110,10 @@ class Query::Builder(Model)
       end
     end
   end
+
+  def map(&block)
+    assembler.select.run.map do |record|
+      yield record
+    end
+  end
 end

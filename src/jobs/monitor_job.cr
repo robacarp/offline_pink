@@ -6,21 +6,79 @@ class MonitorJob < Mosquito::QueuedJob
   def perform
     log "Starting monitor for Domain##{present_domain.id} #{present_domain.name}"
     @start_time = Time.now
-    lookup_hosts
-    # if resolved?
-    #   ip_addresses.each do |address|
-    #     domain.monitors.each do |monitor|
-    #       results = case monitor.monitor_type
-    #       when Monitor::VALID_TYPES[:ping]
-    #         check_ping address, monitor
-    #       when Monitor::VALID_TYPES[:http]
-    #         check_http address, monitor
-    #       end
-    #     end
-    #   end
-    # end
+    resolver = HostResolver.lookup_hosts present_domain
+    resolve_info resolver
+    log_missing_hosts resolver
+
+    results = resolver.hosts.map do |host|
+      domain.monitors.map do |monitor|
+        result = case monitor.monitor_type
+        when Monitor::VALID_TYPES[:ping]
+          check_ping host, monitor
+        when Monitor::VALID_TYPES[:http]
+          check_http host, monitor
+        end
+
+        next if result.nil?
+
+        result.domain_id = monitor.domain_id
+        result.host_id = host.id
+        result.monitor_type = monitor.monitor_type
+        result
+      end
+    end.compact
+
+    results.flatten.compact.map &.save
+
   ensure
     log "Finished monitor for Domain##{present_domain.id} #{present_domain.name}"
+  end
+
+  def check_ping(host : Host, monitor : Monitor) : MonitorResult?
+    log "Pinging #{host.address}"
+    return unless address = host.address
+
+    statistics = ICMP::Ping.ping(address)
+    log "Ping time: #{statistics[:average_response]}"
+
+    MonitorResult.new(
+      ok: statistics[:success] > 0,
+      ping_response_time: statistics[:average_response]
+    )
+  end
+
+  # Job failed! Raised Errno: connect: Network is down
+
+  def check_http(host : Host, monitor : Monitor) : MonitorResult?
+    url = "#{host.address}#{monitor.http_path}"
+    headers = HTTP::Headers{ "Host" => "#{monitor.domain.name}" }
+
+    log "GETing #{url} host=#{monitor.domain.name}"
+
+    # TODO prevent big pages from taking down the worker? Limit to 1KB or so?
+    # TODO handle OpenSSL::SSL::Error: SSL_connect: error:14090086:SSL routines:ssl3_get_server_certificate:certificate verify failed
+
+    start_time = Time.now
+    response = HTTP::Client.get url, headers
+    response_time = Time.now - start_time
+
+    log "response code: #{response.status_code}"
+
+    result = MonitorResult.new(
+      ok: response.status_code == monitor.http_expected_status_code,
+      http_response_code: response.status_code,
+      http_response_time: response_time.milliseconds.to_f32,
+    )
+
+    if search_text = monitor.http_expected_content
+      unless search_text.blank?
+        index = response.body.lines.join(" ").index search_text
+        result.http_content_found = ! index.nil?
+        result.ok = result.ok && result.http_content_found
+      end
+    end
+
+    result
   end
 
   def rescheduleable?
@@ -35,56 +93,31 @@ class MonitorJob < Mosquito::QueuedJob
     present_domain.name.not_nil!
   end
 
-  def lookup_hosts : Array(Host)
-    addresses = [] of Host
-
-    resolved_hosts = Socket::Addrinfo.resolve(
-      domain_name!,
-      "http",
-      type: Socket::Type::STREAM,
-      protocol: Socket::Protocol::TCP
-    ).map(&.ip_address)
-
-    log "Found #{resolved_hosts.size} hosts:"
-    resolved_hosts.map(&.address).each do |address|
+  def resolve_info(resolver : HostResolver)
+    log "#{resolver.hosts.size} hosts:"
+    resolver.hosts.map(&.address).each do |address|
       log "\t #{address}"
     end
 
-    saved_hosts = present_domain.hosts
-
-    log "Previously knew about #{saved_hosts.size} hosts:"
-    saved_hosts.map(&.address).each do |address|
+    log "#{resolver.new_hosts.size} new hosts:"
+    resolver.new_hosts.map(&.address).each do |address|
       log "\t #{address}"
     end
 
-    new_hosts = resolved_hosts.reject {|host|  saved_hosts.map(&.address).includes? host.address }
-
-    log "found #{new_hosts.size} new hosts:"
-    new_hosts.map(&.address).each do |address|
+    log "#{resolver.missing_hosts.size} hosts are no longer resolving:"
+    resolver.missing_hosts.map(&.address).each do |address|
       log "\t #{address}"
     end
-
-    missing_hosts = saved_hosts.reject {|host| resolved_hosts.map(&.address).includes? host.address }
-
-    log "#{missing_hosts.size} hosts are no longer resolving:"
-    missing_hosts.map(&.address).each do |address|
-      log "\t #{address}"
-    end
-
-    repeat_hosts = saved_hosts.reject {|host| ! resolved_hosts.map(&.address).includes? host.address }
-
-    log "#{repeat_hosts.size} hosts have not changed:"
-    repeat_hosts.map(&.address).each do |address|
-      log "\t #{address}"
-    end
-
-    addresses = repeat_hosts
-
-    new_hosts.each do |host|
-      addresses << Host.new(domain_id: present_domain.id, address: host.address).tap(&.save)
-    end
-
-    addresses
   end
 
+  def log_missing_hosts(resolver : HostResolver)
+    resolver.missing_hosts.each do |host|
+      MonitorResult.new(
+        domain_id: present_domain.id,
+        host_id: host.id,
+        monitor_type: MonitorResult::VALID_TYPES[:host],
+        missing_host: true
+      ).tap &.save
+    end
+  end
 end

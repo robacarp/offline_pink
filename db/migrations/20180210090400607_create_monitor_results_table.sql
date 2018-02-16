@@ -1,7 +1,8 @@
 -- +micrate Up
 CREATE TABLE monitor_results(
   id BIGSERIAL PRIMARY KEY,
-  ip_address_id BIGINT NOT NULL,
+  host_id BIGINT NOT NULL,
+  domain_id BIGINT NOT NULL,
 
   monitor_id BIGINT,
   monitor_type VARCHAR,
@@ -35,7 +36,7 @@ CREATE TABLE monitor_results(
 );
 
 CREATE INDEX monitor_results_monitor_id_idx ON monitor_results (monitor_id);
-CREATE INDEX monitor_results_ip_address_id_idx ON monitor_results (ip_address_id);
+CREATE INDEX monitor_results_host_id_idx ON monitor_results (host_id);
 
 
 -- SQL in section 'Up' is executed when this migration is applied

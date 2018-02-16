@@ -56,6 +56,10 @@ class Monitor < Granite::ORM::Base
     VALID_TYPES.invert[monitor_type]
   end
 
+  def http_full_path
+    "#{domain.name}#{http_path}"
+  end
+
   private def default_status_code
     if @http_expected_status_code.nil? || @http_expected_status_code == 0
       @http_expected_status_code = 200
