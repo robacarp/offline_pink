@@ -14,7 +14,6 @@ end
 require "../src/controllers/application_controller"
 require "../src/mailers/application_mailer"
 
-require "../src/models/model_helpers"
 require "../src/models/**"
 require "../src/mailers/**"
 require "../src/handlers/**"
