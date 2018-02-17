@@ -42,6 +42,20 @@ class Host < Granite::ORM::Base
     end
   end
 
+  def up?
+    success, failure, total = last_result_summary
+    success == total
+  end
+
+  def partial_up?
+    success, failure, total = last_result_summary
+    success > 0 && failure > 0
+  end
+
+  def down?
+    ! up?
+  end
+
   @last_result_batch = [] of MonitorResult
   @last_results_grouped_by_success : Hash(Bool, Array(MonitorResult))?
   @last_results_grouped_by_type : Hash(String, Array(MonitorResult))?

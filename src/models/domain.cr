@@ -41,33 +41,27 @@ class Domain < Granite::ORM::Base
     Host.where(domain_id: id)
   end
 
+  @host_list : Array(Host)?
+  def memoized_hosts
+    @host_list ||= hosts.select
+  end
+
   def grouped_monitors
     monitors.order(monitor_type: :desc, id: :asc)
             .select
             .group_by(&.monitor_type)
   end
 
-  def last_result : PingResult?
-    query = <<-SQL
-      JOIN ip_addresses ON ip_addresses.id = ping_results.ip_address_id
-      WHERE
-        ip_addresses.domain_id = ?
-      ORDER BY created_at DESC
-      LIMIT 1
-    SQL
-
-    result_set = PingResult.all query, id
-    if result_set.any?
-      result_set.first
-    end
-  end
-
   def up?
-    true
+    ! memoized_hosts.map(&.up?).includes? false
   end
 
-  def checked?
-    false #ping_results.any?
+  def partial_up?
+    memoized_hosts.map(&.partial_up?).includes? true
+  end
+
+  def down?
+    ! up?
   end
 
   def is_valid?

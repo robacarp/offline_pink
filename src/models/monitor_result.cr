@@ -35,4 +35,8 @@ class MonitorResult < Granite::ORM::Base
   def ok?
     ok
   end
+
+  def matching_result_set
+    where(run_start_time: run_start_time)
+  end
 end

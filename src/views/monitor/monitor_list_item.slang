@@ -1,4 +1,8 @@
-tr
+- if monitor.up?
+  - background = ""
+- else
+  - background = "background-red"
+tr class=background
   - if type == "ping"
     td
       a href="/monitor/#{monitor.id}" ICMP Ping

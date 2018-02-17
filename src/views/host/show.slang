@@ -3,12 +3,12 @@
     h4
       | Host detail for
       = host.address
-      - success, failure, total = host.last_result_summary
-      - if success == total
+      - if host.up?
         span.green.text-right [OK]
-      - elsif failure == total
+      - elsif host.down?
         span.pink.text-right [Offline]
-      - else# failure != total && success != total
+      - else
+        - success, _, total = host.last_result_summary
         span.yellow.text-right
           br
           | [Not Ok]
