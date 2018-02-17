@@ -10,8 +10,8 @@
         span.pink.text-right [Offline]
       - else# failure != total && success != total
         span.yellow.text-right
-          | [Not Ok]
           br
+          | [Not Ok]
           | (#{success}/#{total} monitors passing)
   .col-md-2.text-right
     a href="/domain/#{host.domain_id}" Back to domain
