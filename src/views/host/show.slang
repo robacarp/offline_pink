@@ -18,9 +18,15 @@
 
 .row
   .col-md-8.offset-md-2
-    - host.last_results_grouped_by_type.each do |type, results|
-      h5= type
-      table.table.table-dark
+    .row
+      .col-md-3.offset-md-6 Expected
+      .col-md-3 Actual
+
+    .result-table
+      - host.last_results_grouped_by_type.each do |type, results|
+        .row.result-type
+          .col-md-8.offset-md-2
+            h5= type
         - results.each do |result|
           - monitor = result.monitor
           == render partial: "monitor_result/monitor_result_list_item.slang"

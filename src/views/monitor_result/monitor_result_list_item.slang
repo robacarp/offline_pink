@@ -1,29 +1,29 @@
 - if type == "ping"
-  tr title="Result##{result.id}"
-    th.text-right scope="row" Response Time
-    td #{result.ping_response_time}ms
+  .row.result-header title="Result##{result.id}"
+    .col-md-6.text-right Response Time
+    .col-md-3 -
+    .col-md-3 #{result.ping_response_time}ms
 
 - if type == "http"
-  tr title="Result##{result.id}"
-    th.text-left
+  .row.result-header title="Result##{result.id}"
+    .col-md-6.text-left
       | GET
       strong
         = monitor.http_full_url
-    th scope="col" Expected
-    th scope="col" Actual
-  tr
-    th.text-right scope="row" Response Time
-    td
-      | -
-    td #{result.http_response_time}ms
-  tr
-    th.text-right scope="row" Status Code
+  .row
+    .col-md-6.text-right Response Time
+    .col-md-3 -
+    .col-md-3 #{result.http_response_time}ms
+  .row
+    .col-md-6.text-right Status Code
     - if monitor.http_expected_status_code == result.http_response_code
-      - color = "bg-success"
+      - color = "background-green"
     - else
-      - color = "bg-danger"
-    td class=color = monitor.http_expected_status_code
-    td class=color = result.http_response_code
+      - color = "background-red"
+    .col-md-3 class=color
+      = monitor.http_expected_status_code
+    .col-md-3 class=color
+      = result.http_response_code
   - if monitor.search_content?
     tr
       th.text-right scope="row" Text Search
