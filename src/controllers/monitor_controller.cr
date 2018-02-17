@@ -109,6 +109,7 @@ class MonitorController < ApplicationController
 
     if monitor.destroy
       flash["info"] = "Monitor deleted."
+      MonitorJob.new(domain: domain).enqueue
       redirect_to_domain_monitors domain
     else
       flash["danger"] = "Unable to delete monitor."

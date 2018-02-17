@@ -37,6 +37,6 @@ class MonitorResult < Granite::ORM::Base
   end
 
   def matching_result_set
-    where(run_start_time: run_start_time)
+    self.class.where(run_start_time: run_start_time)
   end
 end

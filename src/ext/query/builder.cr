@@ -103,6 +103,10 @@ class Query::Builder(Model)
     assembler.select.run
   end
 
+  def size
+    count
+  end
+
   def reject(&block)
     assembler.select.run.reject do |record|
       yield record

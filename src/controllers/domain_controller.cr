@@ -45,6 +45,8 @@ class DomainController < ApplicationController
       monitor_type: Monitor::VALID_TYPES[:ping]
     ).save
 
+    MonitorJob.new(domain: domain).enqueue
+
     flash["success"] = "Domain monitoring will begin shortly."
     redirect_to "/domain/#{domain.id}"
   end
