@@ -1,9 +1,9 @@
-- if type == "ping"
-  tr
+tr
+  - if type == "ping"
     td
       a href="/monitor/#{monitor.id}" ICMP Ping
-- if type == "http"
-  tr
+
+  - if type == "http"
     td
       a href="/monitor/#{monitor.id}"
         | GET
@@ -21,3 +21,5 @@
       = monitor.http_expected_content
       | "
 
+  td.text-right
+    a href="/monitor/#{monitor.id}/delete" Stop

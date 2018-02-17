@@ -3,6 +3,8 @@
     h3 = domain.name
   .col-md-6.text-right
     a href="/domain/#{domain.id}/delete" stop monitoring this domain
+    br
+    a href="/domain/#{domain.id}/monitors" manage this domains monitors
 
 - if domain.is_invalid?
   .alert.alert-danger
@@ -17,19 +19,20 @@
         a href="/domain/#{domain.id}/delete" Stop monitoring
         | if the domain is incorrect.
 
-- if domain.monitors.any?
-  | #{domain.monitors.count} monitors:
+- if domain.hosts.any?
+  h3 Host Status
 
-  - domain.grouped_monitors.each do |type, monitors|
-    h4= type
-    .row
-      .col-md-11.offset-md-1
-        table.table.table-dark
-          - monitors.each do |monitor|
-            == render partial: "monitor/monitor_list_item.slang"
-
-
-br
-a href="/domain/#{domain.id}/monitors/new" Create a new monitor
-
-/
+  table.table.table-dark
+    - domain.hosts.each do |host|
+      tr
+        td = host.address
+        - success, failure, total = host.last_result_summary
+        - if success == total
+          td.green.text-right [OK]
+        - elsif failure == total
+          td.pink.text-right [Offline]
+        - else# failure != total && success != total
+          td.yellow.text-right
+            | [Not Ok] (#{success}/#{total} monitors passing)
+        td
+          a href="/host/#{host.id}/last_results" Details

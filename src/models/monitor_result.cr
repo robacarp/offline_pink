@@ -5,6 +5,7 @@ class MonitorResult < Granite::ORM::Base
 
   belongs_to :domain
   belongs_to :host
+  belongs_to :monitor
 
   field monitor_type : String
 
@@ -30,4 +31,8 @@ class MonitorResult < Granite::ORM::Base
     :http => "http",
     :host => "host"
   }
+
+  def ok?
+    ok
+  end
 end

@@ -22,7 +22,7 @@ module PunditAuthorization
         \{{ policy_class }}::Scope.new(current_user).resolve
       end
 
-      private def authorize(object)
+      private def authorize(object) : Nil
         unless object.is_a? \{{ protected_class }}
           raise "Invalid Authorization"
         end
@@ -37,7 +37,7 @@ module PunditAuthorization
         @_authorized = true
       end
 
-      private def authorize(object, *, with object_policy : ApplicationPolicy.class, for action : Symbol)
+      private def authorize(object, *, with object_policy : ApplicationPolicy.class, for action : Symbol) : Nil
         unless object.class == object_policy.policy_type
           raise "Invalid Authorization"
         end
@@ -47,6 +47,8 @@ module PunditAuthorization
         unless policy.can_user_act? action
           raise "Not Authorized"
         end
+
+        @_authorized = true
       end
 
       def skip_authorization

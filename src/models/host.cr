@@ -34,12 +34,59 @@ class Host < Granite::ORM::Base
 
   def last_result
     @last_result ||= begin
-      if result = ping_results.order(created_at: :desc).first
+      if result = monitor_results.order(created_at: :desc).first
         result
       else
-        PingResult.new
+        MonitorResult.new
       end
     end
+  end
+
+  @last_result_batch = [] of MonitorResult
+  @last_results_grouped_by_success : Hash(Bool, Array(MonitorResult))?
+  @last_results_grouped_by_type : Hash(String, Array(MonitorResult))?
+  @found_last_results = false
+
+  def last_result_batch
+    if @found_last_results
+      @last_result_batch
+    else
+      @found_last_results = true
+      @last_result_batch = monitor_results.where(
+        run_start_time: last_result.run_start_time
+      ).select
+    end
+  end
+
+  def last_results_grouped_by_type
+    @last_results_grouped_by_type ||= begin
+      grouped_results = last_result_batch.group_by(&.monitor_type)
+      grouped_last_results = {} of String => Array(MonitorResult)
+      MonitorResult::VALID_TYPES.values.each do |type|
+        if grouped_results[type]?
+          grouped_last_results[type] = grouped_results[type]
+        end
+      end
+      grouped_last_results
+    end
+  end
+
+  def last_results_grouped_by_success
+    @last_results_grouped_by_success ||= begin
+      grouped_results = last_result_batch.group_by(&.ok)
+      grouped_last_results = {} of Bool => Array(MonitorResult)
+      grouped_last_results[true]  = grouped_results[true]?  || [] of MonitorResult
+      grouped_last_results[false] = grouped_results[false]? || [] of MonitorResult
+      grouped_last_results
+    end
+  end
+
+  def last_result_summary
+    {
+      last_results_grouped_by_success[true].size,
+      last_results_grouped_by_success[false].size,
+      last_result_batch.size
+    }
   end
 
   def destroy_associations

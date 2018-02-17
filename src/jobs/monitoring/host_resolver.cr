@@ -21,11 +21,9 @@ class HostResolver
 
     saved_hosts = @domain.hosts
 
-    new_hosts = resolved_hosts.reject {|host|  saved_hosts.map(&.address).includes? host.address }
-
-    missing_hosts = saved_hosts.reject {|host| resolved_hosts.map(&.address).includes? host.address }
-
-    repeat_hosts = saved_hosts.reject {|host| ! resolved_hosts.map(&.address).includes? host.address }
+    new_hosts     = resolved_hosts.reject {|host| saved_hosts.map(&.address).includes? host.address }
+    missing_hosts = saved_hosts.reject    {|host| resolved_hosts.map(&.address).includes? host.address }
+    repeat_hosts  = saved_hosts.reject    {|host| ! resolved_hosts.map(&.address).includes? host.address }
 
     @hosts = repeat_hosts
     @missing_hosts = missing_hosts

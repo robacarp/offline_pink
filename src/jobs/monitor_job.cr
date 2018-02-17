@@ -5,7 +5,7 @@ class MonitorJob < Mosquito::QueuedJob
 
   def perform
     log "Starting monitor for Domain##{present_domain.id} #{present_domain.name}"
-    @start_time = Time.now
+    start_time = Time.now
     resolver = HostResolver.lookup_hosts present_domain
     resolve_info resolver
     log_missing_hosts resolver
@@ -23,7 +23,9 @@ class MonitorJob < Mosquito::QueuedJob
 
         result.domain_id = monitor.domain_id
         result.host_id = host.id
+        result.monitor_id = monitor.id
         result.monitor_type = monitor.monitor_type
+        result.run_start_time = start_time
         result
       end
     end.compact
@@ -50,7 +52,7 @@ class MonitorJob < Mosquito::QueuedJob
   # Job failed! Raised Errno: connect: Network is down
 
   def check_http(host : Host, monitor : Monitor) : MonitorResult?
-    url = "#{host.address}#{monitor.http_path}"
+    url = "#{monitor.http_protocol}#{host.address}#{monitor.http_path}"
     headers = HTTP::Headers{ "Host" => "#{monitor.domain.name}" }
 
     log "GETing #{url} host=#{monitor.domain.name}"
@@ -58,8 +60,15 @@ class MonitorJob < Mosquito::QueuedJob
     # TODO prevent big pages from taking down the worker? Limit to 1KB or so?
     # TODO handle OpenSSL::SSL::Error: SSL_connect: error:14090086:SSL routines:ssl3_get_server_certificate:certificate verify failed
 
+    tls_config = OpenSSL::SSL::Context::Client.new
+    tls_config.verify_mode = OpenSSL::SSL::VerifyMode::NONE
+
     start_time = Time.now
-    response = HTTP::Client.get url, headers
+    if monitor.https?
+      response = HTTP::Client.get url, headers, tls: tls_config
+    else
+      response = HTTP::Client.get url, headers
+    end
     response_time = Time.now - start_time
 
     log "response code: #{response.status_code}"
@@ -70,8 +79,8 @@ class MonitorJob < Mosquito::QueuedJob
       http_response_time: response_time.milliseconds.to_f32,
     )
 
-    if search_text = monitor.http_expected_content
-      unless search_text.blank?
+    if monitor.search_content?
+      if search_text = monitor.http_expected_content
         index = response.body.lines.join(" ").index search_text
         result.http_content_found = ! index.nil?
         result.ok = result.ok && result.http_content_found

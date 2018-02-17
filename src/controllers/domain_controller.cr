@@ -40,6 +40,11 @@ class DomainController < ApplicationController
       return render "new.slang"
     end
 
+    Monitor.new(
+      domain_id: domain.id,
+      monitor_type: Monitor::VALID_TYPES[:ping]
+    ).save
+
     flash["success"] = "Domain monitoring will begin shortly."
     redirect_to "/domain/#{domain.id}"
   end

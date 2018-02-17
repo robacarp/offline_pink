@@ -11,14 +11,32 @@ module HttpMonitor
     duplicate_monitors = Monitor.where(domain_id: @domain_id, monitor_type: Monitor::VALID_TYPES[:http])
                                 .where(http_path: @http_path)
                                 .where(http_use_ssl: @http_use_ssl)
-                                .where(http_expected_status_code: @http_expected_status_code)
-                                .where(http_expected_content: @http_expected_content)
 
     (add_error :monitor, Monitor::MESSAGES[:duplicate]; return) if duplicate_monitors.any?
   end
 
   def http_full_path
     "#{domain.name}#{http_path}"
+  end
+
+  def https?
+    http_use_ssl
+  end
+
+  def http_protocol
+    proto = "http"
+    proto += "s" if https?
+    "#{proto}://"
+  end
+
+  def http_full_url
+    "#{http_protocol}#{http_full_path}"
+  end
+
+  def search_content?
+    expected_content = @http_expected_content
+    return false if expected_content.nil?
+    ! expected_content.blank?
   end
 
   private def default_status_code

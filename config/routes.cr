@@ -40,9 +40,13 @@ Amber::Server.configure do |app|
     # Monitors
     get "/domain/:domain_id/monitors/new",  MonitorController, :new
     post "/domain/:domain_id/monitors/new", MonitorController, :create
+    get "/domain/:domain_id/monitors", MonitorController, :index
     get "/monitor/:id",              MonitorController, :show
     get "/monitor/:id/delete",       MonitorController, :delete
     delete "/monitor/:id",           MonitorController, :destroy
+
+    # Hosts
+    get "/host/:id/last_results", HostController, :show
 
     # Admin panel
     get "/admin", Admin::HomeController, :show

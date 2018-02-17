@@ -40,7 +40,9 @@ class MonitorController < ApplicationController
   end
 
   def index
-    ""
+    return unless domain = find_domain
+    authorize domain, with: DomainPolicy, for: :show
+    render "index.slang"
   end
 
   def show
@@ -67,13 +69,12 @@ class MonitorController < ApplicationController
     monitor = Monitor.new domain_id: domain.id
     monitor.set_attributes params_for_monitor_type
 
-    p monitor
-
     authorize monitor
 
     if monitor.save
       flash["success"] = "Monitoring will begin shortly."
-      redirect_to_domain domain.id
+      MonitorJob.new(domain: domain).enqueue
+      redirect_to_domain_monitors domain
     else
       flash["danger"] = "Monitor could not be created."
       render "new.slang"
@@ -108,10 +109,14 @@ class MonitorController < ApplicationController
 
     if monitor.destroy
       flash["info"] = "Monitor deleted."
-      redirect_to_domain domain.id
+      redirect_to_domain_monitors domain
     else
       flash["danger"] = "Unable to delete monitor."
       redirect_to_domains
     end
+  end
+
+  private def redirect_to_domain_monitors(domain : Domain)
+    redirect_to "/domain/#{domain.id}/monitors"
   end
 end

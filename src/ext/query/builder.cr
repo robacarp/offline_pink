@@ -103,6 +103,12 @@ class Query::Builder(Model)
     assembler.select.run
   end
 
+  def reject(&block)
+    assembler.select.run.reject do |record|
+      yield record
+    end
+  end
+
   def each(&block)
     assembler.select.tap do |record_set|
       record_set.each do |record|
