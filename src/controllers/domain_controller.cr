@@ -96,7 +96,6 @@ class DomainController < ApplicationController
     domain.is_valid = true
     if domain.save
       flash["info"] = "Domain will be re-checked."
-      # PingJob.new(domain: domain).enqueue
       redirect_to "/domain/#{domain.id}"
     else
       flash["danger"] = "Could not set domain for re-check."
