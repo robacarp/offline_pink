@@ -87,7 +87,7 @@ class Host < Granite::ORM::Base
     {
       last_results_grouped_by_success[true].size,
       last_results_grouped_by_success[false].size,
-      last_result.matching_result_set.size
+      last_result.matching_result_set.size.to_i
     }
   end
 
