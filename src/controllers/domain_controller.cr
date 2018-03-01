@@ -35,14 +35,20 @@ class DomainController < ApplicationController
     domain.user = current_user
     authorize domain
 
-    if domain.valid? && domain.save
-      flash["success"] = "Domain monitoring will begin shortly."
-      PingJob.new(domain: domain).enqueue
-      redirect_to "/domain/#{domain.id}"
-    else
+    unless domain.save
       flash["danger"] = "Domain could not be created."
-      render "new.slang"
+      return render "new.slang"
     end
+
+    Monitor.new(
+      domain_id: domain.id,
+      monitor_type: Monitor::VALID_TYPES[:ping]
+    ).save
+
+    MonitorJob.new(domain: domain).enqueue
+
+    flash["success"] = "Domain monitoring will begin shortly."
+    redirect_to "/domain/#{domain.id}"
   end
 
   def delete
@@ -66,7 +72,6 @@ class DomainController < ApplicationController
 
     unless params["confirm"] == "1"
       flash["info"] = "You must check the confirm box"
-      skip_authorization
       return render "delete.slang"
     end
 
@@ -91,7 +96,6 @@ class DomainController < ApplicationController
     domain.is_valid = true
     if domain.save
       flash["info"] = "Domain will be re-checked."
-      PingJob.new(domain: domain).enqueue
       redirect_to "/domain/#{domain.id}"
     else
       flash["danger"] = "Could not set domain for re-check."

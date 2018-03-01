@@ -28,11 +28,32 @@ a {
   &:hover { color: inherit; }
 }
 
-.pink { color: $bright_pink }
-.green { color: $green }
-.red { color: $dark_red }
+.pink   { color: $bright_pink }
+.green  { color: $green }
+.red    { color: $dark_red }
+.yellow { color: $warm_yellow }
+
+.background-pink   { color: #000; background-color: $bright_pink }
+.background-green  { color: #000; background-color: $green }
+.background-red    { color: #000; background-color: $dark_red }
+.background-yellow { color: #000; background-color: $warm_yellow }
 
 .navbar-brand {
   color: #868686;
 }
 
+.result-table {
+  .row {
+    background-color: rgb(33, 37, 41);
+  }
+
+  .result-type {
+    padding-top: 2em;
+    background-color: transparent;
+  }
+
+  .result-header {
+    padding-top: 1.5em;
+    border-bottom: 1px solid #868686
+  }
+}

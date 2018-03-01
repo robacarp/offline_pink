@@ -22,14 +22,6 @@ class RouteController < ApplicationController
     end
   end
 
-  private def redirect_to_domain(domain_id : Int64?) : Nil
-    if domain_id
-      redirect_to "/domain/#{domain_id}"
-    else
-      redirect_to_domains
-    end
-  end
-
   private def expected_code
     code = params["expected_code"]?
     if code.nil? || code == ""

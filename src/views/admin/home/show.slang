@@ -5,4 +5,4 @@
       ul
         li #{user_count} users on the system.
         li #{domain_count} domains being monitored.
-        li #{route_count} routes being monitored.
+        li #{monitor_count} monitors running.

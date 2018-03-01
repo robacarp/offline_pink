@@ -37,5 +37,11 @@ class ApplicationController < Amber::Controller::Base
     redirect_to "/my/domains"
   end
 
-
+  private def redirect_to_domain(domain_id : Int64?) : Nil
+    if domain_id
+      redirect_to "/domain/#{domain_id}"
+    else
+      redirect_to_domains
+    end
+  end
 end

@@ -1,15 +1,15 @@
-require "granite_orm/adapter/pg"
-
 class Domain < Granite::ORM::Base
   extend Query::BuilderMethods
   adapter pg
 
   field name : String
   field is_valid : Bool
+
   timestamps
 
   belongs_to :user
-  has_many :routes
+  has_many :monitors
+  has_many :hosts
 
   before_destroy :destroy_associations
 
@@ -33,43 +33,35 @@ class Domain < Granite::ORM::Base
     end
   end
 
-  # has_many :ip_addresses, class: IpAddress
-  def ip_addresses : Array(IpAddress)
-    IpAddress.all "WHERE domain_id = ?", id
+  def monitors
+    Monitor.where(domain_id: id)
   end
 
-  # has_many :ping_results, through: :ip_addresses
-  def ping_results : Array(PingResult)
-    query = <<-SQL
-      JOIN ip_addresses ON ip_addresses.id = ping_results.ip_address_id
-      WHERE
-        ip_addresses.domain_id = ?
-    SQL
-
-    PingResult.all query, id
+  def hosts
+    Host.where(domain_id: id)
   end
 
-  def last_result : PingResult?
-    query = <<-SQL
-      JOIN ip_addresses ON ip_addresses.id = ping_results.ip_address_id
-      WHERE
-        ip_addresses.domain_id = ?
-      ORDER BY created_at DESC
-      LIMIT 1
-    SQL
+  @host_list : Array(Host)?
+  def memoized_hosts
+    @host_list ||= hosts.select
+  end
 
-    result_set = PingResult.all query, id
-    if result_set.any?
-      result_set.first
-    end
+  def grouped_monitors
+    monitors.order(monitor_type: :desc, id: :asc)
+            .select
+            .group_by(&.monitor_type)
   end
 
   def up?
-    true
+    ! memoized_hosts.map(&.up?).includes? false
   end
 
-  def checked?
-    ping_results.any?
+  def partial_up?
+    memoized_hosts.map(&.partial_up?).includes? true
+  end
+
+  def down?
+    ! up?
   end
 
   def is_valid?
@@ -81,7 +73,7 @@ class Domain < Granite::ORM::Base
   end
 
   def destroy_associations
-    ip_addresses.map(&.destroy)
-    routes.map(&.destroy)
+    hosts.delete
+    monitors.delete
   end
 end

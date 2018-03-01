@@ -2,11 +2,11 @@ version: 1.0
 shards:
   amber:
     github: robacarp/amber
-    commit: 29314a6525fe8d826b9bd2113a84426dcf76c176
+    commit: aed410e525fe476868365c01a4c60de5a3e8e9ca
 
   amber_router:
     github: amberframework/router
-    version: 0.0.1
+    commit: 5883a23ae9ad780a6d7b2ddb5642997894cff110
 
   amber_spec:
     github: amberframework/amber-spec
@@ -31,6 +31,10 @@ shards:
   email:
     github: arcage/crystal-email
     version: 0.2.5
+
+  garnet_spec:
+    github: amberframework/garnet-spec
+    version: 0.1.1
 
   granite_orm:
     github: amberframework/granite-orm

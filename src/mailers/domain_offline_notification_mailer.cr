@@ -1,13 +1,12 @@
 class DomainOfflineNotificationMailer < ApplicationMailer
-  @ip_address : IpAddress
+  @host : Host
 
   def initialize(
-      @user : User,
-      @domain : Domain,
-      @result : PingResult
+    @user : User,
+    @domain : Domain,
+    @result : PingResult
   )
-
-    @ip_address = @result.ip_address.not_nil!
+    @host = @result.ip_address.not_nil!
 
     to @user.email.not_nil!
     subject "Domain Offline : Offline.pink"

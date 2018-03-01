@@ -6,11 +6,7 @@ class SchedulerJob < Mosquito::PeriodicJob
     return unless u
 
     Domain.find_each("WHERE is_valid = true") do |domain|
-      PingJob.new(domain: domain).enqueue
-
-      domain.routes.each do |route|
-        GetJob.new(route: route).enqueue
-      end
+      MonitorJob.new(domain: domain).enqueue
     end
   end
 end

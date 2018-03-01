@@ -1,72 +1,40 @@
 .row
-  .col-md-6
+  .col-md-6.offset-md-2
     h3 = domain.name
-  .col-md-6.text-right
-    a href="/domain/#{domain.id}/delete" stop monitoring this domain
-
-- if domain.is_invalid?
-  .alert.alert-danger
-    | This domain has been marked as invalid and monitoring has stopped.
+  .col-md-2.text-right
+    a href="/domain/#{domain.id}/delete" stop monitoring
     br
-    | Options:
-    ul
-      li
-        a href="/domain/#{domain.id}/revalidate" Try again
-        | if you think the error was temporary or
-      li
-        a href="/domain/#{domain.id}/delete" Stop monitoring
-        | if the domain is incorrect.
+    a href="/domain/#{domain.id}/monitors" manage monitors
 
-| Checking #{domain.routes.size} routes:
+.row
+  .col-md-8.offset-md-2
+    - if domain.is_invalid?
+      .alert.alert-danger
+        | This domain has been marked as invalid and monitoring has stopped.
+        br
+        | Options:
+        ul
+          li
+            a href="/domain/#{domain.id}/revalidate" Try again
+            | if you think the error was temporary or
+          li
+            a href="/domain/#{domain.id}/delete" Stop monitoring
+            | if the domain is incorrect.
 
-- if domain.routes.any?
-  table.table.table-dark
-    tr
-      th scope="col" Path
-      th scope="col" Status
-      th scope="col" Last Checked
-      th scope="col" Response Time
-    - domain.routes.each do |route|
-      tr
-        th scope="row"
-          a href="/route/#{route.id}" = route.full_path
-        td
-          - if route.last_result.is_up?
-            .green [up]
-          - else
-            - if route.last_result.checked?
-              .red [down]
-            - else
-              .pink [unchecked]
-        td = route.last_result.relative_time_since
-        td
-          = route.last_result.response_time
-          | ms
+    - if domain.hosts.any?
+      h3 Host Summary
 
-a href="/domain/#{domain.id}/routes/new" Create a route
-
-h4 Most recent pings:
-
-- if domain.ip_addresses.any?
-  table.table.table-dark
-    tr
-      th scope="col" Address
-      th scope="col" Status
-      th scope="col" Last Ping
-      th scope="col" Latency
-    - domain.ip_addresses.each do |address|
-      tr
-        th scope="row" == address.address
-        td title="Result##{address.last_result.id}"
-          - if address.last_result.is_up?
-            .green [up]
-          - else
-            - if address.last_result.checked?
-              .red [down]
-            - else
-              .pink [unchecked]
-        td = address.last_result.relative_time_since
-        td
-          = "#{address.last_result.response_time}ms"
-        td
-          a href="/ip_address/#{address.id}/delete" forget
+      table.table.table-dark
+        - domain.hosts.each do |host|
+          tr
+            td = host.address
+            - success, failure, total = host.last_result_summary
+            - if success == total
+              td.green.text-right [OK]
+            - elsif failure == total
+              td.pink.text-right [Offline]
+            - else# failure != total && success != total
+              td.yellow.text-right
+                | [Not Ok] (#{success}/#{total} monitors passing)
+            td
+              a href="/host/#{host.id}/last_results" details
