@@ -2,15 +2,11 @@ version: 1.0
 shards:
   amber:
     github: robacarp/amber
-    commit: aed410e525fe476868365c01a4c60de5a3e8e9ca
+    commit: 19794995fa3c3dc3329c8faf87bc03b4bd3fa290
 
   amber_router:
     github: amberframework/router
-    commit: 5883a23ae9ad780a6d7b2ddb5642997894cff110
-
-  amber_spec:
-    github: amberframework/amber-spec
-    version: 0.1.2
+    version: 0.0.3
 
   callback:
     github: mosop/callback
@@ -19,6 +15,14 @@ shards:
   cli:
     github: amberframework/cli
     version: 0.7.0
+
+  compiled_license:
+    github: elorest/compiled_license
+    version: 0.1.2
+
+  cry:
+    github: elorest/cry
+    version: 0.3.0
 
   db:
     github: crystal-lang/crystal-db
@@ -42,7 +46,11 @@ shards:
 
   icmp:
     github: robacarp/icmp.cr
-    commit: e75950f32daf9148a1a6505157b974dd01ae4fe6
+    version: 0.0.2
+
+  inflector:
+    github: phoffer/inflector.cr
+    version: 0.1.8
 
   jasper_helpers:
     github: amberframework/jasper-helpers
@@ -53,7 +61,7 @@ shards:
     version: 0.4.0
 
   micrate:
-    github: juanedi/micrate
+    github: amberframework/micrate
     version: 0.3.0
 
   mosquito:
@@ -91,10 +99,6 @@ shards:
   slang:
     github: jeromegn/slang
     version: 1.7.1
-
-  spinner:
-    github: askn/spinner
-    version: 0.1.1
 
   sqlite3:
     github: crystal-lang/crystal-sqlite3

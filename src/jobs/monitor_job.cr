@@ -40,13 +40,27 @@ class MonitorJob < Mosquito::QueuedJob
     log "Pinging #{host.address}"
     return unless address = host.address
 
-    statistics = ICMP::Ping.ping(address)
-    log "Ping time: #{statistics[:average_response]}"
+    icmp = ICMP::Ping.new address
+    statistics = icmp.ping timeout: 2 do |thing|
+      # shhhhhh
+    end
 
-    MonitorResult.new(
-      ok: statistics[:success] > 0,
-      ping_response_time: statistics[:average_response]
-    )
+    success = statistics[:success] == 1
+
+    if success
+      log "Ping time: #{statistics[:average_response]}"
+
+      MonitorResult.new(
+        ok: true,
+        ping_response_time: statistics[:average_response]
+      )
+    else
+      log "Ping failure."
+
+      MonitorResult.new(
+        ok: false
+      )
+    end
   end
 
   # Job failed! Raised Errno: connect: Network is down

@@ -22,8 +22,7 @@ dependencies:
   amber:
     # path: ../amber
     github: robacarp/amber
-    branch: amber_router
-    # version: ~> 0.6.4
+    commit: 19794995fa3c3dc3329c8faf87bc03b4bd3fa290
 
   dotenv:
     github: gdotdesign/cr-dotenv
@@ -43,6 +42,7 @@ dependencies:
   icmp:
     # path: ../ping_cr
     github: robacarp/icmp.cr
+    version: ~> 0.0.2
 
   jasper_helpers:
     #    path: ../jasper-helpers
@@ -55,9 +55,3 @@ dependencies:
     github: amberframework/quartz-mailer
     commit: c16fd94
     # path: ../quartz-mailer
-
-development_dependencies:
-  amber_spec:
-    github: amberframework/amber-spec
-
-
