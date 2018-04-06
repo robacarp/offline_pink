@@ -25,6 +25,10 @@ class ApplicationController < Amber::Controller::Base
     @_current_user
   end
 
+  def params_hash
+    params.raw_params.to_h
+  end
+
   private def login_user(user : User)
     session[:user_id] = user.id
   end

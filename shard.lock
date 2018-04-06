@@ -1,8 +1,8 @@
 version: 1.0
 shards:
   amber:
-    github: robacarp/amber
-    commit: 19794995fa3c3dc3329c8faf87bc03b4bd3fa290
+    github: amberframework/amber
+    version: 0.7.2
 
   amber_router:
     github: amberframework/router
@@ -42,7 +42,7 @@ shards:
 
   granite_orm:
     github: amberframework/granite-orm
-    version: 0.8.4
+    version: 0.9.1
 
   icmp:
     github: robacarp/icmp.cr
@@ -54,7 +54,7 @@ shards:
 
   jasper_helpers:
     github: amberframework/jasper-helpers
-    version: 0.1.8
+    version: 0.2.0
 
   kilt:
     github: jeromegn/kilt

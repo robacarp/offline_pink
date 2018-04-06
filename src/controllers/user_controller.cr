@@ -2,7 +2,7 @@ class UserController < ApplicationController
   authorize_with UserPolicy, User
 
   private def user_params
-    params.to_h.select [
+    params_hash.select [
       "email"
     ]
   end

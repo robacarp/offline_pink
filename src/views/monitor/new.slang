@@ -26,7 +26,7 @@
         == label :http_expected_status_code, "Expected HTTP Status Code"
         == text_field name: :http_expected_status_code, value: monitor.http_expected_status_code, placeholder: "200", class: "form-control"
       .form_group
-        == check_box name: :http_use_ssl, checked: monitor.http_use_ssl?
+        == check_box name: :http_use_ssl, checked: monitor.https?
         == label :http_use_ssl, "Use SSL?"
       .form_group
         == submit "Submit", class: "btn"
