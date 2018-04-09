@@ -107,6 +107,17 @@ class MonitorJob < Mosquito::QueuedJob
     end
 
     result
+  rescue err : Errno
+    case err.errno
+    when Errno::ECONNREFUSED
+      log "http connection refused"
+    when Errno::ETIMEDOUT
+      log "http connection timed out"
+    else
+      log "http check failed with errno #{err.errno}"
+    end
+
+    MonitorResult.new(ok: false)
   end
 
   def rescheduleable?
