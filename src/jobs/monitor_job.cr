@@ -77,12 +77,17 @@ class MonitorJob < Mosquito::QueuedJob
     tls_config = OpenSSL::SSL::Context::Client.new
     tls_config.verify_mode = OpenSSL::SSL::VerifyMode::NONE
 
-    start_time = Time.now
-    if monitor.https?
-      response = HTTP::Client.get url, headers, tls: tls_config
+    client = if monitor.https?
+      HTTP::Client.new "#{host.address}", tls: tls_config
     else
-      response = HTTP::Client.get url, headers
+      HTTP::Client.new "#{host.address}"
     end
+
+    client.connect_timeout = 2
+    client.read_timeout = 2
+
+    start_time = Time.now
+    response = client.get "#{monitor.http_path}"
     response_time = Time.now - start_time
 
     log "response code: #{response.status_code}"
