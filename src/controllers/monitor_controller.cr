@@ -13,7 +13,7 @@ class MonitorController < ApplicationController
   end
 
   private def params_for_monitor_type
-    case params["monitor_type"]
+    case params_hash["monitor_type"]
     when Monitor::VALID_TYPES[:ping].to_s
       ping_params
     when Monitor::VALID_TYPES[:http].to_s
@@ -24,18 +24,24 @@ class MonitorController < ApplicationController
   end
 
   private def ping_params
-    params.to_h.select(["monitor_type"])
+    params_hash.select ["monitor_type"]
   end
 
   private def http_params
-    params_hash = params.to_h
+    status_code = params_hash["http_expected_status_code"]?
+    if status_code
+      status_code = status_code.to_i32? || 0
+    else
+      status_code = 0
+    end
+
     params_hash.select([
       "monitor_type",
       "http_path",
       "http_expected_content",
     ]).merge({
-      "http_use_ssl"              => params_hash["http_use_ssl"] == "1",
-      "http_expected_status_code" => params_hash["http_expected_status_code"].to_i32?,
+      "http_use_ssl"              => params["http_use_ssl"] == "1",
+      "http_expected_status_code" => status_code
     })
   end
 

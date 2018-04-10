@@ -6,7 +6,7 @@ authors:
 
 crystal: 0.24.1
 
-license: UNLICENSED
+license: Private
 
 targets:
   offline_pink:
@@ -21,9 +21,8 @@ targets:
 dependencies:
   amber:
     # path: ../amber
-    github: robacarp/amber
-    branch: amber_router
-    # version: ~> 0.6.4
+    github: amberframework/amber
+    version: ~> 0.7.2
 
   dotenv:
     github: gdotdesign/cr-dotenv
@@ -31,6 +30,7 @@ dependencies:
   granite_orm:
     # path: ../granite-orm
     github: amberframework/granite-orm
+    version: ~> 0.9.1
 
   garnet_spec:
     github: amberframework/garnet-spec
@@ -43,10 +43,12 @@ dependencies:
   icmp:
     # path: ../ping_cr
     github: robacarp/icmp.cr
+    version: ~> 0.0.2
 
   jasper_helpers:
     #    path: ../jasper-helpers
     github: amberframework/jasper-helpers
+    version: ~> 0.2.0
 
   pg:
     github: will/crystal-pg
@@ -55,9 +57,3 @@ dependencies:
     github: amberframework/quartz-mailer
     commit: c16fd94
     # path: ../quartz-mailer
-
-development_dependencies:
-  amber_spec:
-    github: amberframework/amber-spec
-
-

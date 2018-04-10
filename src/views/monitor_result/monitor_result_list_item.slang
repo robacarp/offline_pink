@@ -1,8 +1,11 @@
 - if type == "ping"
   .row.result-header title="Result##{result.id}"
-    .col-md-6.text-right Response Time
-    .col-md-3 -
-    .col-md-3 #{result.ping_response_time}ms
+    - if result.ok?
+      .col-md-6.text-right Response Time
+      .col-md-3 -
+      .col-md-3 #{result.ping_response_time}ms
+    - else
+      .col-md-6.text-right.pink No Response
 
 - if type == "http"
   .row.result-header title="Result##{result.id}"

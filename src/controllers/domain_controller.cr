@@ -3,8 +3,7 @@ class DomainController < ApplicationController
   require_logged_in
 
   private def domain_params
-    params_hash = params.to_h
-    params_hash.select([
+    params.raw_params.to_h.select([
       "name"
     ])
   end

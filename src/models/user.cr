@@ -7,6 +7,7 @@ class User < Granite::ORM::Base
 
   adapter pg
 
+  primary id : Int64
   field name : String
   field email : String
   field crypted_password : String
@@ -53,11 +54,11 @@ class User < Granite::ORM::Base
   def password
   end
 
-  def self.guest_user
+  def self.guest_user : self
     new
   end
 
   def admin? : Bool
-    @admin
+    @admin || false
   end
 end

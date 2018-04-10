@@ -40,13 +40,27 @@ class MonitorJob < Mosquito::QueuedJob
     log "Pinging #{host.address}"
     return unless address = host.address
 
-    statistics = ICMP::Ping.ping(address)
-    log "Ping time: #{statistics[:average_response]}"
+    icmp = ICMP::Ping.new address
+    statistics = icmp.ping timeout: 2 do |thing|
+      # shhhhhh
+    end
 
-    MonitorResult.new(
-      ok: statistics[:success] > 0,
-      ping_response_time: statistics[:average_response]
-    )
+    success = statistics[:success] == 1
+
+    if success
+      log "Ping time: #{statistics[:average_response]}"
+
+      MonitorResult.new(
+        ok: true,
+        ping_response_time: statistics[:average_response]
+      )
+    else
+      log "Ping failure."
+
+      MonitorResult.new(
+        ok: false
+      )
+    end
   end
 
   # Job failed! Raised Errno: connect: Network is down
@@ -63,12 +77,17 @@ class MonitorJob < Mosquito::QueuedJob
     tls_config = OpenSSL::SSL::Context::Client.new
     tls_config.verify_mode = OpenSSL::SSL::VerifyMode::NONE
 
-    start_time = Time.now
-    if monitor.https?
-      response = HTTP::Client.get url, headers, tls: tls_config
+    client = if monitor.https?
+      HTTP::Client.new "#{host.address}", tls: tls_config
     else
-      response = HTTP::Client.get url, headers
+      HTTP::Client.new "#{host.address}"
     end
+
+    client.connect_timeout = 2
+    client.read_timeout = 2
+
+    start_time = Time.now
+    response = client.get "#{monitor.http_path}"
     response_time = Time.now - start_time
 
     log "response code: #{response.status_code}"
@@ -88,6 +107,17 @@ class MonitorJob < Mosquito::QueuedJob
     end
 
     result
+  rescue err : Errno
+    case err.errno
+    when Errno::ECONNREFUSED
+      log "http connection refused"
+    when Errno::ETIMEDOUT
+      log "http connection timed out"
+    else
+      log "http check failed with errno #{err.errno}"
+    end
+
+    MonitorResult.new(ok: false)
   end
 
   def rescheduleable?
