@@ -16,11 +16,12 @@ html
 
         .navbar-nav
           a.nav-item.nav-link href="/admin/users" Users
+          a.nav-item.nav-link href="/admin/invites" Invites
 
     .container
       .row
       - flash.each do |key, value|
-        div.alert alert-#{ key }"
+        div.alert(class="alert-#{ key }")
           p = flash[key]
       .row
         .col-md-12.main
