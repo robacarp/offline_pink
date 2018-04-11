@@ -1,9 +1,8 @@
 require "jasper_helpers"
-require "./application_controller/pundit_authorization"
 
 class ApplicationController < Amber::Controller::Base
   include JasperHelpers
-  include PunditAuthorization
+  include PinkAuthorization
 
   LAYOUT = "application.slang"
 

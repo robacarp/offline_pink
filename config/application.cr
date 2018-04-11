@@ -1,5 +1,6 @@
 require "amber"
 require "mosquito"
+require "../src/pink_authorization/all.cr"
 
 require "../src/ext/extensions"
 
@@ -13,6 +14,8 @@ end
 # load the application_ files before those which depend on them
 require "../src/controllers/application_controller"
 require "../src/mailers/application_mailer"
+
+require "../src/policies/application_policy"
 
 require "../src/models/**"
 require "../src/mailers/**"

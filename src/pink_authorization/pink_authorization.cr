@@ -1,4 +1,4 @@
-module PunditAuthorization
+module PinkAuthorization
   macro included
     macro authorize_with(policy_class, protected_class)
       @_authorized = false
@@ -24,14 +24,14 @@ module PunditAuthorization
 
       private def authorize(object) : Nil
         unless object.is_a? \{{ protected_class }}
-          raise "Invalid Authorization"
+          raise AccessDenied.new("Invalid Authorization")
         end
 
         policy = current_user_object_policy object
         result = policy.can_user_act? action_name
 
         unless result
-          raise "Not Authorized. User(#{current_user.id}) cannot perform #{action_name} on #{object.class}##{object.id}"
+          raise AccessDenied.new("Not Authorized. User(#{current_user.id}) cannot perform #{action_name} on #{object.class}##{object.id}")
         end
 
         @_authorized = true
@@ -39,13 +39,13 @@ module PunditAuthorization
 
       private def authorize(object, *, with object_policy : ApplicationPolicy.class, for action : Symbol) : Nil
         unless object.class == object_policy.policy_type
-          raise "Invalid Authorization"
+          raise AccessDenied.new("Invalid Authorization")
         end
 
         policy = object_policy.new current_user, object
 
         unless policy.can_user_act? action
-          raise "Not Authorized"
+          raise AccessDenied.new("Not Authorized")
         end
 
         @_authorized = true
@@ -58,7 +58,7 @@ module PunditAuthorization
       after_action do
         all {
           if ! @_authorization_skipped && ! redirecting && ! @_authorized && ! @_scoped
-            raise "Authorization for action not triggered: #{controller_name}.#{action_name}"
+            raise AccessDenied.new("Authorization for action not triggered: #{controller_name}.#{action_name}")
           end
         }
       end
