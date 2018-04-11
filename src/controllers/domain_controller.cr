@@ -1,6 +1,6 @@
 class DomainController < ApplicationController
   authorize_with DomainPolicy, Domain
-  require_logged_in
+  require_activated_user
 
   private def domain_params
     params.raw_params.to_h.select([

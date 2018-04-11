@@ -9,8 +9,15 @@ h3 Users
       tr
         th scope="col" id
         th scope="col" email
+        th scope="col" roles
       - users.each do |user|
         tr
           th scope="row" = user.id
           td
             a href="/admin/user/#{user.id}" = user.email
+          td
+            |
+            - if user.admin?
+              | admin
+            - if user.activated?
+              | activated

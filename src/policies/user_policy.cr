@@ -1,7 +1,7 @@
 class UserPolicy < ApplicationPolicy
   policy_for User, :new, :create,
-    show: :user_is_self,
-    edit: :user_is_self,
+    show:   :user_is_self,
+    edit:   :user_is_self,
     update: :user_is_self
 
   def user_is_self?

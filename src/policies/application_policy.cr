@@ -3,12 +3,12 @@ class ApplicationPolicy < PinkAuthorization::Policy
     ! current_user.id.nil?
   end
 
-  def activated?
+  def user_is_activated?
     logged_in? && current_user.activated?
   end
 
   def user_is_owner?
-    activated? && object.user_id == current_user.id
+    user_is_activated? && object.user_id == current_user.id
   end
 
   def user_owns_related_domain?

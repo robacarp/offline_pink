@@ -13,6 +13,7 @@ class User < Granite::ORM::Base
   field crypted_password : String
 
   field admin : Bool
+  field activated : Bool
 
   @admin = false
 
@@ -60,5 +61,9 @@ class User < Granite::ORM::Base
 
   def admin? : Bool
     @admin || false
+  end
+
+  def activated? : Bool
+    @activated || false
   end
 end

@@ -1,4 +1,6 @@
-h3 User ##{user.id}
+.row
+  .col-md-8.offset-md-2
+    h3 User ##{user.id}
 
 - if user.admin?
   .alert.alert-warning
@@ -6,6 +8,13 @@ h3 User ##{user.id}
 
 .row
   .col-md-8.offset-md-2
+    h4 Actions
+    ul
+      li
+        - if user.activated?
+          == button_to "Deactivate", deactivate_path(user)
+        - else
+          == button_to "Activate", activate_path(user)
     table.table.table-dark
       tr
         th scope="row" Name
@@ -13,6 +22,15 @@ h3 User ##{user.id}
       tr
         th scope="row" Email
         td= user.email
+      tr
+        th scope="row" Flags
+        td
+          - if user.admin?
+            | admin
+          - if user.activated?
+            | activated
+          - else
+            .pink deactivated
       tr
         th scope="row" Registered
         td

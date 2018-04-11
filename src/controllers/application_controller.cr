@@ -15,6 +15,20 @@ class ApplicationController < Amber::Controller::Base
     !current_user.id.nil?
   end
 
+  def activated_user?
+    logged_in? && current_user.activated?
+  end
+
+  macro require_activated_user
+    before_action do
+      all do
+        unless activated_user?
+          redirect_to "/"
+        end
+      end
+    end
+  end
+
   def current_user : User
     unless @_current_user_loaded
       @_current_user_loaded = true

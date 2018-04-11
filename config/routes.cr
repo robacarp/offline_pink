@@ -53,6 +53,8 @@ Amber::Server.configure do |app|
     get "/admin", Admin::HomeController, :show
     get "/admin/users",    Admin::UserController, :index
     get "/admin/user/:id", Admin::UserController, :show
+    post "/admin/user/:id/activate", Admin::UserController, :activate
+    post "/admin/user/:id/deactivate", Admin::UserController, :deactivate
 
     get "/admin/invites",  Admin::InviteController, :index
     get "/admin/invites/new", Admin::InviteController, :new

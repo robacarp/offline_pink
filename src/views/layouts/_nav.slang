@@ -7,9 +7,10 @@ nav.navbar.navbar-expand-lg.bg-dark
   #navbarSupportedContent.collapse.navbar-collapse
   ul.navbar-nav.mr-auto
     li.nav-item
-    - if logged_in?
+    - if activated_user?
       li.nav-item
         a.nav-link href="/my/domains" Domains
+    - if logged_in?
       li.nav-item
         a.nav-link href="/sessions/destroy" Log out
     - else
