@@ -85,4 +85,6 @@ class PinkAuthorization::Policy
   def delete?; false; end
 
   def new?; logged_in?; end
+
+  def all_access_pass?; true; end
 end

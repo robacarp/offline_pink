@@ -6,6 +6,7 @@ module PinkAuthorization
       response = render_error context
       context.response.status_code = 401
       context.response.print response
+      context.response.close
     end
 
     private def render_error(context)

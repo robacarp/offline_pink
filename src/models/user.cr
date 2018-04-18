@@ -20,6 +20,7 @@ class User < Granite::ORM::Base
   timestamps
 
   has_many :domains
+  belongs_to :invite
 
   def validate : Nil
     messages = {
@@ -57,6 +58,10 @@ class User < Granite::ORM::Base
 
   def self.guest_user : self
     new
+  end
+
+  def guest? : Bool
+    new_record?
   end
 
   def admin? : Bool

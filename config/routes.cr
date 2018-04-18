@@ -1,7 +1,5 @@
 Amber::Server.configure do |app|
   pipeline :web do
-    # Plug is the method to use connect a pipe (middleware)
-    # A plug accepts an instance of HTTP::Handler
     plug Amber::Pipe::Error.new
     plug Amber::Pipe::Logger.new
     plug Amber::Pipe::Session.new
@@ -19,8 +17,8 @@ Amber::Server.configure do |app|
 
   routes :web do
     # Sessions
-    get "/sessions/new",     SessionController, :new
-    post "/sessions/create", SessionController, :create
+    get "/sessions",         SessionController, :new
+    post "/sessions",        SessionController, :create
     get "/sessions/destroy", SessionController, :destroy
 
     # Registration
@@ -28,6 +26,8 @@ Amber::Server.configure do |app|
     post "/me/register",          UserController, :create
     get "/me/edit",               UserController, :edit
     post "/me/edit",              UserController, :update
+    get "/me/activate", User::InvitesController, :edit
+    post "/me/activate", User::InvitesController, :update
 
     # Domains
     get  "/my/domains",           DomainController, :index
@@ -58,9 +58,9 @@ Amber::Server.configure do |app|
 
     get "/admin/invites",  Admin::InviteController, :index
     get "/admin/invites/new", Admin::InviteController, :new
-    get "/admin/invites/:id", Admin::InviteController, :show
+    get "/admin/invite/:id", Admin::InviteController, :show
     post "/admin/invites", Admin::InviteController, :create
-    delete "/admin/invites/:id", Admin::InviteController, :destroy
+    delete "/admin/invite/:id", Admin::InviteController, :destroy
 
     get "/", HomeController, :index
   end

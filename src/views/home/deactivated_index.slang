@@ -4,4 +4,4 @@
       p Offline pink monitoring service is currently by invite only.
       p
         | Have an invite code?
-        a href="" Activate your account now.
+        a href="#{user_activation_path}" Activate your account now.

@@ -28,6 +28,10 @@ module UrlHelpers
     "/me/register?invite=#{invite.code}"
   end
 
+  def user_activation_path
+    "/me/activate"
+  end
+
 
 
 

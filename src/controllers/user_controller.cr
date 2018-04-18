@@ -20,17 +20,35 @@ class UserController < ApplicationController
   def new
     user = User.new
     authorize user
+
+    invite_code = params["invite"]?
+    invite = Invite.where(code: invite_code).first
+
+    if invite
+      session[:invite_code] = invite_code
+    end
+
     render "new.slang"
   end
 
   def create
     user = User.new user_params
+    authorize user
 
     unless params["password"].blank?
       user.hash_password params["password"]
     end
 
-    authorize user
+    if invite = Invite.where(code: session[:invite_code]).first
+      if invite.use!
+        user.invite_id = invite.id
+        user.activated = true
+      else
+        flash["warning"] = "The invite code used is no longer valid."
+      end
+
+      session.delete :invite_code
+    end
 
     if user.valid? && user.save
       UserSignupMailer.new(user).deliver

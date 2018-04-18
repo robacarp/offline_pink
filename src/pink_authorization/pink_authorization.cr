@@ -58,6 +58,7 @@ module PinkAuthorization
       after_action do
         all {
           if ! @_authorization_skipped && ! redirecting && ! @_authorized && ! @_scoped
+            puts "Nobody ever asked if you could #{action_name} in a #{controller_name}"
             raise AccessDenied.new("Authorization for action not triggered: #{controller_name}.#{action_name}")
           end
         }

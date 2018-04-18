@@ -1,4 +1,6 @@
 class Invite < Granite::ORM::Base
+  extend Query::BuilderMethods
+
   adapter pg
   table_name invites
 
@@ -15,5 +17,9 @@ class Invite < Granite::ORM::Base
 
   def invited_user_count
     0
+  end
+
+  def use!
+    true
   end
 end
