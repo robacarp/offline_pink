@@ -7,6 +7,25 @@ class UserController < ApplicationController
     ]
   end
 
+
+
+  def root_path
+    "/"
+  end
+
+  def users_path
+    "/users"
+  end
+
+  def user_path(user : User)
+    "/user/#{user.id}"
+  end
+
+  def invite_needed_path
+    "/me/register/invite_needed"
+  end
+
+
   def show
     if user = User.find params["id"]
       authorize user
@@ -36,7 +55,7 @@ class UserController < ApplicationController
       UserSignupMailer.new(user).deliver
       flash["success"] = "Successfully registered and logged in."
       login_user user
-      redirect_to "/"
+      redirect_to root_path
     else
       flash["danger"] = "Registration unsuccessful, check for errors and retry."
       render "new.slang"
@@ -50,7 +69,7 @@ class UserController < ApplicationController
 
     unless user
       flash["warning"] = "User not found."
-      redirect_to "/users"
+      redirect_to users_path
       return
     end
 
@@ -64,7 +83,7 @@ class UserController < ApplicationController
 
     unless user
       flash["warning"] = "User not found."
-      redirect_to "/users"
+      redirect_to users_path
       return
     end
 
@@ -76,7 +95,7 @@ class UserController < ApplicationController
 
     if user.valid? && user.save
       flash["success"] = "Updated successfully."
-      redirect_to "/users"
+      redirect_to users_path
     else
       flash["danger"] = "Could not update!"
       render "edit.slang"

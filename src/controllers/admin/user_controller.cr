@@ -40,7 +40,7 @@ class Admin::UserController < Admin::Controller
   def activate
     unless user = User.find params["id"]
       flash["warning"] = "User doesn't exist"
-      redirect_to admin_path
+      redirect_to admin_users_path
       return
     end
 
@@ -54,7 +54,7 @@ class Admin::UserController < Admin::Controller
   def deactivate
     unless user = User.find params["id"]
       flash["warning"] = "User doesn't exist"
-      redirect_to admin_path
+      redirect_to admin_users_path
       return
     end
 

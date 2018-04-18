@@ -3,8 +3,28 @@ class Admin::InviteController < Admin::Controller
     params_hash.select ["uses_remaining"]
   end
 
-  private def invites_path
+  def invites_path
     "/admin/invites"
+  end
+
+  def invite_path(invite : Invite, **query_params)
+    query_string = query_params.map do |name, value|
+      "#{name}=#{value}"
+    end.join("&")
+
+    String.build do |path|
+      path << "/admin/invite/"
+      path << invite.id
+
+      if query_string.size > 0
+        path << "?"
+        path << query_string
+      end
+    end
+  end
+
+  def user_invite_path(invite : Invite)
+    "/me/register?invite=#{invite.code}"
   end
 
   def index
