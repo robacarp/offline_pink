@@ -8,7 +8,7 @@ class User::InvitesController < ApplicationController
     redirect_to root_path if current_user.activated?
     authorize current_user
     invite = Invite.new
-    render "edit.slang", folder: "user/invites"
+    render "edit.slang"
   end
 
   def update
@@ -26,12 +26,12 @@ class User::InvitesController < ApplicationController
         return redirect_to root_path
       else
         flash["warning"] = "That invite code is no longer valid."
-        return render "edit.slang", folder: "user/invites"
+        return render "edit.slang"
       end
     else
       invite = Invite.new
       flash["warning"] = "That invite code doesn't exist."
-      return render "edit.slang", folder: "user/invites"
+      return render "edit.slang"
     end
   end
 end
