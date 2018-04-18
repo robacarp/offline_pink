@@ -46,13 +46,12 @@ class UserController < ApplicationController
       else
         flash["warning"] = "The invite code used is no longer valid."
       end
-
-      session.delete :invite_code
     end
 
     if user.valid? && user.save
       UserSignupMailer.new(user).deliver
       flash["success"] = "Successfully registered and logged in."
+      session.delete :invite_code
       login_user user
       redirect_to root_path
     else
