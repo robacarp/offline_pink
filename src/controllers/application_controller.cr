@@ -35,6 +35,7 @@ class ApplicationController < Amber::Controller::Base
     unless @_current_user_loaded
       @_current_user_loaded = true
       @_current_user = User.find(session[:user_id]) || @_current_user
+      session.delete :user_id if @_current_user.guest?
     end
 
     @_current_user
