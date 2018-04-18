@@ -1,6 +1,10 @@
 module UrlHelpers
   def root_path
-    "/"
+    if current_user.guest? || ! current_user.activated?
+      "/"
+    else
+      domains_path
+    end
   end
 
 

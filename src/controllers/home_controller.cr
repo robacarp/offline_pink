@@ -1,5 +1,11 @@
 class HomeController < ApplicationController
   def index
-    render("index.slang")
+    if current_user.guest?
+      render "guest_index.slang"
+    elsif ! current_user.activated?
+      render "deactivated_index.slang"
+    else
+      redirect_to domains_path
+    end
   end
 end
