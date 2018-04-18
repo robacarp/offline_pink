@@ -6,7 +6,7 @@
         - domain.errors.each do |error|
           li = error.to_s
 
-    == form action: "/my/domains/new", method: :post do
+    == form action: new_domain_path, method: :post do
       == csrf_tag
       .form_group
         == text_field name: "name", value: domain.name, placeholder: "offline.pink", class: "form-control"

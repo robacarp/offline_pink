@@ -17,16 +17,16 @@ class SessionController < ApplicationController
     if user && user.check_password params["password"]
       login_user user
       flash["success"] = "Logged in"
-      redirect_to "/"
+      redirect_to root_path
     else
       flash["warning"] = "Email or password invalid"
-      redirect_to "/sessions/new"
+      redirect_to new_session_path
     end
   end
 
   def destroy
     logout
     flash["info"] = "Logged out"
-    redirect_to "/"
+    redirect_to root_path
   end
 end

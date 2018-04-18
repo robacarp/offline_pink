@@ -5,7 +5,7 @@
       | ::
       = monitor.type
   .col-md-6.text-right
-    a href="/monitor/#{monitor.id}/delete" stop this monitor
+    a href="#{delete_monitor_path monitor}" stop this monitor
 
 .row
   .col-md-6.offset-md-3

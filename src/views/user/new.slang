@@ -7,7 +7,7 @@ h1 Register
       - user.errors.each do |error|
         li = error.to_s
 
-    == form action: "/me/register", method: :post do
+    == form action: new_user_path, method: :post do
       == csrf_tag
       div.form-group
         == text_field name: "email", value: user.email, placeholder: "Email", class: "form-control"

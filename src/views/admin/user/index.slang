@@ -14,7 +14,7 @@ h3 Users
         tr
           th scope="row" = user.id
           td
-            a href="/admin/user/#{user.id}" = user.email
+            a href="#{admin_user_path user}" = user.email
           td
             |
             - if user.admin?

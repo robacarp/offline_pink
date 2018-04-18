@@ -1,24 +1,4 @@
 class Admin::UserController < Admin::Controller
-  def admin_path
-    "/admin"
-  end
-
-  def admin_user_path(user : User)
-    "/admin/user/#{user.id}"
-  end
-
-  def admin_users_path
-    "/admin/users"
-  end
-
-  def activate_path(user : User)
-    "/admin/user/#{user.id}/activate"
-  end
-
-  def deactivate_path(user : User)
-    "/admin/user/#{user.id}/deactivate"
-  end
-
   def index
     users = User.where().order(id: :asc).first(20)
     user_count = User.count

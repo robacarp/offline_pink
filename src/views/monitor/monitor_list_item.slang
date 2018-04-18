@@ -5,11 +5,11 @@
 tr class=background
   - if type == "ping"
     td
-      a href="/monitor/#{monitor.id}" ICMP Ping
+      a href="#{monitor_path monitor}" ICMP Ping
 
   - if type == "http"
     td
-      a href="/monitor/#{monitor.id}"
+      a href="#{monitor_path monitor}"
         | GET
         = monitor.http_path
     td
@@ -26,4 +26,4 @@ tr class=background
       | "
 
   td.text-right
-    a href="/monitor/#{monitor.id}/delete" Stop
+    a href="#{delete_monitor_path monitor}" Stop

@@ -3,7 +3,7 @@
     h3
       | Disable monitoring
 
-    == form action: "/monitor/#{monitor.id}", method: :delete do
+    == form action: monitor_path(monitor), method: :delete do
       == csrf_tag
       .form_group
         == check_box name: "confirm", checked: false

@@ -12,9 +12,9 @@
     ul
       li
         - if user.activated?
-          == button_to "Deactivate", deactivate_path(user)
+          == button_to "Deactivate", admin_deactivate_user_path(user)
         - else
-          == button_to "Activate", activate_path(user)
+          == button_to "Activate", admin_activate_user_path(user)
     table.table.table-dark
       tr
         th scope="row" Name

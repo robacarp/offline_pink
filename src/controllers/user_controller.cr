@@ -7,32 +7,13 @@ class UserController < ApplicationController
     ]
   end
 
-
-
-  def root_path
-    "/"
-  end
-
-  def users_path
-    "/users"
-  end
-
-  def user_path(user : User)
-    "/user/#{user.id}"
-  end
-
-  def invite_needed_path
-    "/me/register/invite_needed"
-  end
-
-
   def show
     if user = User.find params["id"]
       authorize user
       render "show.slang"
     else
       flash["warning"] = "User not found."
-      redirect_to "/users"
+      redirect_to users_path
     end
   end
 

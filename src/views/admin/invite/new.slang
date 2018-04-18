@@ -7,7 +7,7 @@
         - invite.errors.each do |error|
           li = error.to_s
 
-    == form action: "/admin/invites", method: :post do
+    == form action: admin_invites_path, method: :post do
       == csrf_tag
       div.form-group
         == label :uses_remaining, "Uses remaining:"

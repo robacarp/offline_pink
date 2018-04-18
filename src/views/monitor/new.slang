@@ -10,7 +10,7 @@
           li = error.to_s
 
 
-    == form action: "/domain/#{domain.id}/monitors/new", method: :post do
+    == form action: "#{new_domain_monitor_path domain}", method: :post do
       == csrf_tag
       .form_group
         == label :monitor_type, "Monitor Type"

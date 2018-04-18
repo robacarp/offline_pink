@@ -5,7 +5,7 @@ class HostController < ApplicationController
   def show
     unless host = Host.find params[:id]
       flash["warning"] = "Host could not be found"
-      redirect_to_domains
+      redirect_to domains_path
       return
     end
 

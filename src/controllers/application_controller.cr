@@ -1,8 +1,10 @@
 require "jasper_helpers"
+require "./application/url_helpers"
 
 class ApplicationController < Amber::Controller::Base
   include JasperHelpers
   include PinkAuthorization
+  include UrlHelpers
 
   LAYOUT = "application.slang"
 
@@ -51,7 +53,7 @@ class ApplicationController < Amber::Controller::Base
   end
 
   private def redirect_to_domains
-    redirect_to "/my/domains"
+    redirect_to domains_path
   end
 
   private def redirect_to_domain(domain_id : Int64?) : Nil
