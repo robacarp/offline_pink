@@ -21,7 +21,7 @@ module UrlHelpers
   end
 
   def new_user_path
-    "/user"
+    "/me/register"
   end
 
   def invited_user_registration_path(invite : Invite)
@@ -80,7 +80,7 @@ module UrlHelpers
 
 
   def new_session_path
-    "/sessions/new"
+    "/sessions"
   end
 
   def destroy_session_path
