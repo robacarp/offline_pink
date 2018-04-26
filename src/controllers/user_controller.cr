@@ -13,30 +13,47 @@ class UserController < ApplicationController
       render "show.slang"
     else
       flash["warning"] = "User not found."
-      redirect_to "/users"
+      redirect_to users_path
     end
   end
 
   def new
     user = User.new
     authorize user
+
+    invite_code = params["invite"]?
+    invite = Invite.where(code: invite_code).first
+
+    if invite
+      session[:invite_code] = invite_code
+    end
+
     render "new.slang"
   end
 
   def create
     user = User.new user_params
+    authorize user
 
     unless params["password"].blank?
       user.hash_password params["password"]
     end
 
-    authorize user
+    if invite = Invite.where(code: session[:invite_code]).first
+      if invite.use!
+        user.invite_id = invite.id
+        user.activated = true
+      else
+        flash["warning"] = "The invite code used is no longer valid."
+      end
+    end
 
     if user.valid? && user.save
       UserSignupMailer.new(user).deliver
       flash["success"] = "Successfully registered and logged in."
+      session.delete :invite_code
       login_user user
-      redirect_to "/"
+      redirect_to root_path
     else
       flash["danger"] = "Registration unsuccessful, check for errors and retry."
       render "new.slang"
@@ -50,7 +67,7 @@ class UserController < ApplicationController
 
     unless user
       flash["warning"] = "User not found."
-      redirect_to "/users"
+      redirect_to users_path
       return
     end
 
@@ -64,7 +81,7 @@ class UserController < ApplicationController
 
     unless user
       flash["warning"] = "User not found."
-      redirect_to "/users"
+      redirect_to users_path
       return
     end
 
@@ -76,7 +93,7 @@ class UserController < ApplicationController
 
     if user.valid? && user.save
       flash["success"] = "Updated successfully."
-      redirect_to "/users"
+      redirect_to users_path
     else
       flash["danger"] = "Could not update!"
       render "edit.slang"

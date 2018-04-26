@@ -1,10 +1,10 @@
 .row
   .col-md-6
     h3
-      a href="/domain/#{domain.id}" = domain.name
+      a href="#{domain_path domain}" = domain.name
       | has #{domain.monitors.count} monitors:
   .col-md-6.text-right
-    a href="/domain/#{domain.id}/monitors/new" Create a new monitor
+    a href="#{new_domain_monitor_path domain}" Create a new monitor
 
 .row
   .col-md-8.offset-md-2
@@ -22,4 +22,4 @@
         h4 This domain isn't currently being monitored!
         p
           | Would you like to
-          a href="/domain/#{domain.id}/monitors/new" create a monitor?
+          a href="#{new_domain_monitor_path domain}" create a monitor?

@@ -4,7 +4,7 @@
       | Disable monitoring of
       = domain.name
 
-    == form action: "/domain/#{domain.id}", method: :delete do
+    == form action: domain_path(domain), method: :delete do
       == csrf_tag
       .form_group
         == check_box name: "confirm", checked: false

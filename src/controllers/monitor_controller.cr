@@ -7,7 +7,7 @@ class MonitorController < ApplicationController
       domain.not_nil!
     else
       flash["warning"] = "Domain could not be found"
-      redirect_to_domains
+      redirect_to domains_path
       nil
     end
   end
@@ -58,7 +58,7 @@ class MonitorController < ApplicationController
       render "show.slang"
     else
       flash["danger"] = "Monitor not found"
-      redirect_to_domains
+      redirect_to domains_path
     end
   end
 
@@ -94,14 +94,14 @@ class MonitorController < ApplicationController
       render "delete.slang"
     else
       flash["danger"] = "Monitor not found"
-      redirect_to_domains
+      redirect_to domains_path
     end
   end
 
   def destroy
     unless monitor = Monitor.find params[:id]
       flash["danger"] = "Monitor not found"
-      redirect_to_domains
+      redirect_to domains_path
       return
     end
 
@@ -119,7 +119,7 @@ class MonitorController < ApplicationController
       redirect_to_domain_monitors domain
     else
       flash["danger"] = "Unable to delete monitor."
-      redirect_to_domains
+      redirect_to domains_path
     end
   end
 

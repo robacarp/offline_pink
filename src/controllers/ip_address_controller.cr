@@ -10,14 +10,14 @@ class IpAddressController < ApplicationController
       render "delete.slang"
     else
       flash["warning"] = "IP address doesnt exist."
-      redirect_to_domains
+      redirect_to domains_path
     end
   end
 
   def destroy
     unless ip_address = IpAddress.find params["id"]
       flash["warning"] = "IP address doesnt exist."
-      redirect_to_domains
+      redirect_to domains_path
       return
     end
 
@@ -33,10 +33,10 @@ class IpAddressController < ApplicationController
 
     if ip_address.destroy
       flash["info"] = "IP address forgotten."
-      redirect_to_domains
+      redirect_to domains_path
     else
       flash["error"] = "Unable to forget IP address."
-      redirect_to_domains
+      redirect_to domains_path
     end
   end
 end

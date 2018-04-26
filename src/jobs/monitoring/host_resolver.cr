@@ -32,6 +32,7 @@ class HostResolver
     end
 
     @hosts += @new_hosts
+  rescue Socket::Error
+    # cleverly do nothing
   end
-
 end

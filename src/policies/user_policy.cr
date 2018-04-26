@@ -1,8 +1,9 @@
 class UserPolicy < ApplicationPolicy
   policy_for User, :new, :create,
-    show: :user_is_self,
-    edit: :user_is_self,
-    update: :user_is_self
+    show:   :user_is_self,
+    edit:   :user_is_self,
+    update: :user_is_self,
+    invite_needed: :all_access_pass
 
   def user_is_self?
     object.id == current_user

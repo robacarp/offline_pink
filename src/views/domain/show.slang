@@ -2,9 +2,9 @@
   .col-md-6.offset-md-2
     h3 = domain.name
   .col-md-2.text-right
-    a href="/domain/#{domain.id}/delete" stop monitoring
+    a href="#{delete_domain_path domain}" stop monitoring
     br
-    a href="/domain/#{domain.id}/monitors" manage monitors
+    a href="#{domain_monitors_path domain}" manage monitors
 
 .row
   .col-md-8.offset-md-2
@@ -15,10 +15,10 @@
         | Options:
         ul
           li
-            a href="/domain/#{domain.id}/revalidate" Try again
+            a href="#{revalidate_domain_path domain}" Try again
             | if you think the error was temporary or
           li
-            a href="/domain/#{domain.id}/delete" Stop monitoring
+            a href="#{delete_domain_path domain}" Stop monitoring
             | if the domain is incorrect.
 
     - if domain.hosts.any?

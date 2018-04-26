@@ -13,12 +13,14 @@ class User < Granite::ORM::Base
   field crypted_password : String
 
   field admin : Bool
+  field activated : Bool
 
   @admin = false
 
   timestamps
 
   has_many :domains
+  belongs_to :invite
 
   def validate : Nil
     messages = {
@@ -58,7 +60,15 @@ class User < Granite::ORM::Base
     new
   end
 
+  def guest? : Bool
+    new_record?
+  end
+
   def admin? : Bool
     @admin || false
+  end
+
+  def activated? : Bool
+    @activated || false
   end
 end

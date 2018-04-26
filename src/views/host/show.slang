@@ -14,7 +14,7 @@
           | [Not Ok]
           | (#{success}/#{total} monitors passing)
   .col-md-2.text-right
-    a href="/domain/#{host.domain_id}" Back to domain
+    a href="#{domain_path host.domain}" Back to domain
 
 .row
   .col-md-8.offset-md-2

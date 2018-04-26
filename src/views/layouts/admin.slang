@@ -11,16 +11,17 @@ html
   body
     .container
       nav.navbar.navbar-expand-md.bg-dark
-        a.navbar-brand href="/"
+        a.navbar-brand href="#{root_path}"
           == %(Offline<span class="pink">.pink</span>)
 
         .navbar-nav
-          a.nav-item.nav-link href="/admin/users" Users
+          a.nav-item.nav-link href="#{admin_users_path}" Users
+          a.nav-item.nav-link href="#{admin_invites_path}" Invites
 
     .container
       .row
       - flash.each do |key, value|
-        div.alert alert-#{ key }"
+        div.alert(class="alert-#{ key }")
           p = flash[key]
       .row
         .col-md-12.main

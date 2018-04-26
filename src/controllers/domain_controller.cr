@@ -1,6 +1,6 @@
 class DomainController < ApplicationController
   authorize_with DomainPolicy, Domain
-  require_logged_in
+  require_activated_user
 
   private def domain_params
     params.raw_params.to_h.select([
@@ -19,7 +19,7 @@ class DomainController < ApplicationController
       render "show.slang"
     else
       flash["warning"] = "Domain doesnt exist."
-      redirect_to_domains
+      redirect_to domains_path
     end
   end
 
@@ -47,7 +47,7 @@ class DomainController < ApplicationController
     MonitorJob.new(domain: domain).enqueue
 
     flash["success"] = "Domain monitoring will begin shortly."
-    redirect_to "/domain/#{domain.id}"
+    redirect_to domain_path domain
   end
 
   def delete
@@ -56,14 +56,14 @@ class DomainController < ApplicationController
       render "delete.slang"
     else
       flash["warning"] = "Domain doesnt exist."
-      redirect_to_domains
+      redirect_to domains_path
     end
   end
 
   def destroy
     unless domain = Domain.find params["id"]
       flash["warning"] = "Domain doesnt exist."
-      redirect_to_domains
+      redirect_to domains_path
       return
     end
 
@@ -76,17 +76,17 @@ class DomainController < ApplicationController
 
     if domain.destroy
       flash["info"] = "Domain deleted."
-      redirect_to_domains
+      redirect_to domains_path
     else
       flash["danger"] = "Unable to delete domain."
-      redirect_to_domains
+      redirect_to domains_path
     end
   end
 
   def revalidate
     unless domain = Domain.find params["id"]
       flash["warning"] = "Domain doesnt exist."
-      redirect_to_domains
+      redirect_to domains_path
       return
     end
 
@@ -95,10 +95,10 @@ class DomainController < ApplicationController
     domain.is_valid = true
     if domain.save
       flash["info"] = "Domain will be re-checked."
-      redirect_to "/domain/#{domain.id}"
+      redirect_to domain_path domain
     else
       flash["danger"] = "Could not set domain for re-check."
-      redirect_to "/domain/#{domain.id}"
+      redirect_to domain_path domain
     end
   end
 end

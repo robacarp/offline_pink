@@ -1,9 +1,10 @@
 require "jasper_helpers"
-require "./application_controller/pundit_authorization"
+require "./application/url_helpers"
 
 class ApplicationController < Amber::Controller::Base
   include JasperHelpers
-  include PunditAuthorization
+  include PinkAuthorization
+  include UrlHelpers
 
   LAYOUT = "application.slang"
 
@@ -16,10 +17,25 @@ class ApplicationController < Amber::Controller::Base
     !current_user.id.nil?
   end
 
+  def activated_user?
+    logged_in? && current_user.activated?
+  end
+
+  macro require_activated_user
+    before_action do
+      all do
+        unless activated_user?
+          redirect_to "/"
+        end
+      end
+    end
+  end
+
   def current_user : User
     unless @_current_user_loaded
       @_current_user_loaded = true
       @_current_user = User.find(session[:user_id]) || @_current_user
+      session.delete :user_id if @_current_user.guest?
     end
 
     @_current_user
@@ -38,7 +54,7 @@ class ApplicationController < Amber::Controller::Base
   end
 
   private def redirect_to_domains
-    redirect_to "/my/domains"
+    redirect_to domains_path
   end
 
   private def redirect_to_domain(domain_id : Int64?) : Nil
