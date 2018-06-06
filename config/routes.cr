@@ -24,10 +24,12 @@ Amber::Server.configure do |app|
     # Registration
     get "/me/register",           UserController, :new
     post "/me/register",          UserController, :create
-    get "/me/edit",               UserController, :edit
-    post "/me/edit",              UserController, :update
     get "/me/activate", User::InvitesController, :edit
     post "/me/activate", User::InvitesController, :update
+
+    # Account
+    get "/my/account",               UserController, :edit
+    post "/my/account",              UserController, :update
 
     # Domains
     get  "/my/domains",           DomainController, :index

@@ -34,6 +34,11 @@ module UrlHelpers
 
 
 
+  def edit_account_path
+    "/my/account"
+  end
+
+
 
 
 
