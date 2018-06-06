@@ -33,6 +33,11 @@ module UrlHelpers
   end
 
 
+  def notification_preferences_path
+    "/my/notifications/preferences"
+  end
+
+
 
   def edit_account_path
     "/my/account"

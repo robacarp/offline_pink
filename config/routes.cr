@@ -31,6 +31,9 @@ Amber::Server.configure do |app|
     get "/my/account",               UserController, :edit
     post "/my/account",              UserController, :update
 
+    # Notification Preferences
+    get "/my/notifications/preferences", User::NotificationPreferencesController, :edit
+
     # Domains
     get  "/my/domains",           DomainController, :index
     get  "/my/domains/new",       DomainController, :new

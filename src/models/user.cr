@@ -13,6 +13,7 @@ class User < Granite::Base
   field crypted_password : String
 
   field features : Int32
+  field pushover_key : String
 
   timestamps
 
@@ -53,6 +54,14 @@ class User < Granite::Base
 
   # for form views
   def password
+  end
+
+  def masked_pushover_key
+    if (key = pushover_key) && key.size > 0
+      "#{"*"*24}#{key[-8..-1]}"
+    else
+      nil
+    end
   end
 
   def self.guest_user : self
