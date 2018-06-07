@@ -1,6 +1,14 @@
 class UserController < ApplicationController
   authorize_with UserPolicy, User
 
+  before_action do
+    only [:edit, :update] do
+      unless logged_in?
+        redirect_to "/"
+      end
+    end
+  end
+
   private def user_params
     params_hash.select [
       "email"
