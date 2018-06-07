@@ -5,6 +5,7 @@ module PinkAuthorization
     rescue ex : AccessDenied
       response = render_error context
       context.response.status_code = 401
+      puts ex.message
       context.response.print response
       context.response.close
     end

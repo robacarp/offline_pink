@@ -61,13 +61,15 @@ class UserController < ApplicationController
   end
 
   def edit
-    user = User.find params["id"]
+    new_password = ""
+    current_password = ""
 
+    user = current_user
     authorize user
 
     unless user
       flash["warning"] = "User not found."
-      redirect_to users_path
+      redirect_to domains_path
       return
     end
 
@@ -75,27 +77,41 @@ class UserController < ApplicationController
   end
 
   def update
-    user = User.find(params["id"])
+    new_password = ""
+    current_password = ""
 
+    user = current_user
     authorize user
 
     unless user
       flash["warning"] = "User not found."
-      redirect_to users_path
+      redirect_to domains_path
       return
     end
 
-    user.set_attributes user_params
+    # A user shouldn't need to provide a password when neither email or password have changed
+    if params["password"].blank? && params["email"] == user.email
+      flash["success"] = "Account updated."
+      redirect_to edit_account_path
+      return
+    end
 
-    if password = params["password"]
-      user.hash_password params["password"]
+    user.email = params["email"]
+
+    unless user.check_password params["current_password"]
+      flash["danger"] = "Invalid password."
+      return render "edit.slang"
+    end
+
+    if (password = params["password"]?) && params["password"].size != 0
+      user.hash_password password
     end
 
     if user.valid? && user.save
-      flash["success"] = "Updated successfully."
-      redirect_to users_path
+      flash["success"] = "Account updated."
+      redirect_to edit_account_path
     else
-      flash["danger"] = "Could not update!"
+      flash["danger"] = "Could not update account!"
       render "edit.slang"
     end
   end

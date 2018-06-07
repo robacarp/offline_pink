@@ -31,7 +31,7 @@ module PinkAuthorization
         result = policy.can_user_act? action_name
 
         unless result
-          raise AccessDenied.new("Not Authorized. User(#{current_user.id}) cannot perform #{action_name} on #{object.class}##{object.id}")
+          raise AccessDenied.new("Not Authorized. User(#{current_user.id}) cannot perform #{action_name} on #{object.class}(#{object.id})")
         end
 
         @_authorized = true
@@ -45,7 +45,7 @@ module PinkAuthorization
         policy = object_policy.new current_user, object
 
         unless policy.can_user_act? action
-          raise AccessDenied.new("Not Authorized")
+          raise AccessDenied.new("Not Authorized. User(#{current_user.id}) cannot perform #{action_name} on #{object.class}(#{object.id})")
         end
 
         @_authorized = true

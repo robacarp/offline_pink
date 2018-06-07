@@ -6,7 +6,7 @@ class UserPolicy < ApplicationPolicy
     invite_needed: :all_access_pass
 
   def user_is_self?
-    object.id == current_user
+    object == current_user
   end
 
   def new?
