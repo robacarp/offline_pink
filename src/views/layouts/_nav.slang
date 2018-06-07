@@ -12,6 +12,8 @@ nav.navbar.navbar-expand-lg.bg-dark
         a.nav-link href="#{domains_path}" Domains
     - if logged_in?
       li.nav-item
+        a.nav-link href="#{edit_account_path}" Account
+      li.nav-item
         a.nav-link href="#{destroy_session_path}" Log out
     - else
       li.nav-item
