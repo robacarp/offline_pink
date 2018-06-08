@@ -1,5 +1,5 @@
 class Invite < Granite::Base
-  extend Query::BuilderMethods
+  extend Granite::Query::BuilderMethods
 
   adapter pg
   table_name invites

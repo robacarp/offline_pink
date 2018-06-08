@@ -1,7 +1,7 @@
 require "./monitor/*"
 
 class Monitor < Granite::Base
-  extend Query::BuilderMethods
+  extend Granite::Query::BuilderMethods
   include HttpMonitor
   include IcmpMonitor
 

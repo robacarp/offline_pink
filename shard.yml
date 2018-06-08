@@ -28,9 +28,9 @@ dependencies:
     github: gdotdesign/cr-dotenv
 
   granite:
-    # path: ../granite-orm
-    github: amberframework/granite
-    version: ~> 0.11.0
+    path: ../../amberframework/granite
+    # github: amberframework/granite
+    # version: ~> 0.11.0
 
   garnet_spec:
     github: amberframework/garnet-spec

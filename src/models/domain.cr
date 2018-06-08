@@ -1,5 +1,5 @@
 class Domain < Granite::Base
-  extend Query::BuilderMethods
+  extend Granite::Query::BuilderMethods
   adapter pg
 
   field name : String
