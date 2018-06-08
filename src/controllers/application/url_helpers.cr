@@ -34,7 +34,7 @@ module UrlHelpers
 
 
   def notification_preferences_path
-    "/my/notifications/preferences"
+    "/my/notification/preferences"
   end
 
 

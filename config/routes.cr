@@ -27,12 +27,13 @@ Amber::Server.configure do |app|
     get "/me/activate", User::InvitesController, :edit
     post "/me/activate", User::InvitesController, :update
 
+    # Notification Preferences
+    get "/my/notification/preferences",  User::NotificationPreferencesController, :edit
+    post "/my/notification/preferences", User::NotificationPreferencesController, :update
+
     # Account
     get "/my/account",               UserController, :edit
     post "/my/account",              UserController, :update
-
-    # Notification Preferences
-    get "/my/notifications/preferences", User::NotificationPreferencesController, :edit
 
     # Domains
     get  "/my/domains",           DomainController, :index
