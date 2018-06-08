@@ -1,7 +1,6 @@
-require "granite_orm/adapter/pg"
 require "crypto/bcrypt/password"
 
-class User < Granite::ORM::Base
+class User < Granite::Base
   extend Query::BuilderMethods
   include RelativeTime
 

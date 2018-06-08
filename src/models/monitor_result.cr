@@ -1,4 +1,4 @@
-class MonitorResult < Granite::ORM::Base
+class MonitorResult < Granite::Base
   extend Query::BuilderMethods
 
   adapter pg

@@ -27,18 +27,18 @@ dependencies:
   dotenv:
     github: gdotdesign/cr-dotenv
 
-  granite_orm:
+  granite:
     # path: ../granite-orm
-    github: amberframework/granite-orm
-    version: ~> 0.9.1
+    github: amberframework/granite
+    version: ~> 0.11.0
 
   garnet_spec:
     github: amberframework/garnet-spec
 
   mosquito:
-    # path: ../mosquito
-    github: robacarp/mosquito
-    version: ~> 0.0.4
+    path: ../mosquito
+    # github: robacarp/mosquito
+    # version: ~> 0.0.4
 
   icmp:
     # path: ../ping_cr

@@ -1,4 +1,4 @@
-class Granite::ORM::Base
+class Granite::Base
   def validate : Nil
   end
 

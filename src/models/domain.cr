@@ -1,4 +1,4 @@
-class Domain < Granite::ORM::Base
+class Domain < Granite::Base
   extend Query::BuilderMethods
   adapter pg
 

@@ -1,4 +1,4 @@
-class Invite < Granite::ORM::Base
+class Invite < Granite::Base
   extend Query::BuilderMethods
 
   adapter pg
