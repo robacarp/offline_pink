@@ -15,7 +15,7 @@ nav.navbar.navbar-expand-lg.bg-dark
         a.nav-link.dropdown-toggle href="#" role="button" data-toggle="dropdown" Settings
         .dropdown-menu
           a.dropdown-item href="#{edit_account_path}" Account
-          a.dropdown-item href="#{notification_preferences_path}" Notifications
+          a.dropdown-item href="#{pushover_notification_settings_path}" Notifications
       li.nav-item
         a.nav-link href="#{destroy_session_path}" Log out
     - else

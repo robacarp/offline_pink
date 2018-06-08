@@ -1,4 +1,30 @@
 module UrlHelpers
+
+  macro method_added(method)
+    {%
+      method_name = method.name.stringify
+      url_method = ""
+
+      if method_name.ends_with? "_path"
+        new_name = method_name[0..-6]
+        url_method = <<-CRYSTAL
+          def #{new_name.id}_url(*args)
+            String.build do |s|
+              base = Amber.url
+              path = #{ method_name.id }(*args).lchop('/')
+              s << base
+              s << '/' if base[-1] != '/'
+              s << path
+            end
+          end
+        CRYSTAL
+      end
+    %}
+
+    {{ url_method.id }}
+  end
+
+
   def root_path
     if current_user.guest? || ! current_user.is? :active
       "/"
@@ -33,8 +59,16 @@ module UrlHelpers
   end
 
 
-  def notification_preferences_path
-    "/my/notification/preferences"
+  def pushover_notification_settings_path
+    "/my/notifications/pushover"
+  end
+
+  def pushover_verification_path
+    "/my/notifications/pushover/verify"
+  end
+
+  def pushover_link_verification_path(user : User, key : PushoverKey)
+    "/notifications/pushover/verify?user_id=#{user.id}&code=#{key.verification_code}"
   end
 
 

@@ -28,8 +28,10 @@ Amber::Server.configure do |app|
     post "/me/activate", User::InvitesController, :update
 
     # Notification Preferences
-    get "/my/notification/preferences",  User::NotificationPreferencesController, :edit
-    post "/my/notification/preferences", User::NotificationPreferencesController, :update
+    get "/my/notifications/pushover",  PushoverNotificationController, :edit
+    post "/my/notifications/pushover", PushoverNotificationController, :update
+    post "/my/notifications/pushover/verify", PushoverNotificationController, :verify
+    get "/notifications/pushover/verify", PushoverNotificationController, :link_verify
 
     # Account
     get "/my/account",               UserController, :edit

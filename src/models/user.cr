@@ -15,6 +15,8 @@ class User < Granite::Base
   field features : Int32
   field pushover_key : String
 
+  @pushover_key : PushoverKey?
+
   timestamps
 
   include Features
@@ -52,16 +54,12 @@ class User < Granite::Base
     end
   end
 
-  # for form views
-  def password
+  def pushover_key : PushoverKey
+    @pushover_key ||= PushoverKey.where(user_id: id).first || PushoverKey.new(user_id: id)
   end
 
-  def masked_pushover_key
-    if (key = pushover_key) && key.size > 0
-      "#{"*"*24}#{key[-8..-1]}"
-    else
-      nil
-    end
+  # for form views
+  def password
   end
 
   def self.guest_user : self
