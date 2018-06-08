@@ -3,6 +3,7 @@ require "mosquito"
 require "../src/pink_authorization/all.cr"
 
 require "../src/ext/extensions"
+require "../src/apis/*"
 
 require "./initializers/*"
 require "./routes"
