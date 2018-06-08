@@ -6,6 +6,7 @@ class Host < Granite::Base
 
   field address : String
   field ip_version : String
+  field status : Int32
   timestamps
 
   belongs_to :domain
@@ -13,6 +14,25 @@ class Host < Granite::Base
 
   before_create :guess_version
   before_destroy :destroy_associations
+
+  enum Status
+    UnChecked = -1
+    Up = 0
+    Down = 1
+  end
+
+  def state : Status
+    if s = @status
+      Status.new s
+    else
+      Status.new -1
+    end
+  end
+
+  def state=(s : Status)
+    @status = s.value
+  end
+
 
   def v4?
     version == "ipv4"

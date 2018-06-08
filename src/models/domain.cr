@@ -4,6 +4,7 @@ class Domain < Granite::Base
 
   field name : String
   field is_valid : Bool
+  field status : Int32
 
   timestamps
 
@@ -12,6 +13,13 @@ class Domain < Granite::Base
   has_many :hosts
 
   before_destroy :destroy_associations
+
+  enum Status
+    UnChecked = -1
+    Up = 0
+    PartiallyDown = 1
+    Down = 2
+  end
 
   @is_valid = true
 
@@ -31,6 +39,18 @@ class Domain < Granite::Base
     if new_record?
       (add_error :name, messages[:duplicate];  return) if Domain.where(user_id: @user_id, name: @name).any?
     end
+  end
+
+  def state : Status
+    if s = @status
+      Status.new s
+    else
+      Status.new -1
+    end
+  end
+
+  def state=(s : Status)
+    @status = s.value
   end
 
   def monitors

@@ -10,8 +10,12 @@ class MonitorJob < Mosquito::QueuedJob
     resolve_info resolver
     log_missing_hosts resolver
 
-    results = resolver.hosts.map do |host|
-      domain.monitors.map do |monitor|
+    hosts = resolver.hosts
+
+    results = hosts.map do |host|
+      old_host_status = host.status
+
+      host_results = domain.monitors.map do |monitor|
         result = case monitor.monitor_type
         when Monitor::VALID_TYPES[:ping]
           check_ping host, monitor
@@ -21,16 +25,37 @@ class MonitorJob < Mosquito::QueuedJob
 
         next if result.nil?
 
-        result.domain_id = monitor.domain_id
-        result.host_id = host.id
-        result.monitor_id = monitor.id
-        result.monitor_type = monitor.monitor_type
-        result.run_start_time = start_time
-        result
-      end
-    end.compact
+        result.tap do |r|
+          r.domain_id      = monitor.domain_id
+          r.host_id        = host.id
+          r.monitor_id     = monitor.id
+          r.monitor_type   = monitor.monitor_type
+          r.run_start_time = start_time
+          r.save
+        end
+      end.compact
 
-    results.flatten.compact.map &.save
+      if host_results.all?(&.ok?)
+        host.state = Host::Status::Up
+      else
+        host.state = Host::Status::Down
+      end
+
+      host.save
+
+      host_results
+    end
+
+    host_statuses = hosts.map(&.state).uniq
+
+    log "Hosts are #{host_statuses}"
+
+    domain.state = Domain::Status::PartiallyDown
+    domain.state = Domain::Status::Up   unless host_statuses.includes? Host::Status::Down
+    domain.state = Domain::Status::Down unless host_statuses.includes? Host::Status::Up
+    domain.save
+
+    log "Domain is #{domain.state}"
 
   ensure
     log "Finished monitor for Domain##{present_domain.id} #{present_domain.name}"
