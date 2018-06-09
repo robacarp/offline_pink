@@ -36,9 +36,8 @@ dependencies:
     github: amberframework/garnet-spec
 
   mosquito:
-    path: ../mosquito
-    # github: robacarp/mosquito
-    # version: ~> 0.0.4
+    github: robacarp/mosquito
+    version: ~> 0.1.1
 
   icmp:
     # path: ../ping_cr
