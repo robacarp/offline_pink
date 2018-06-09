@@ -6,14 +6,19 @@ class MonitorJob < Mosquito::QueuedJob
   def perform
     log "Starting monitor for Domain##{present_domain.id} #{present_domain.name}"
     start_time = Time.now
+    old_domain_state = present_domain.state
     resolver = HostResolver.lookup_hosts present_domain
     resolve_info resolver
     log_missing_hosts resolver
 
     hosts = resolver.hosts
+    resolver.missing_hosts.map do |host|
+      host.state = Host::Status::Down
+      host.save
+    end
 
-    results = hosts.map do |host|
-      old_host_status = host.status
+    hosts.map do |host|
+      host.state = Host::Status::Down
 
       host_results = domain.monitors.map do |monitor|
         result = case monitor.monitor_type
@@ -35,18 +40,11 @@ class MonitorJob < Mosquito::QueuedJob
         end
       end.compact
 
-      if host_results.all?(&.ok?)
-        host.state = Host::Status::Up
-      else
-        host.state = Host::Status::Down
-      end
-
+      host.state = Host::Status::Up if host_results.all?(&.ok?)
       host.save
-
-      host_results
     end
 
-    host_statuses = hosts.map(&.state).uniq
+    host_statuses = domain.hosts.map(&.state).uniq
 
     log "Hosts are #{host_statuses}"
 
@@ -56,6 +54,10 @@ class MonitorJob < Mosquito::QueuedJob
     domain.save
 
     log "Domain is #{domain.state}"
+
+    if domain.state != old_domain_state
+      NotificationJob.new(domain: domain).enqueue
+    end
 
   ensure
     log "Finished monitor for Domain##{present_domain.id} #{present_domain.name}"
