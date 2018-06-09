@@ -1,7 +1,5 @@
-require "granite_orm/adapter/pg"
-
-class Host < Granite::ORM::Base
-  extend Query::BuilderMethods
+class Host < Granite::Base
+  extend Granite::Query::BuilderMethods
 
   adapter pg
   table_name :hosts

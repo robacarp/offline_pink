@@ -27,18 +27,17 @@ dependencies:
   dotenv:
     github: gdotdesign/cr-dotenv
 
-  granite_orm:
-    # path: ../granite-orm
-    github: amberframework/granite-orm
-    version: ~> 0.9.1
+  granite:
+    path: ../../amberframework/granite
+    # github: amberframework/granite
+    # version: ~> 0.11.0
 
   garnet_spec:
     github: amberframework/garnet-spec
 
   mosquito:
-    # path: ../mosquito
     github: robacarp/mosquito
-    version: ~> 0.0.4
+    version: ~> 0.1.1
 
   icmp:
     # path: ../ping_cr
@@ -55,5 +54,5 @@ dependencies:
 
   quartz_mailer:
     github: amberframework/quartz-mailer
-    commit: c16fd94
+    version: ~> 0.5.1
     # path: ../quartz-mailer

@@ -18,11 +18,7 @@ shards:
 
   compiled_license:
     github: elorest/compiled_license
-    version: 0.1.2
-
-  cry:
-    github: elorest/cry
-    version: 0.3.0
+    version: 0.1.3
 
   db:
     github: crystal-lang/crystal-db
@@ -40,13 +36,13 @@ shards:
     github: amberframework/garnet-spec
     version: 0.1.1
 
-  granite_orm:
-    github: amberframework/granite-orm
-    version: 0.9.1
+  granite:
+    path: ../../amberframework/granite
+    version: 0.11.0
 
   icmp:
     github: robacarp/icmp.cr
-    version: 0.0.2
+    version: 0.0.3
 
   inflector:
     github: phoffer/inflector.cr
@@ -62,11 +58,11 @@ shards:
 
   micrate:
     github: amberframework/micrate
-    version: 0.3.0
+    version: 0.3.1
 
   mosquito:
     github: robacarp/mosquito
-    version: 0.0.4
+    version: 0.1.1
 
   mysql:
     github: crystal-lang/crystal-mysql
@@ -82,7 +78,7 @@ shards:
 
   quartz_mailer:
     github: amberframework/quartz-mailer
-    commit: c16fd9459a904799ff616e5336cb8d1244fe1ef0
+    version: 0.5.1
 
   redis:
     github: stefanwille/crystal-redis
