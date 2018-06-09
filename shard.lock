@@ -78,7 +78,7 @@ shards:
 
   quartz_mailer:
     github: amberframework/quartz-mailer
-    commit: c16fd9459a904799ff616e5336cb8d1244fe1ef0
+    version: 0.5.1
 
   redis:
     github: stefanwille/crystal-redis
