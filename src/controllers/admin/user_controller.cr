@@ -2,7 +2,6 @@ class Admin::UserController < Admin::Controller
   def index
     users = User.where().order(id: :asc).first(20)
     user_count = User.count
-    admin_count = User.where(admin: true).count
     render "index.slang"
   end
 
@@ -24,7 +23,8 @@ class Admin::UserController < Admin::Controller
       return
     end
 
-    user.activated = true
+    user.enable! :active
+
     if user.save
       flash["success"] = "User activated."
       redirect_to admin_user_path(user)
@@ -38,7 +38,8 @@ class Admin::UserController < Admin::Controller
       return
     end
 
-    user.activated = false
+    user.disable! :active
+
     if user.save
       flash["success"] = "User deactivated."
       redirect_to admin_user_path(user)

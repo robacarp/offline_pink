@@ -50,7 +50,7 @@ class UserController < ApplicationController
     if invite = Invite.where(code: session[:invite_code]).first
       if invite.use!
         user.invite_id = invite.id
-        user.activated = true
+        user.enable! :active
       else
         flash["warning"] = "The invite code used is no longer valid."
       end

@@ -4,7 +4,7 @@ class ApplicationPolicy < PinkAuthorization::Policy
   end
 
   def user_is_activated?
-    logged_in? && current_user.activated?
+    logged_in? && current_user.is? :active
   end
 
   def user_is_owner?

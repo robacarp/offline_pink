@@ -18,7 +18,7 @@ class ApplicationController < Amber::Controller::Base
   end
 
   def activated_user?
-    logged_in? && current_user.activated?
+    logged_in? && current_user.is? :active
   end
 
   macro require_activated_user

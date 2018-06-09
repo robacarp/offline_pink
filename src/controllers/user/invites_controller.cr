@@ -5,7 +5,7 @@ class User::InvitesController < ApplicationController
   # to add an invite to their account to activate it
 
   def edit
-    redirect_to root_path if current_user.activated?
+    redirect_to root_path if current_user.is? :active
     authorize current_user
     invite = Invite.new
     render "edit.slang"
@@ -18,7 +18,7 @@ class User::InvitesController < ApplicationController
     if invite = Invite.where(code: params["invite_code"]).first
       if invite.use!
         user.invite_id = invite.id
-        user.activated = true
+        user.enable! :active
         user.save
 
         flash["success"] = "Success! Thanks for adding your invite code."

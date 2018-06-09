@@ -1,7 +1,6 @@
 h3 Users
 
 | There are #{user_count} users registered.
-| #{admin_count} are marked as admin.
 
 .row
   .col-md-8.offset-md-2
@@ -17,7 +16,7 @@ h3 Users
             a href="#{admin_user_path user}" = user.email
           td
             |
-            - if user.admin?
+            - if user.is? :admin
               | admin
-            - if user.activated?
+            - if user.is? :active
               | activated

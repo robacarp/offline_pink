@@ -2,7 +2,7 @@
   .col-md-8.offset-md-2
     h3 User ##{user.id}
 
-- if user.admin?
+- if user.is? :admin
   .alert.alert-warning
     | This user is marked as an admin.
 
@@ -11,7 +11,7 @@
     h4 Actions
     ul
       li
-        - if user.activated?
+        - if user.is? :active
           == button_to "Deactivate", admin_deactivate_user_path(user)
         - else
           == button_to "Activate", admin_activate_user_path(user)
@@ -25,9 +25,9 @@
       tr
         th scope="row" Flags
         td
-          - if user.admin?
+          - if user.is? :admin
             | admin
-          - if user.activated?
+          - if user.is? :active
             | activated
           - else
             .pink deactivated
