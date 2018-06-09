@@ -1,4 +1,5 @@
 require "crypto/bcrypt/password"
+require "./user/*"
 
 class User < Granite::Base
   extend Granite::Query::BuilderMethods
@@ -11,12 +12,11 @@ class User < Granite::Base
   field email : String
   field crypted_password : String
 
-  field admin : Bool
-  field activated : Bool
-
-  @admin = false
+  field features : Int32
 
   timestamps
+
+  include Features
 
   has_many :domains
   belongs_to :invite
@@ -61,13 +61,5 @@ class User < Granite::Base
 
   def guest? : Bool
     new_record?
-  end
-
-  def admin? : Bool
-    @admin || false
-  end
-
-  def activated? : Bool
-    @activated || false
   end
 end

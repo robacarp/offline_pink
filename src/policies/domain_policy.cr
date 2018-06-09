@@ -1,6 +1,6 @@
 class DomainPolicy < ApplicationPolicy
   policy_for Domain,
-    new:        :activated,
+    new:        :user_is_activated,
     create:     :user_is_owner,
     show:       :user_is_owner,
     delete:     :user_is_owner,

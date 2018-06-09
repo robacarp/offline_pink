@@ -1,6 +1,6 @@
 module UrlHelpers
   def root_path
-    if current_user.guest? || ! current_user.activated?
+    if current_user.guest? || ! current_user.is? :active
       "/"
     else
       domains_path
