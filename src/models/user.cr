@@ -13,7 +13,6 @@ class User < Granite::Base
   field crypted_password : String
 
   field features : Int32
-  field pushover_key : String
 
   @pushover_key : PushoverKey?
 

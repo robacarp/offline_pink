@@ -52,25 +52,26 @@ class PushoverNotificationController < ApplicationController
       return redirect_to pushover_notification_settings_path
     end
 
-    # success, limits, status, body = Pushover.new(key_string).send(
-    #   title: "Offline.pink Verification",
-    #   message: "Your verification code is #{key.verification_code}.",
-    #   link: {
-    #     "Verify your pushover configuration now.",
-    #     pushover_link_verification_url(current_user, key)
-    #   }
-    # )
+    success = NotificationHandler
+      .to(current_user)
+      .reason(:verification)
+      .title("Offline.pink Verification")
+      .message("Your verification code is #{key.verification_code}.")
+      .link(
+        "Verify your pushover configuration now.",
+        pushover_link_verification_url(current_user, key)
+      )
+      .send_pushover(validate_key: false)
 
     key.verification_sent!
 
-    if true#success
+    if success
       flash["success"] = "A message was sent."
     else
       flash["warning"] = "A message was attempted, but an error was received. Check your pushover key."
-      # logger.warn body
     end
 
-    render "edit.slang"
+    redirect_to pushover_notification_settings_path
   end
 
   def link_verify

@@ -19,7 +19,7 @@ class Pushover
     HTTP::Headers { "Content-Type" => "application/json" }
   end
 
-  def send(title : String, message : String, link : Tuple(String, String)?, priority = 0)
+  def send(title : String, message : String, link : Tuple(String, String)? = nil, priority = 0)
     message_body = JSON.build do |j|
       j.object do
         j.field "token", self.class.settings.app_key
