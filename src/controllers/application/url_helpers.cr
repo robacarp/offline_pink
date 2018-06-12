@@ -174,12 +174,8 @@ module UrlHelpers
     "/admin"
   end
 
-  def admin_activate_user_path(user : User)
-    "/admin/user/#{user.id}/activate"
-  end
-
-  def admin_deactivate_user_path(user : User)
-    "/admin/user/#{user.id}/deactivate"
+  def admin_user_features_path(user : User)
+    "/admin/user/#{user.id}/features"
   end
 
 end

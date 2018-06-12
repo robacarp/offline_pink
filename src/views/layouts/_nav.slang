@@ -15,7 +15,8 @@ nav.navbar.navbar-expand-lg.bg-dark
         a.nav-link.dropdown-toggle href="#" role="button" data-toggle="dropdown" Settings
         .dropdown-menu
           a.dropdown-item href="#{edit_account_path}" Account
-          a.dropdown-item href="#{pushover_notification_settings_path}" Notifications
+          - if current_user.can? :use_pushover
+            a.dropdown-item href="#{pushover_notification_settings_path}" Pushover
       li.nav-item
         a.nav-link href="#{destroy_session_path}" Log out
     - else

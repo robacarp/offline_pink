@@ -4,8 +4,16 @@ class PushoverNotificationController < ApplicationController
   # require_activated_user
   before_action do
     all do
-      # skip authenticating user for link verify
+      # if you're logged in, and you can't use pushover, redirect out
+      if current_user
+        redirect_to "/" unless current_user.can? :use_pushover
+        next
+      end
+
+      # skip authenticating the user for link verify
       next if action_name == :link_verify
+
+      # all other actions are authenticated normally
       redirect_to "/" unless activated_user?
     end
   end
