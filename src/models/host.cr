@@ -6,7 +6,7 @@ class Host < Granite::Base
 
   field address : String
   field ip_version : String
-  field status : Int32
+  field status_code : Int32
   timestamps
 
   belongs_to :domain
@@ -21,16 +21,16 @@ class Host < Granite::Base
     Down = 1
   end
 
-  def state : Status
-    if s = @status
+  def status : Status
+    if s = @status_code
       Status.new s
     else
       Status.new -1
     end
   end
 
-  def state=(s : Status)
-    @status = s.value
+  def status=(s : Status)
+    @status_code = s.value
   end
 
 

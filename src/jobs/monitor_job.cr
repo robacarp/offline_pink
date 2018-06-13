@@ -6,19 +6,19 @@ class MonitorJob < Mosquito::QueuedJob
   def perform
     log "Starting monitor for Domain##{present_domain.id} #{present_domain.name}"
     start_time = Time.now
-    old_domain_state = present_domain.state
+    old_domain_status = present_domain.status
     resolver = HostResolver.lookup_hosts present_domain
     resolve_info resolver
     log_missing_hosts resolver
 
     hosts = resolver.hosts
-    resolver.missing_hosts.map do |host|
-      host.state = Host::Status::Down
+    resolver.missing_hosts.each do |host|
+      host.status = Host::Status::Down
       host.save
     end
 
     hosts.map do |host|
-      host.state = Host::Status::Down
+      host.status = Host::Status::Down
 
       host_results = domain.monitors.map do |monitor|
         result = case monitor.monitor_type
@@ -40,23 +40,28 @@ class MonitorJob < Mosquito::QueuedJob
         end
       end.compact
 
-      host.state = Host::Status::Up if host_results.all?(&.ok?)
+      host.status = Host::Status::Up if host_results.all?(&.ok?)
       host.save
     end
 
-    host_statuses = domain.hosts.map(&.state).uniq
+    host_statuses = domain.hosts.map(&.status).uniq
 
     log "Hosts are #{host_statuses}"
 
-    domain.state = Domain::Status::PartiallyDown
-    domain.state = Domain::Status::Up   unless host_statuses.includes? Host::Status::Down
-    domain.state = Domain::Status::Down unless host_statuses.includes? Host::Status::Up
+    domain.status = Domain::Status::PartiallyDown
+    domain.status = Domain::Status::Up   unless host_statuses.includes? Host::Status::Down
+    domain.status = Domain::Status::Down unless host_statuses.includes? Host::Status::Up
     domain.save
 
-    log "Domain is #{domain.state}"
+    log "Domain is #{domain.status}"
 
-    if domain.state != old_domain_state
-      NotificationJob.new(domain: domain).enqueue
+    if domain.status != old_domain_status
+      NotificationHandler
+        .to(domain.user)
+        .reason(:downtime)
+        .message(
+          *DomainStateChangedMessenger.message_for(domain, was: old_domain_status)
+        ).send
     end
 
   ensure

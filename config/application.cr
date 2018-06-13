@@ -6,7 +6,6 @@ require "../src/ext/extensions"
 require "../src/apis/*"
 
 require "./initializers/*"
-require "./routes"
 
 Amber::Server.configure do |settings|
   settings.database_url = ENV["DATABASE_URL"] if ENV["DATABASE_URL"]?
@@ -21,6 +20,7 @@ require "../src/policies/application_policy"
 require "../src/models/**"
 require "../src/mailers/**"
 require "../src/handlers/**"
+require "../src/messengers/**"
 
 require "../src/policies/**"
 require "../src/controllers/**"

@@ -2,12 +2,10 @@
   .col-md-8.offset-md-2
     h3 User ##{user.id}
 
-- if user.is? :admin
-  .alert.alert-warning
-    | This user is marked as an admin.
+    - if user.is? :admin
+      .alert.alert-warning
+        | This user is marked as an admin.
 
-.row
-  .col-md-8.offset-md-2
     table.table.table-dark
       tr
         th scope="row" Name
