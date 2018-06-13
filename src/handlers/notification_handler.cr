@@ -37,10 +37,6 @@ class NotificationHandler
     end
   end
 
-  def send
-    send_pushover
-  end
-
   def validate_notification_components
     unless @user
       raise "No user provided for notification"
@@ -59,6 +55,14 @@ class NotificationHandler
     end
   end
 
+  def send
+    if send_pushover
+      puts "Pushover message sent"
+    else
+      puts "Pushover message could not send"
+    end
+  end
+
   def send_pushover(*, validate_key = true) : Bool
     validate_notification_components
 
@@ -73,7 +77,6 @@ class NotificationHandler
     return false unless title = @title
     return false unless message = @message
 
-    # TODO why aren't reason and vendor persisting to the database
     log.save
 
     success, _, _, body = Pushover.new(key).send(

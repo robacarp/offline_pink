@@ -11,7 +11,8 @@ class SentNotification < Granite::Base
 
 
   enum Reason
-    Verification = 1
+    Undefined
+    Verification
     Downtime
   end
 
@@ -20,11 +21,15 @@ class SentNotification < Granite::Base
   end
 
   def reason : Reason
-    Reason.parse self.reason_code
+    if code = @reason_code
+      Reason.new code
+    else
+      Reason::Undefined
+    end
   end
 
   def reason=(r : Symbol) : Reason
-    reason = reasonify r
+    self.reason = reasonify r
   end
 
   def reason=(r : Reason) : Reason
@@ -36,8 +41,9 @@ class SentNotification < Granite::Base
 
 
   enum Vendor
-    Pushover = 1
-    Slack = 2
+    Undefined
+    Pushover
+    Slack
   end
 
   def vendorify(v : Symbol) : Vendor
@@ -45,11 +51,15 @@ class SentNotification < Granite::Base
   end
 
   def vendor : Vendor
-    Vendor.parse self.vendor_code
+    if code = @vendor_code
+      Vendor.new code
+    else
+      Vendor::Undefined
+    end
   end
 
   def vendor=(v : Symbol) : Vendor
-    vendor = vendorify v
+    self.vendor = vendorify v
   end
 
   def vendor=(v : Vendor) : Vendor

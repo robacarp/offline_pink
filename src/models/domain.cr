@@ -45,7 +45,7 @@ class Domain < Granite::Base
     if s = @status_code
       Status.new s
     else
-      Status.new -1
+      Status::UnChecked
     end
   end
 

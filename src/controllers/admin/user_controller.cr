@@ -25,7 +25,7 @@ class Admin::UserController < Admin::Controller
 
     user.set_features params.fetch_all "feature"
 
-    if user.id == current_user.id && ! user.can? :admin
+    if user.id == current_user.id && ! user.is? :admin
       flash["info"] = "You cannot remove the Admin feature from yourself."
       user.enable :admin
     end
