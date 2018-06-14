@@ -14,13 +14,6 @@ class Domain < Granite::Base
 
   before_destroy :destroy_associations
 
-  enum Status
-    UnChecked = -1
-    Up = 0
-    PartiallyDown = 1
-    Down = 2
-  end
-
   @is_valid = true
 
   def validate : Nil
@@ -39,6 +32,13 @@ class Domain < Granite::Base
     if new_record?
       (add_error :name, messages[:duplicate];  return) if Domain.where(user_id: @user_id, name: @name).any?
     end
+  end
+
+  enum Status
+    UnChecked = -1
+    Up = 0
+    PartiallyDown = 1
+    Down = 2
   end
 
   def status : Status

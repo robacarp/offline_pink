@@ -1,5 +1,4 @@
 module UrlHelpers
-
   macro method_added(method)
     {%
       method_name = method.name.stringify
@@ -9,13 +8,7 @@ module UrlHelpers
         new_name = method_name[0..-6]
         url_method = <<-CRYSTAL
           def #{new_name.id}_url(*args)
-            String.build do |s|
-              base = Amber.url
-              path = #{ method_name.id }(*args).lchop('/')
-              s << base
-              s << '/' if base[-1] != '/'
-              s << path
-            end
+            File.join Amber.url, #{ method_name.id }(*args)
           end
         CRYSTAL
       end
@@ -23,7 +16,6 @@ module UrlHelpers
 
     {{ url_method.id }}
   end
-
 
   def root_path
     if current_user.guest? || ! current_user.is? :active
