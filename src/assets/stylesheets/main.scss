@@ -28,15 +28,33 @@ a {
   &:hover { color: inherit; }
 }
 
+hr {
+  border: 1px solid $font-color;
+}
+
 .pink   { color: $bright_pink }
 .green  { color: $green }
 .red    { color: $dark_red }
 .yellow { color: $warm_yellow }
 
+.alert {
+  p {
+    margin-bottom: 0;
+  }
+
+  &.alert-info a {
+    color: #0291ff;
+  }
+}
+
 .background-pink   { color: #000; background-color: $bright_pink }
 .background-green  { color: #000; background-color: $green }
 .background-red    { color: #000; background-color: $dark_red }
 .background-yellow { color: #000; background-color: $warm_yellow }
+
+.navbar {
+  margin-bottom: 1em;
+}
 
 .navbar-brand {
   color: #868686;
@@ -56,4 +74,8 @@ a {
     padding-top: 1.5em;
     border-bottom: 1px solid #868686
   }
+}
+
+#vspacer {
+  min-height: 900px;
 }
