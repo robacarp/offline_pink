@@ -37,6 +37,7 @@
           | utility.
 
         == form action: new_domain_monitor_path(domain), method: :post do
+          == csrf_tag
           == hidden_field name: :monitor_type, value: "ping"
           == submit "Add ICMP Ping monitor", class: "btn"
 
@@ -47,7 +48,7 @@
           a href="https://en.wikipedia.org/wiki/CURL" curl
           | utility.
 
-        == form action: "#{new_domain_monitor_path domain}", method: :post do
+        == form action: new_domain_monitor_path(domain), method: :post do
           == csrf_tag
           == hidden_field name: :monitor_type, value: "http"
           .form_group
@@ -63,4 +64,4 @@
             == check_box name: :http_use_ssl, checked: monitor.https?
             == label :http_use_ssl, "Use SSL?"
           .form_group
-            == submit "Submit", class: "btn"
+            == submit "Add HTTP GET Monitor", class: "btn"
