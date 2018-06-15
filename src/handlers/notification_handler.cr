@@ -56,11 +56,20 @@ class NotificationHandler
   end
 
   def send
-    if send_pushover
+    if can_send_pushover && send_pushover
       puts "Pushover message sent"
     else
       puts "Pushover message could not send"
     end
+  end
+
+  def can_send_pushover : Bool
+    return false unless @user.can? :use_pushover
+    return false unless pushover_key = @user.pushover_key
+    return false unless pushover_key.verified?
+    return false unless key = pushover_key.key
+    return false unless key.size == 30
+    true
   end
 
   def send_pushover(*, validate_key = true) : Bool

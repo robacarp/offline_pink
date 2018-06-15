@@ -28,7 +28,7 @@ class PushoverNotificationController < ApplicationController
     key = current_user.pushover_key
     authorize key
 
-    if (new_key = params["pushover_key"]?) && ! new_key.includes?('*')
+    if (new_key = params_hash["pushover_key"]?) && ! new_key.includes?('*')
       key.key = new_key
       key.unverify!
     else
@@ -83,7 +83,7 @@ class PushoverNotificationController < ApplicationController
   end
 
   def link_verify
-    user = User.find params["user_id"]
+    user = User.find params_hash["user_id"]?
 
     unless user
       flash["warning"] = "Cannot verify pushover credentials, no active user found."
@@ -93,7 +93,7 @@ class PushoverNotificationController < ApplicationController
     pushover_key = user.pushover_key
     authorize pushover_key, user: user
 
-    if pushover_key.verify! params["code"]
+    if pushover_key.verify! params_hash["code"]
       flash["success"] = "Your pushover key has been verified."
     else
       flash["danger"] = "Your pushover key verification could not be completed."
