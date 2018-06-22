@@ -12,7 +12,7 @@ jobs:
       - restore_cache:
           keys:
             - i-{{ checksum "shard.lock" }}
-      - run: crystal deps
+      - run: shards install
       - run: crystal spec
       - run: shards build offline_pink worker
       - save_cache:
