@@ -4,7 +4,7 @@ version: 0.1.0
 authors:
   - Amber <amberframework.org>
 
-crystal: 0.24.1
+crystal: 0.25.0
 
 license: Private
 
@@ -22,22 +22,22 @@ dependencies:
   amber:
     # path: ../amber
     github: amberframework/amber
-    version: ~> 0.7.2
+    version: ~> 0.8.0
 
   dotenv:
     github: gdotdesign/cr-dotenv
 
   granite:
-    path: ../../amberframework/granite
-    # github: amberframework/granite
-    # version: ~> 0.11.0
+    github: amberframework/granite
+    version: ~> 0.12.1
 
   garnet_spec:
     github: amberframework/garnet-spec
 
   mosquito:
+    # path: ../mosquito
     github: robacarp/mosquito
-    version: ~> 0.1.1
+    version: ~> 0.2.0
 
   icmp:
     # path: ../ping_cr
