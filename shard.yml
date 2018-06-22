@@ -31,6 +31,11 @@ dependencies:
     github: amberframework/granite
     version: ~> 0.12.1
 
+  migrate:
+    path: ../../vladfaust/migrate.cr
+    # github: vladfaust/migrate.cr
+    # version: ~> 0.2.1
+
   garnet_spec:
     github: amberframework/garnet-spec
 

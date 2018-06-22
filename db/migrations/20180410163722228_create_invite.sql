@@ -1,4 +1,4 @@
--- +micrate Up
+-- +migrate Up
 CREATE TABLE invites (
   id BIGSERIAL PRIMARY KEY,
   code VARCHAR,
@@ -8,5 +8,5 @@ CREATE TABLE invites (
 );
 
 
--- +micrate Down
+-- +migrate Down
 DROP TABLE IF EXISTS invites;

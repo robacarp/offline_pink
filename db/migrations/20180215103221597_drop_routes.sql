@@ -1,8 +1,8 @@
--- +micrate Up
+-- +migrate Up
 DROP TABLE routes;
 -- SQL in section 'Up' is executed when this migration is applied
 
--- +micrate Down
+-- +migrate Down
 CREATE TABLE routes(
   id BIGSERIAL PRIMARY KEY,
   domain_id BIGINT NOT NULL,

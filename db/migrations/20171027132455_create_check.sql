@@ -1,4 +1,4 @@
--- +micrate Up
+-- +migrate Up
 CREATE TABLE checks (
   id BIGSERIAL PRIMARY KEY,
   user_id BIGINT,
@@ -12,5 +12,5 @@ CREATE TABLE checks (
 
 CREATE INDEX user_id_idx ON checks (user_id);
 
--- +micrate Down
+-- +migrate Down
 DROP TABLE IF EXISTS checks;

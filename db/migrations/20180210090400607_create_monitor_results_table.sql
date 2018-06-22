@@ -1,4 +1,4 @@
--- +micrate Up
+-- +migrate Up
 CREATE TABLE monitor_results(
   id BIGSERIAL PRIMARY KEY,
   host_id BIGINT NOT NULL,
@@ -41,6 +41,6 @@ CREATE INDEX monitor_results_host_id_idx ON monitor_results (host_id);
 
 -- SQL in section 'Up' is executed when this migration is applied
 
--- +micrate Down
+-- +migrate Down
 DROP TABLE monitor_results;
 -- SQL section 'Down' is executed when this migration is rolled back

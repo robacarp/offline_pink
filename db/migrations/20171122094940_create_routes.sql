@@ -1,4 +1,4 @@
--- +micrate Up
+-- +migrate Up
 CREATE TABLE routes(
   id BIGSERIAL PRIMARY KEY,
   domain_id BIGINT NOT NULL,
@@ -14,6 +14,6 @@ CREATE INDEX routes_domain_id_idx ON routes (domain_id);
 
 -- SQL in section 'Up' is executed when this migration is applied
 
--- +micrate Down
+-- +migrate Down
 DROP TABLE routes;
 -- SQL section 'Down' is executed when this migration is rolled back

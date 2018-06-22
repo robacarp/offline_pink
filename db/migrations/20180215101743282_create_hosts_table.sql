@@ -1,4 +1,4 @@
--- +micrate Up
+-- +migrate Up
 CREATE TABLE hosts(
   id BIGSERIAL PRIMARY KEY,
   domain_id BIGINT NOT NULL,
@@ -12,6 +12,6 @@ CREATE INDEX hosts_domain_id_idx ON hosts (domain_id);
 CREATE INDEX hosts_address_idx ON hosts (address);
 -- SQL in section 'Up' is executed when this migration is applied
 
--- +micrate Down
+-- +migrate Down
 DROP TABLE hosts;
 -- SQL section 'Down' is executed when this migration is rolled back

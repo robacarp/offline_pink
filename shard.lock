@@ -68,6 +68,10 @@ shards:
     github: amberframework/micrate
     version: 0.3.1
 
+  migrate:
+    path: ../../vladfaust/migrate.cr
+    version: 0.2.0
+
   mosquito:
     github: robacarp/mosquito
     version: 0.2.0
@@ -119,4 +123,8 @@ shards:
   teeplate:
     github: mosop/teeplate
     version: 0.6.1
+
+  time_format:
+    github: vladfaust/time_format.cr
+    version: 0.1.1
 
