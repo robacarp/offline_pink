@@ -1,6 +1,9 @@
-require "spec"
+require "envy"
+Envy.load "test.env" do
+  { raise_exception: true }
+end
 
-ENV["AMBER_ENV"] = "test"
+require "spec"
 
 require "amber"
 require "../config/*"
@@ -14,9 +17,12 @@ Micrate::Cli.run_up
 
 Spec.before_each do
   Domain.clear
+  Host.clear
+  Invite.clear
   Monitor.clear
   MonitorResult.clear
-  Host.clear
+  PushoverKey.clear
+  SentNotification.clear
   User.clear
 end
 

@@ -56,3 +56,7 @@ dependencies:
     github: amberframework/quartz-mailer
     version: ~> 0.5.1
     # path: ../quartz-mailer
+
+development_dependencies:
+  envy:
+    github: petoem/envy

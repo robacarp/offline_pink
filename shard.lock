@@ -32,6 +32,10 @@ shards:
     github: arcage/crystal-email
     version: 0.2.5
 
+  envy:
+    github: petoem/envy
+    version: 0.2.0
+
   garnet_spec:
     github: amberframework/garnet-spec
     version: 0.2.1
