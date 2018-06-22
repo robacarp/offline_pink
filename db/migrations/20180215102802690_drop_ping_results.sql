@@ -10,7 +10,8 @@ CREATE TABLE ping_results (
   response_time REAL,
   check_id BIGINT,
   created_at TIMESTAMP,
-  updated_at TIMESTAMP
+  updated_at TIMESTAMP,
+  ip_address_id BIGINT default null not null
 );
 CREATE INDEX ping_results_check_id_idx ON ping_results (check_id);
 -- SQL section 'Down' is executed when this migration is rolled back

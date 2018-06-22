@@ -9,6 +9,7 @@ CREATE TABLE checks (
   get_request BOOL default false,
   host VARCHAR,
   url VARCHAR,
+  uri VARCHAR default null,
   created_at TIMESTAMP,
   updated_at TIMESTAMP
 );
