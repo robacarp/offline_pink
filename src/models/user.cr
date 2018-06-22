@@ -14,6 +14,8 @@ class User < Granite::Base
 
   field features : Int32
 
+  @pushover_key : PushoverKey?
+
   timestamps
 
   include Features
@@ -49,6 +51,10 @@ class User < Granite::Base
     if hash = @crypted_password
       Crypto::Bcrypt::Password.new(hash) == password_guess
     end
+  end
+
+  def pushover_key : PushoverKey
+    @pushover_key ||= PushoverKey.where(user_id: id).first || PushoverKey.new(user_id: id)
   end
 
   # for form views

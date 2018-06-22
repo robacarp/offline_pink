@@ -15,8 +15,4 @@ h3 Users
           td
             a href="#{admin_user_path user}" = user.email
           td
-            |
-            - if user.is? :admin
-              | admin
-            - if user.is? :active
-              | activated
+            = user.enabled_features.to_a.join ", "

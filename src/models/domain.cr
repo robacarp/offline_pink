@@ -4,6 +4,7 @@ class Domain < Granite::Base
 
   field name : String
   field is_valid : Bool
+  field status_code : Int32
 
   timestamps
 
@@ -33,12 +34,35 @@ class Domain < Granite::Base
     end
   end
 
+  enum Status
+    UnChecked = -1
+    Up = 0
+    PartiallyDown = 1
+    Down = 2
+  end
+
+  def status : Status
+    if s = @status_code
+      Status.new s
+    else
+      Status::UnChecked
+    end
+  end
+
+  def status=(s : Status)
+    @status_code = s.value
+  end
+
   def monitors
     Monitor.where(domain_id: id)
   end
 
   def hosts
     Host.where(domain_id: id)
+  end
+
+  def monitor_results
+    MonitorResult.where(domain_id: id)
   end
 
   @host_list : Array(Host)?
@@ -75,5 +99,6 @@ class Domain < Granite::Base
   def destroy_associations
     hosts.delete
     monitors.delete
+    monitor_results.delete
   end
 end

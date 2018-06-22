@@ -16,33 +16,26 @@ class Admin::UserController < Admin::Controller
     render "show.slang"
   end
 
-  def activate
+  def features
     unless user = User.find params["id"]
       flash["warning"] = "User doesn't exist"
       redirect_to admin_users_path
       return
     end
 
-    user.enable! :active
+    user.set_features params.fetch_all "feature"
+
+    if user.id == current_user.id && ! user.is? :admin
+      flash["info"] = "You cannot remove the Admin feature from yourself."
+      user.enable :admin
+    end
 
     if user.save
-      flash["success"] = "User activated."
-      redirect_to admin_user_path(user)
-    end
-  end
-
-  def deactivate
-    unless user = User.find params["id"]
-      flash["warning"] = "User doesn't exist"
-      redirect_to admin_users_path
-      return
+      flash["success"] = "User features updated."
+    else
+      flash["danger"] = "User features didn't update."
     end
 
-    user.disable! :active
-
-    if user.save
-      flash["success"] = "User deactivated."
-      redirect_to admin_user_path(user)
-    end
+    redirect_to admin_user_path(user)
   end
 end

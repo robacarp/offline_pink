@@ -22,7 +22,7 @@ module PinkAuthorization
         \{{ policy_class }}::Scope.new(current_user).resolve
       end
 
-      private def authorize(object) : Nil
+      private def authorize(object, user : User = current_user) : Nil
         unless object.is_a? \{{ protected_class }}
           raise AccessDenied.new("Invalid Authorization")
         end
@@ -37,12 +37,12 @@ module PinkAuthorization
         @_authorized = true
       end
 
-      private def authorize(object, *, with object_policy : ApplicationPolicy.class, for action : Symbol) : Nil
+      private def authorize(object, *, with object_policy : ApplicationPolicy.class, for action : Symbol, user : User = current_user) : Nil
         unless object.class == object_policy.policy_type
           raise AccessDenied.new("Invalid Authorization")
         end
 
-        policy = object_policy.new current_user, object
+        policy = object_policy.new user, object
 
         unless policy.can_user_act? action
           raise AccessDenied.new("Not Authorized. User(#{current_user.id}) cannot perform #{action_name} on #{object.class}(#{object.id})")
@@ -58,7 +58,6 @@ module PinkAuthorization
       after_action do
         all {
           if ! @_authorization_skipped && ! redirecting && ! @_authorized && ! @_scoped
-            puts "Nobody ever asked if you could #{action_name} in a #{controller_name}"
             raise AccessDenied.new("Authorization for action not triggered: #{controller_name}.#{action_name}")
           end
         }

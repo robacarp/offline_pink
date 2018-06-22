@@ -6,12 +6,21 @@ class MonitorJob < Mosquito::QueuedJob
   def perform
     log "Starting monitor for Domain##{present_domain.id} #{present_domain.name}"
     start_time = Time.now
+    old_domain_status = present_domain.status
     resolver = HostResolver.lookup_hosts present_domain
     resolve_info resolver
     log_missing_hosts resolver
 
-    results = resolver.hosts.map do |host|
-      domain.monitors.map do |monitor|
+    hosts = resolver.hosts
+    resolver.missing_hosts.each do |host|
+      host.status = Host::Status::Down
+      host.save
+    end
+
+    hosts.map do |host|
+      host.status = Host::Status::Down
+
+      host_results = domain.monitors.map do |monitor|
         result = case monitor.monitor_type
         when Monitor::VALID_TYPES[:ping]
           check_ping host, monitor
@@ -21,16 +30,39 @@ class MonitorJob < Mosquito::QueuedJob
 
         next if result.nil?
 
-        result.domain_id = monitor.domain_id
-        result.host_id = host.id
-        result.monitor_id = monitor.id
-        result.monitor_type = monitor.monitor_type
-        result.run_start_time = start_time
-        result
-      end
-    end.compact
+        result.tap do |r|
+          r.domain_id      = monitor.domain_id
+          r.host_id        = host.id
+          r.monitor_id     = monitor.id
+          r.monitor_type   = monitor.monitor_type
+          r.run_start_time = start_time
+          r.save
+        end
+      end.compact
 
-    results.flatten.compact.map &.save
+      host.status = Host::Status::Up if host_results.all?(&.ok?)
+      host.save
+    end
+
+    host_statuses = domain.hosts.map(&.status).uniq
+
+    log "Hosts are #{host_statuses}"
+
+    domain.status = Domain::Status::PartiallyDown
+    domain.status = Domain::Status::Up   unless host_statuses.includes? Host::Status::Down
+    domain.status = Domain::Status::Down unless host_statuses.includes? Host::Status::Up
+    domain.save
+
+    log "Domain is #{domain.status}"
+
+    if domain.status != old_domain_status
+      NotificationHandler
+        .to(domain.user)
+        .reason(:downtime)
+        .message(
+          *DomainStateChangedMessenger.message_for(domain, was: old_domain_status)
+        ).send
+    end
 
   ensure
     log "Finished monitor for Domain##{present_domain.id} #{present_domain.name}"

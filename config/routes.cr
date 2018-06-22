@@ -27,6 +27,12 @@ Amber::Server.configure do |app|
     get "/me/activate", User::InvitesController, :edit
     post "/me/activate", User::InvitesController, :update
 
+    # Notification Preferences
+    get "/my/notifications/pushover",  PushoverNotificationController, :edit
+    post "/my/notifications/pushover", PushoverNotificationController, :update
+    post "/my/notifications/pushover/verify", PushoverNotificationController, :verify
+    get "/notifications/pushover/verify", PushoverNotificationController, :link_verify
+
     # Account
     get "/my/account",               UserController, :edit
     post "/my/account",              UserController, :update
@@ -55,8 +61,7 @@ Amber::Server.configure do |app|
     get "/admin", Admin::HomeController, :show
     get "/admin/users",    Admin::UserController, :index
     get "/admin/user/:id", Admin::UserController, :show
-    post "/admin/user/:id/activate", Admin::UserController, :activate
-    post "/admin/user/:id/deactivate", Admin::UserController, :deactivate
+    post "/admin/user/:id/features", Admin::UserController, :features
 
     get "/admin/invites",  Admin::InviteController, :index
     get "/admin/invites/new", Admin::InviteController, :new

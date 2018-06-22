@@ -1,4 +1,22 @@
 module UrlHelpers
+  macro method_added(method)
+    {%
+      method_name = method.name.stringify
+      url_method = ""
+
+      if method_name.ends_with? "_path"
+        new_name = method_name[0..-6]
+        url_method = <<-CRYSTAL
+          def #{new_name.id}_url(*args)
+            File.join Amber.url, #{ method_name.id }(*args)
+          end
+        CRYSTAL
+      end
+    %}
+
+    {{ url_method.id }}
+  end
+
   def root_path
     if current_user.guest? || ! current_user.is? :active
       "/"
@@ -30,6 +48,19 @@ module UrlHelpers
 
   def user_activation_path
     "/me/activate"
+  end
+
+
+  def pushover_notification_settings_path
+    "/my/notifications/pushover"
+  end
+
+  def pushover_verification_path
+    "/my/notifications/pushover/verify"
+  end
+
+  def pushover_link_verification_path(user : User, key : PushoverKey)
+    "/notifications/pushover/verify?user_id=#{user.id}&code=#{key.verification_code}"
   end
 
 
@@ -135,12 +166,8 @@ module UrlHelpers
     "/admin"
   end
 
-  def admin_activate_user_path(user : User)
-    "/admin/user/#{user.id}/activate"
-  end
-
-  def admin_deactivate_user_path(user : User)
-    "/admin/user/#{user.id}/deactivate"
+  def admin_user_features_path(user : User)
+    "/admin/user/#{user.id}/features"
   end
 
 end
