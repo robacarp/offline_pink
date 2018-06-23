@@ -1,5 +1,5 @@
 module Generate
-  def self.domain(**attributes)
+  def domain(**attributes)
     fields = {
       name: "test#{counter(:domain)}.example.com",
       is_valid: true,
@@ -9,7 +9,11 @@ module Generate
     Domain.new(**fields)
   end
 
-  def self.domain!(**a)
+  def domain!(**a)
     domain(**a).tap &.save
+  end
+
+  def domain_with_hosts
+    d = domain
   end
 end

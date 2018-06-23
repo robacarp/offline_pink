@@ -1,5 +1,5 @@
 module Generate
-  def self.pushover_key(**attributes)
+  def pushover_key(**attributes)
     fields = {
       key: "0000abadidea",
       user_id: user!
@@ -8,7 +8,7 @@ module Generate
     PushoverKey.new(**fields)
   end
 
-  def self.pushover_key!(**a)
+  def pushover_key!(**a)
     pushover_key(**a).tap &.save
   end
 end

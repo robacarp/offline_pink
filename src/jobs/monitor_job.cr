@@ -1,5 +1,10 @@
 require "icmp"
 
+# 2018-06-22T15:45:46.615942586Z app[worker.1]: I, [2018-06-22 15:45:46 +00:00 #5]  INFO -- : [MonitorJob-mosquito:task:1529682339526:749] Pinging 2604:a880:400:d0::1552:8001
+# 2018-06-22T15:45:46.616823264Z app[worker.1]: I, [2018-06-22 15:45:46 +00:00 #5]  INFO -- : [MonitorJob-mosquito:task:1529682339526:749] Finished monitor for Domain#15 robacarp.io
+# 2018-06-22T15:45:46.616871963Z app[worker.1]: I, [2018-06-22 15:45:46 +00:00 #5]  INFO -- : [MonitorJob-mosquito:task:1529682339526:749] Job failed! Raised Errno: failed to create socket:: Permission denied
+# 2018-06-22T15:45:46.628618016Z app[worker.1]: I, [2018-06-22 15:45:46 +00:00 #5]  INFO -- : [MonitorJob-mosquito:task:1529682339526:749] /usr/share/crystal/src/socket.cr:0:5 in 'initialize'
+
 class MonitorJob < Mosquito::QueuedJob
   params(domain : Domain | Nil)
 

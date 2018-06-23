@@ -24,10 +24,6 @@ shards:
     github: crystal-lang/crystal-db
     version: 0.5.0
 
-  dotenv:
-    github: gdotdesign/cr-dotenv
-    version: 0.1.0
-
   email:
     github: arcage/crystal-email
     version: 0.2.5
@@ -66,11 +62,15 @@ shards:
 
   micrate:
     github: amberframework/micrate
-    version: 0.3.1
+    version: 0.3.3
 
   migrate:
-    path: ../../vladfaust/migrate.cr
-    version: 0.2.0
+    github: vladfaust/migrate.cr
+    version: 0.2.2
+
+  minitest:
+    github: ysbaddaden/minitest.cr
+    version: 0.4.0
 
   mosquito:
     github: robacarp/mosquito

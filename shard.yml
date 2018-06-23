@@ -18,34 +18,19 @@ targets:
   amber:
     main: lib/amber/src/amber/cli.cr
 
+  db:
+    main: src/db.cr
+
 dependencies:
   amber:
-    # path: ../amber
     github: amberframework/amber
     version: ~> 0.8.0
-
-  dotenv:
-    github: gdotdesign/cr-dotenv
 
   granite:
     github: amberframework/granite
     version: ~> 0.12.1
 
-  migrate:
-    path: ../../vladfaust/migrate.cr
-    # github: vladfaust/migrate.cr
-    # version: ~> 0.2.1
-
-  garnet_spec:
-    github: amberframework/garnet-spec
-
-  mosquito:
-    # path: ../mosquito
-    github: robacarp/mosquito
-    version: ~> 0.2.0
-
   icmp:
-    # path: ../ping_cr
     github: robacarp/icmp.cr
     version: ~> 0.0.2
 
@@ -54,14 +39,29 @@ dependencies:
     github: amberframework/jasper-helpers
     version: ~> 0.2.0
 
+  minitest:
+    github: ysbaddaden/minitest.cr
+    version: ~> 0.4.0
+
+  migrate:
+    github: vladfaust/migrate.cr
+    version: ~> 0.2.2
+
+  mosquito:
+    github: robacarp/mosquito
+    version: ~> 0.2.0
+
   pg:
     github: will/crystal-pg
 
   quartz_mailer:
     github: amberframework/quartz-mailer
     version: ~> 0.5.1
-    # path: ../quartz-mailer
 
 development_dependencies:
   envy:
     github: petoem/envy
+
+  garnet_spec:
+    github: amberframework/garnet-spec
+    version: ~> 0.2.1

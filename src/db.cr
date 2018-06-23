@@ -51,3 +51,13 @@ class MigrationRunner
     puts "There are pending migrations." if pending?
   end
 end
+
+# migrator.current_version  # => 0
+# migrator.next_version     # => 1
+# migrator.previous_version # => nil
+# migrator.up
+# migrator.down
+# migrator.to(10)
+# migrator.redo
+# migrator.reset
+# migrator.to_latest

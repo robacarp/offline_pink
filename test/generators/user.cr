@@ -1,5 +1,5 @@
 module Generate
-  def self.user(**attributes)
+  def user(**attributes)
     fields = {
       email: "test_user#{counter(:user)}@example.com",
       password: "12345"
@@ -12,7 +12,7 @@ module Generate
     end
   end
 
-  def self.user!(**attributes)
+  def user!(**attributes)
     user(**attributes).tap &.save
   end
 end

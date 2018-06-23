@@ -1,5 +1,5 @@
 module Generate
-  def self.invite(**attributes)
+  def invite(**attributes)
     fields = {
       uses_remaining: 1_i64
     }.merge(attributes)
@@ -7,7 +7,7 @@ module Generate
     Invite.new(**fields)
   end
 
-  def self.invite!(**a)
+  def invite!(**a)
     invite(**a).tap &.save
   end
 end
