@@ -25,7 +25,7 @@ module Generate
     http_monitor(**a).tap &.save
   end
 
-  def ping_monitor(**attributes)
+  def icmp_monitor(**attributes)
     fields = monitor_fields
       .merge(attributes)
       .merge({
@@ -35,7 +35,7 @@ module Generate
     Monitor.new(**fields)
   end
 
-  def ping_monitor!(**a)
-    ping_monitor(**a).tap &.save
+  def icmp_monitor!(**a)
+    icmp_monitor(**a).tap &.save
   end
 end

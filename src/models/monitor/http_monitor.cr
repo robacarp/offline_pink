@@ -5,7 +5,7 @@ module HttpMonitor
     clean_expected_content
 
     # status code shoud be a number 100-550
-    (add_error :http_expected_status_code, Monitor::MESSAGES[:invalid_code]; return) if @http_expected_status_code.try { |c| ! (100 <= c < 550) }
+    (add_error :base, Monitor::MESSAGES[:invalid_code]; return) if @http_expected_status_code.try { |c| ! (100 <= c <= 550) }
     (add_error :http_path, Monitor::MESSAGES[:blank]; return) unless @http_path && ! @http_path.try(&.blank?)
 
     duplicate_monitors = Monitor.where(domain_id: @domain_id, monitor_type: Monitor::VALID_TYPES[:http])

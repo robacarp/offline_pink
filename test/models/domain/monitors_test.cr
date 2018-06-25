@@ -16,8 +16,8 @@ describe "Domain#monitors" do
   it "grouped monitors groups by type" do
     domain = Generate.domain!
 
-    ping_monitors = [
-      Generate.ping_monitor! domain_id: domain.id
+    icmp_monitors = [
+      Generate.icmp_monitor! domain_id: domain.id
     ].map(&.id!).sort
 
     http_monitors = Array(Monitor).new(3) do
@@ -25,7 +25,7 @@ describe "Domain#monitors" do
     end.map(&.id!).sort
 
     assert_equal(
-      ping_monitors,
+      icmp_monitors,
       domain.grouped_monitors["ping"].map(&.id!).sort
     )
 
