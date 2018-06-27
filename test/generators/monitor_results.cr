@@ -33,12 +33,12 @@ module Generate
   end
 
   def ping_monitor_result(**attributes)
-    monitor_result_fields
+    fields = monitor_result_fields
      .merge({
        ping_response_time: 212.19_f32
      })
      .merge(attributes)
-     .merge({monitor_type: "http"})
+     .merge({monitor_type: "ping"})
 
     MonitorResult.new(**fields)
   end
