@@ -9,7 +9,7 @@ describe "IcmpMonitor" do
     refute monitor1.new_record?
 
     monitor2 = Generate.icmp_monitor domain_id: domain.id
-    assert monitor2.save
-    refute monitor2.errors.any?
+    refute monitor2.save
+    assert monitor2.errors.map(&.to_s).includes? duplicate_error_message
   end
 end
