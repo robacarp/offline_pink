@@ -1,6 +1,8 @@
 require "../../test_helper"
 
 describe "Host status" do
+  let(:run_time) { Time.now }
+
   it "up? is true when no results are failing" do
     host = Generate.host!
     successful_results = Array(MonitorResult).new(3) do |_|
