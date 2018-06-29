@@ -47,7 +47,7 @@ describe "PushoverKey verification" do
     assert pushover_key.verified
 
     pushover_key.verified = false
-    assert pushover_key.verify! "#{code}1"
+    refute pushover_key.verify! "#{code}1"
     refute pushover_key.verified
   end
 
