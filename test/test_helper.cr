@@ -9,6 +9,7 @@ require "../config/*"
 require "./generate"
 require "migrate"
 require "minitest/autorun"
+require "minitest/focus"
 
 spec_logger = Logger.new STDOUT, level: Logger::WARN
 spec_logger = Logger.new nil

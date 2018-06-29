@@ -41,7 +41,8 @@ dependencies:
 
   minitest:
     github: ysbaddaden/minitest.cr
-    version: ~> 0.4.0
+    commit: f68a06356b51803dad5942d99cb2a3e2bdad4880
+    # version: ~> 0.4.0
 
   migrate:
     github: vladfaust/migrate.cr
