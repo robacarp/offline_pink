@@ -28,7 +28,8 @@ class Monitor < Granite::Base
     invalid_code: "Status code should be a number between 100 and 550",
     assigned:     "must be assigned",
     duplicate:    "is already being checked",
-    blank:        "must be present"
+    blank:        "must be present",
+    invalid_type: "Monitor type must be one of #{VALID_TYPES.values.join(", ")}"
   }
 
   def validate : Nil
@@ -39,6 +40,8 @@ class Monitor < Granite::Base
       validate_http
     when VALID_TYPES[:ping]
       validate_icmp
+    else
+      add_error :base, MESSAGES[:invalid_type]
     end
   end
 

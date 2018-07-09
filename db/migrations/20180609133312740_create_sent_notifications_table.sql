@@ -1,4 +1,4 @@
--- +micrate Up
+-- +migrate Up
 CREATE TABLE sent_notifications (
   id BIGSERIAL PRIMARY KEY,
   user_id BIGINT NOT NULL,
@@ -9,6 +9,6 @@ CREATE TABLE sent_notifications (
 );
 -- SQL in section 'Up' is executed when this migration is applied
 
--- +micrate Down
+-- +migrate Down
 DROP TABLE sent_notifications;
 -- SQL section 'Down' is executed when this migration is rolled back

@@ -12,7 +12,7 @@ class Invite < Granite::Base
   before_save generate_code
 
   def generate_code
-    @code = Random::Secure.hex 10
+    self.code = Random::Secure.hex 10
   end
 
   def invited_user_count

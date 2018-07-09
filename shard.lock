@@ -24,10 +24,6 @@ shards:
     github: crystal-lang/crystal-db
     version: 0.5.0
 
-  dotenv:
-    github: gdotdesign/cr-dotenv
-    version: 0.1.0
-
   email:
     github: arcage/crystal-email
     version: 0.2.5
@@ -66,7 +62,15 @@ shards:
 
   micrate:
     github: amberframework/micrate
-    version: 0.3.1
+    version: 0.3.3
+
+  migrate:
+    github: vladfaust/migrate.cr
+    version: 0.2.3
+
+  minitest:
+    github: ysbaddaden/minitest.cr
+    commit: f68a06356b51803dad5942d99cb2a3e2bdad4880
 
   mosquito:
     github: robacarp/mosquito
@@ -119,4 +123,8 @@ shards:
   teeplate:
     github: mosop/teeplate
     version: 0.6.1
+
+  time_format:
+    github: vladfaust/time_format.cr
+    version: 0.1.1
 

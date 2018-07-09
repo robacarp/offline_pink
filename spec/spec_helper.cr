@@ -3,17 +3,26 @@ Envy.load "test.env" do
   { raise_exception: true }
 end
 
-require "spec"
-
 require "amber"
 require "../config/*"
 
-require "micrate"
-require "pg"
+require "./generate"
+require "migrate"
 
-Granite.settings.logger = Logger.new nil
-Micrate::DB.connection_url = Amber.settings.database_url
-Micrate::Cli.run_up
+spec_logger = Logger.new STDOUT, level: Logger::WARN
+spec_logger = Logger.new nil
+Granite.settings.logger = spec_logger
+
+Migrate::Migrator.new(
+  DB.open(Amber.settings.database_url),
+  spec_logger,
+  File.join("db", "migrations"),
+  "schema_version",
+  "version"
+).tap do |migrator|
+  migrator.reset
+  migrator.to_latest
+end
 
 Spec.before_each do
   Domain.clear
@@ -26,6 +35,7 @@ Spec.before_each do
   User.clear
 end
 
+require "spec"
 require "garnet_spec"
 
 module SystemTest

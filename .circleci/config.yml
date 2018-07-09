@@ -13,7 +13,7 @@ jobs:
           keys:
             - i-{{ checksum "shard.lock" }}
       - run: shards install
-      - run: crystal spec
+      - run: crystal run test/run_tests.cr
       - run: shards build offline_pink worker
       - save_cache:
           key: i-{{ checksum "shard.lock" }}

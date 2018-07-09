@@ -1,8 +1,8 @@
--- +micrate Up
+-- +migrate Up
 DROP TABLE ip_addresses;
 -- SQL in section 'Up' is executed when this migration is applied
 
--- +micrate Down
+-- +migrate Down
 CREATE TABLE ip_addresses(
   id BIGSERIAL PRIMARY KEY,
   domain_id BIGINT NOT NULL,

@@ -1,9 +1,9 @@
--- +micrate Up
+-- +migrate Up
 
 DROP TABLE ping_results;
 -- SQL in section 'Up' is executed when this migration is applied
 
--- +micrate Down
+-- +migrate Down
 CREATE TABLE ping_results (
   id BIGSERIAL PRIMARY KEY,
   is_up BOOL,

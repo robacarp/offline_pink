@@ -1,4 +1,4 @@
--- +micrate Up
+-- +migrate Up
 CREATE TABLE domains (
   id BIGSERIAL PRIMARY KEY,
   user_id BIGINT NOT NULL,
@@ -11,6 +11,6 @@ CREATE INDEX domains_user_id_idx ON domains (user_id);
 
 -- SQL in section 'Up' is executed when this migration is applied
 
--- +micrate Down
+-- +migrate Down
 DROP TABLE domains;
 -- SQL section 'Down' is executed when this migration is rolled back

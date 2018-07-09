@@ -1,7 +1,7 @@
--- +micrate Up
+-- +migrate Up
 DROP TABLE IF EXISTS checks;
 
--- +micrate Down
+-- +migrate Down
 CREATE TABLE checks (
   id BIGSERIAL PRIMARY KEY,
   user_id BIGINT,

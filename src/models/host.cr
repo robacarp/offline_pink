@@ -71,7 +71,8 @@ class Host < Granite::Base
   end
 
   def down?
-    ! up?
+    success, failure, total = last_result_summary
+    failure == total
   end
 
   @last_results_grouped_by_success : Hash(Bool, Array(MonitorResult))?

@@ -1,4 +1,4 @@
--- +micrate Up
+-- +migrate Up
 CREATE TABLE users (
   id BIGSERIAL PRIMARY KEY,
   name VARCHAR,
@@ -8,5 +8,5 @@ CREATE TABLE users (
   updated_at TIMESTAMP
 );
 
--- +micrate Down
+-- +migrate Down
 DROP TABLE IF EXISTS users;

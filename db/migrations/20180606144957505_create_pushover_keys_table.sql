@@ -1,4 +1,4 @@
--- +micrate Up
+-- +migrate Up
 
 CREATE TABLE pushover_keys (
   id BIGSERIAL PRIMARY KEY,
@@ -12,6 +12,6 @@ CREATE TABLE pushover_keys (
 );
 -- SQL in section 'Up' is executed when this migration is applied
 
--- +micrate Down
+-- +migrate Down
 DROP TABLE if exists pushover_keys;
 -- SQL section 'Down' is executed when this migration is rolled back

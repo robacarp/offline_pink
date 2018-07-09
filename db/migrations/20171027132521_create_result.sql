@@ -1,4 +1,4 @@
--- +micrate Up
+-- +migrate Up
 CREATE TABLE ping_results (
   id BIGSERIAL PRIMARY KEY,
   is_up BOOL,
@@ -9,5 +9,5 @@ CREATE TABLE ping_results (
 );
 CREATE INDEX ping_results_check_id_idx ON ping_results (check_id);
 
--- +micrate Down
+-- +migrate Down
 DROP TABLE IF EXISTS ping_results;

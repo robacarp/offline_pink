@@ -1,8 +1,8 @@
--- +micrate Up
+-- +migrate Up
 DROP TABLE IF EXISTS get_results;
 -- SQL in section 'Up' is executed when this migration is applied
 
--- +micrate Down
+-- +migrate Down
 CREATE TABLE get_results (
   id BIGSERIAL PRIMARY KEY,
   is_up BOOL,
