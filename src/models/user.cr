@@ -6,6 +6,7 @@ class User < Granite::Base
   include RelativeTime
 
   adapter pg
+  table_name :users
 
   primary id : Int64
   field name : String
@@ -20,7 +21,7 @@ class User < Granite::Base
 
   include Features
 
-  has_many :domains
+  has_many :domains, class_name: Domain
   belongs_to :invite
 
   def validate : Nil

@@ -6,9 +6,10 @@ class Monitor < Granite::Base
   include IcmpMonitor
 
   adapter pg
+  table_name :monitors
 
   belongs_to :domain
-  has_many :monitor_results
+  has_many :monitor_results, class_name: MonitorResult
 
   field monitor_type : String
 

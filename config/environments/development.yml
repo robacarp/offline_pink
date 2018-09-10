@@ -17,8 +17,6 @@ logging:
   filter:
     - password
     - confirm_password
-  skip:
-    -
   context:
     - request
     - params
