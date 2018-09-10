@@ -1,6 +1,7 @@
 class Domain < Granite::Base
   extend Granite::Query::BuilderMethods
   adapter pg
+  table_name :domains
 
   field name : String
   field is_valid : Bool
@@ -9,8 +10,8 @@ class Domain < Granite::Base
   timestamps
 
   belongs_to :user
-  has_many :monitors
-  has_many :hosts
+  has_many :monitors, class_name: Monitor
+  has_many :hosts, class_name: Host
 
   before_destroy :destroy_associations
 

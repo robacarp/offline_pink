@@ -2,6 +2,7 @@ class MonitorResult < Granite::Base
   extend Granite::Query::BuilderMethods
 
   adapter pg
+  table_name :monitor_results
 
   belongs_to :domain
   belongs_to :host

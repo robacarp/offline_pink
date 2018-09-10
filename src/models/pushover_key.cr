@@ -4,8 +4,7 @@ class PushoverKey < Granite::Base
   extend Granite::Query::BuilderMethods
 
   include Verification
-
-  adapter :pg
+  adapter pg
   table_name :pushover_keys
 
   field key : String

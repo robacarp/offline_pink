@@ -1,6 +1,5 @@
 class Host < Granite::Base
   extend Granite::Query::BuilderMethods
-
   adapter pg
   table_name :hosts
 
@@ -10,7 +9,7 @@ class Host < Granite::Base
   timestamps
 
   belongs_to :domain
-  has_many :monitor_results
+  has_many :monitor_results, class_name: MonitorResult
 
   before_create :guess_version
   before_destroy :destroy_associations

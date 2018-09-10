@@ -2,6 +2,8 @@ class SentNotification < Granite::Base
   extend Granite::Query::BuilderMethods
 
   adapter pg
+  table_name :sent_notifications
+
   primary id : Int64
   field reason_code : Int32
   field vendor_code : Int32

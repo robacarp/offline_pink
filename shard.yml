@@ -24,11 +24,11 @@ targets:
 dependencies:
   amber:
     github: amberframework/amber
-    version: ~> 0.8.0
+    version: ~> 0.9.0
 
   granite:
     github: amberframework/granite
-    version: ~> 0.12.1
+    version: ~> 0.14.0
 
   icmp:
     github: robacarp/icmp.cr
@@ -46,7 +46,7 @@ dependencies:
 
   migrate:
     github: vladfaust/migrate.cr
-    version: ~> 0.2.2
+    version: ~> 0.3.0
 
   mosquito:
     github: robacarp/mosquito
