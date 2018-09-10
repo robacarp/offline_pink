@@ -7,14 +7,12 @@ RUN npm install
 COPY config ./config
 COPY db ./db
 COPY public ./public
-COPY src ./src
 
 COPY shard.yml shard.lock app.json ./
-
 RUN shards install
 
+COPY src ./src
 RUN npm run release
-
 RUN shards build offline_pink worker --production
 
 COPY Procfile .
