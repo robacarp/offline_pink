@@ -2,67 +2,25 @@ name: offline_pink
 version: 0.1.0
 
 authors:
-  - Amber <amberframework.org>
-
-crystal: 0.25.0
-
-license: Private
+  - Robert L Carpenter <robert@robacarp.com>
 
 targets:
   offline_pink:
     main: src/offline_pink.cr
 
-  worker:
-    main: src/worker.cr
-
-  amber:
-    main: lib/amber/src/amber/cli.cr
-
-  db:
-    main: src/db.cr
+crystal: 0.27.0
 
 dependencies:
-  amber:
-    github: amberframework/amber
-    version: ~> 0.9.0
+  lucky:
+    github: luckyframework/lucky
+    version: ~> 0.12
+  authentic:
+    github: luckyframework/authentic
+    version: ~> 0.2
+  carbon:
+    github: luckyframework/carbon
+    version: ~> 0.1.0
 
-  granite:
-    github: amberframework/granite
-    version: ~> 0.14.0
-
-  icmp:
-    github: robacarp/icmp.cr
-    version: ~> 0.0.2
-
-  jasper_helpers:
-    #    path: ../jasper-helpers
-    github: amberframework/jasper-helpers
-    version: ~> 0.2.0
-
-  minitest:
-    github: ysbaddaden/minitest.cr
-    commit: f68a06356b51803dad5942d99cb2a3e2bdad4880
-    # version: ~> 0.4.0
-
-  migrate:
-    github: vladfaust/migrate.cr
-    version: ~> 0.3.0
-
-  mosquito:
-    github: robacarp/mosquito
-    version: ~> 0.2.0
-
-  pg:
-    github: will/crystal-pg
-
-  quartz_mailer:
-    github: amberframework/quartz-mailer
-    version: ~> 0.5.1
-
-development_dependencies:
-  envy:
-    github: petoem/envy
-
-  garnet_spec:
-    github: amberframework/garnet-spec
-    version: ~> 0.2.1
+  lucky_flow:
+    github: luckyframework/lucky_flow
+    version: ~> 0.3

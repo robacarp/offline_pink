@@ -1,44 +1,20 @@
-require "envy"
-Envy.load "test.env" do
-  { raise_exception: true }
-end
-
-require "amber"
-require "../config/*"
-
-require "./generate"
-require "migrate"
-
-spec_logger = Logger.new STDOUT, level: Logger::WARN
-spec_logger = Logger.new nil
-Granite.settings.logger = spec_logger
-
-Migrate::Migrator.new(
-  DB.open(Amber.settings.database_url),
-  spec_logger,
-  File.join("db", "migrations"),
-  "schema_version",
-  "version"
-).tap do |migrator|
-  migrator.reset
-  migrator.to_latest
-end
-
-Spec.before_each do
-  Domain.clear
-  Host.clear
-  Invite.clear
-  Monitor.clear
-  MonitorResult.clear
-  PushoverKey.clear
-  SentNotification.clear
-  User.clear
-end
-
+ENV["LUCKY_ENV"] = "test"
+ENV["PORT"] = "5001"
 require "spec"
-require "garnet_spec"
+require "lucky_flow"
+require "../src/app"
+require "./support/flows/base_flow"
+require "./support/**"
+require "../db/migrations/**"
 
-module SystemTest
-  DRIVER = :chrome
-  PATH = "/usr/local/bin/chromedriver"
-end
+# Add/modify files in spec/setup to start/configure programs or run hooks
+#
+# By default there are scripts for setting up and cleaning the database,
+# configuring LuckyFlow, starting the app server, etc.
+require "./setup/**"
+
+include Carbon::Expectations
+include LuckyFlow::Expectations
+
+LuckyRecord::Migrator::Runner.new.ensure_migrated!
+Habitat.raise_if_missing_settings!

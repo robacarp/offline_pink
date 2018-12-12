@@ -1,2 +1,2 @@
-web: bin/offline_pink
-worker: bin/worker
+web: ./app
+release: lucky db.migrate
