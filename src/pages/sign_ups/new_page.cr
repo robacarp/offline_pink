@@ -2,21 +2,27 @@ class SignUps::NewPage < GuestLayout
   needs form : SignUpForm
 
   def content
-    h1 "Sign Up"
-    render_sign_up_form(@form)
-  end
+    div class: "row" do
+      div class: "col-md-6 offset-md-3" do
+        h1 "Register"
 
-  private def render_sign_up_form(f)
-    form_for SignUps::Create do
-      sign_up_fields(f)
-      submit "Sign Up", flow_id: "sign-up-button"
+        div class: "alert alert-info" do
+          text "Use of Offline.Pink is currently by invite only. You can register for an account but will not be able to use Offline.pink for monitoring until your account is activated."
+        end
+
+        form_for SignUps::Create do
+          field(@form.email) { |i| email_input i, autofocus: "true", class: "form-control" }
+          field(@form.password) { |i| password_input i, class: "form-control" }
+          field(@form.password_confirmation) { |i| password_input i, class: "form-control" }
+
+          div class: "form-group" do
+            submit "Register", flow_id: "sign-up-button", class: "btn btn-primary btn-xs"
+            link "Log in", to: SignIns::New
+          end
+        end
+
+      end
     end
-    link "Sign in instead", to: SignIns::New
   end
 
-  private def sign_up_fields(f)
-    field(f.email) { |i| email_input i, autofocus: "true" }
-    field(f.password) { |i| password_input i }
-    field(f.password_confirmation) { |i| password_input i }
-  end
 end
