@@ -1,22 +1,10 @@
-abstract class MainLayout
-  # Edit shared layout code in src/components/shared/layout.cr
-  include Shared::Layout
-
-  # 'needs current_user : User' makes it so that the current_user
-  # is always required for pages using MainLayout
+abstract class MainLayout < Layout
   needs current_user : User
 
   def render
-    html_doctype
-
-    html lang: "en" do
-      shared_layout_head
-
-      body do
-        render_flash
-        render_signed_in_user
-        content
-      end
+    shell do
+      render_signed_in_user
+      content
     end
   end
 
