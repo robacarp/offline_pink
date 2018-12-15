@@ -55,37 +55,51 @@ abstract class Layout
       ul class: "navbar-nav mr-auto" do
         # if current_user.activated?
         li class: "nav-item" do
-          a href: "/domains" do
+          a href: "/domains", class: "nav-link" do
             text "Domains"
           end
         end
 
 
-        # if current_user.logged_in?
-        li class: "nav-item dropdown" do
-          a class: "nav-link dropdown-toggle", href: "#", role: "button", "data-toggle": "dropdown" do
-            text "Settings"
-          end
+        #if current_user.logged_in?
+          logged_in_menu
+        #else
+          logged_out_menu
+        #end
 
-          div class: "dropdown-menu" do
-            a class: "dropdown-item", href: "/account" do
-              text "Account"
-            end
+      end
+    end
+  end
 
-            # if current_user.can? :use_pushover
-            a class: "dropdown-item", href: "/pushover_settings" do
-              text "Pushover"
-            end
-          end
+  def logged_in_menu
+    li class: "nav-item dropdown" do
+      a class: "nav-link dropdown-toggle", href: "#", role: "button", "data-toggle": "dropdown" do
+        text "Settings"
+      end
+
+      div class: "dropdown-menu" do
+        a class: "dropdown-item", href: "/account" do
+          text "Account"
         end
 
-
-        # else
-        li class: "nav-item" do
-          a class: "nav-link", href: "/login" do
-            text "Log in"
-          end
+        # if current_user.can? :use_pushover
+        a class: "dropdown-item", href: "/pushover_settings" do
+          text "Pushover"
         end
+      end
+    end
+
+    li class: "nav-item" do
+      link to: "/", class: "nav-link" do
+        text "Log out"
+      end
+    end
+  end
+
+  def logged_out_menu
+    li class: "nav-item" do
+      link to: SignIns::New, class: "nav-link" do
+        text "Log in"
       end
     end
   end

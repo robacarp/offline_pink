@@ -7,7 +7,7 @@ class SignUps::NewPage < GuestLayout
         h1 "Register"
 
         div class: "alert alert-info" do
-          text "Use of Offline.Pink is currently by invite only. You can register for an account but will not be able to use Offline.pink for monitoring until your account is activated."
+          text "Use of offline.pink is currently by invite only. You can register for an account but will not be able to use offline.pink for monitoring until your account is activated."
         end
 
         form_for SignUps::Create do
