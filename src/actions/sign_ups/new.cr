@@ -1,7 +1,7 @@
-class SignUps::New < BrowserAction
+class Registration::New < BrowserAction
   include Auth::RedirectIfSignedIn
 
   get "/register" do
-    render NewPage, form: SignUpForm.new
+    render NewPage, form: RegistrationForm.new
   end
 end

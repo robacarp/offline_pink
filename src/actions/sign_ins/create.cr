@@ -1,8 +1,8 @@
-class SignIns::Create < BrowserAction
+class Session::Create < BrowserAction
   include Auth::RedirectIfSignedIn
 
   post "/session/new" do
-    SignInForm.new(params).submit do |form, authenticated_user|
+    SessionForm.new(params).submit do |form, authenticated_user|
       if authenticated_user
         sign_in(authenticated_user)
         flash.success = "You're now signed in"

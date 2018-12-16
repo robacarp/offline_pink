@@ -1,4 +1,4 @@
-class SignInForm < LuckyRecord::VirtualForm
+class SessionForm < LuckyRecord::VirtualForm
   include Authentic::FormHelpers
   include FindAuthenticatable
 
@@ -7,15 +7,15 @@ class SignInForm < LuckyRecord::VirtualForm
 
   # This method is called to allow you to determine if a user can sign in.
   # By default it validates that the user exists and the password is correct.
-  #
-  # If desired, you can add additional checks in this method, e.g.
-  #
-  #    if user.locked?
-  #      email.add_error "is locked out"
-  #    end
+  private def find_authenticatable
+    email.value.try do |value|
+      UserQuery.new.email(value).first?
+    end
+  end
+
   private def validate(user : User?)
     if user
-      unless Authentic.correct_password?(user, password.value.to_s)
+      unless user.valid_password? password.value.to_s
         password.add_error "is wrong"
       end
     else

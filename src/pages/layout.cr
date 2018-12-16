@@ -1,5 +1,6 @@
 abstract class Layout
   include Lucky::HTMLPage
+
   include Shared::FieldErrors
   include Shared::FlashMessages
   include Shared::Field
@@ -90,7 +91,7 @@ abstract class Layout
     end
 
     li class: "nav-item" do
-      link to: "/", class: "nav-link" do
+      link to: Session::Delete, class: "nav-link" do
         text "Log out"
       end
     end
@@ -98,7 +99,7 @@ abstract class Layout
 
   def logged_out_menu
     li class: "nav-item" do
-      link to: SignIns::New, class: "nav-link" do
+      link to: Session::New, class: "nav-link" do
         text "Log in"
       end
     end

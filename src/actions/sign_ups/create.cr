@@ -1,8 +1,8 @@
-class SignUps::Create < BrowserAction
+class Registration::Create < BrowserAction
   include Auth::RedirectIfSignedIn
 
   route do
-    SignUpForm.create(params) do |form, user|
+    RegistrationForm.create(params) do |form, user|
       if user
         flash.info = "Thanks for signing up"
         sign_in(user)

@@ -1,7 +1,7 @@
-class SignIns::New < BrowserAction
+class Session::New < BrowserAction
   include Auth::RedirectIfSignedIn
 
   get "/session/new" do
-    render NewPage, form: SignInForm.new
+    render NewPage, form: SessionForm.new
   end
 end
