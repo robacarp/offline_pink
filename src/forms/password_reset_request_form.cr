@@ -1,6 +1,6 @@
 class PasswordResetRequestForm < LuckyRecord::VirtualForm
-  include Authentic::FormHelpers
-  include FindAuthenticatable
+  # include Authentic::FormHelpers
+  # include FindAuthenticatable
 
   virtual email : String
 
