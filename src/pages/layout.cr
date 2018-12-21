@@ -73,13 +73,21 @@ abstract class Layout
           a "Domains", href: "/domains", class: "nav-link"
         end
 
-        user_menu
+        login_button
 
       end
     end
   end
 
-  abstract def user_menu
+  def login_button
+    li class: "nav-item" do
+      if @current_user
+        link "Log Out", to: Session::Delete, class: "nav-link"
+      else
+        link "Log In", to: Session::New, class: "nav-link"
+      end
+    end
+  end
 
   def render
     shell do

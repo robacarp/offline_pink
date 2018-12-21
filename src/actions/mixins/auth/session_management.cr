@@ -17,10 +17,8 @@ module SessionManagement
 
   def current_user?
     @user ||= begin
-      if id = session.get SESSION_KEY
+      if id = session.get? SESSION_KEY
         UserQuery.find id
-      else
-        nil
       end
     end
   end
