@@ -1,7 +1,7 @@
 class HomePage < GuestLayout
   def content
-    div class: "row" do
-      div class: "col-md-6 offset-md-3" do
+    div ".row" do
+      div ".col-md-6.offset-md-3" do
         para "Offline pink monitors domain and service availability and connectivity with a few simple principals:"
 
         ul do

@@ -4,6 +4,8 @@ class User < BaseModel
   include Carbon::Emailable
 
   include Password
+  include Features
+
   table :users do
     column email : String
     column crypted_password : String
@@ -18,5 +20,7 @@ class User < BaseModel
     Carbon::Address.new(email)
   end
 
+  def activated?
+    is? :active
   end
 end

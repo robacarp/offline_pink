@@ -39,7 +39,7 @@ abstract class Layout
             navbar
 
             div ".row" do
-              div ".col-md-12 main" do
+              div ".col-md-12.main" do
                 render_flash
 
                 yield
@@ -67,25 +67,39 @@ abstract class Layout
 
       div id: "navbarSupportedContent", class: "collapse navbar-collapse"
 
-      ul class: "navbar-nav mr-auto" do
-        # if current_user.activated?
+      user_menu
+    end
+  end
+
+  def user_menu
+    ul class: "navbar-nav mr-auto" do
+      if activated_user?
         li class: "nav-item" do
           a "Domains", href: "/domains", class: "nav-link"
         end
+      end
 
+      li class: "nav-item" do
         login_button
-
       end
     end
   end
 
   def login_button
-    li class: "nav-item" do
-      if @current_user
-        link "Log Out", to: Session::Delete, class: "nav-link"
-      else
-        link "Log In", to: Session::New, class: "nav-link"
-      end
+    if @current_user
+      link "Log Out", to: Session::Delete, class: "nav-link"
+    else
+      link "Log In", to: Session::New, class: "nav-link"
+    end
+  end
+
+  private def activated_user? : Bool
+    user = @current_user
+
+    if user
+      user.activated?
+    else
+      false
     end
   end
 
