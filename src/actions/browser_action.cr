@@ -1,7 +1,6 @@
 abstract class BrowserAction < Lucky::Action
   include Lucky::ProtectFromForgery
-  # This module provides current_user, sign_in, and sign_out methods
-  include Authentic::ActionHelpers(User)
+  include SessionManagement
 
   # When testing you can skip normal sign in by using `vist` with the `as` param
   #

@@ -1,4 +1,4 @@
-class HomePage < Layout
+class HomePage < GuestLayout
   def content
     div class: "row" do
       div class: "col-md-6 offset-md-3" do

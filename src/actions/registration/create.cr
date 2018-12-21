@@ -5,10 +5,10 @@ class Registration::Create < BrowserAction
     RegistrationForm.create(params) do |form, user|
       if user
         flash.info = "Thanks for signing up"
-        sign_in(user)
+        create_session for: user
         redirect to: Home::Index
       else
-        flash.info = "Couldn't sign you up"
+        flash.info = "Couldn't create user"
         render NewPage, form: form
       end
     end

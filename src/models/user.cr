@@ -2,10 +2,13 @@ class User < BaseModel
   include Carbon::Emailable
 
   table :users do
-    column name : String
     column email : String
     column crypted_password : String
     column features : Int32
+  end
+
+  def features
+    previous_def || 0
   end
 
   def emailable

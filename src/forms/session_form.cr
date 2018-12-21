@@ -7,8 +7,7 @@ class SessionForm < LuckyRecord::VirtualForm
     validate_required password
 
     unless valid?
-      yield self, nil
-      return
+      return yield self, nil
     end
 
     user = email.value.try do |value|
@@ -16,16 +15,13 @@ class SessionForm < LuckyRecord::VirtualForm
     end
 
     unless user
-      email.add_error "is not in our system"
-      yield self, nil
-      return
+      return yield self, nil
     end
 
     if user.valid_password? password.value.to_s
-      yield self, user
+      return yield self, user
     else
-      password.add_error "does not match"
-      yield self, nil
+      return yield self, nil
     end
   end
 end

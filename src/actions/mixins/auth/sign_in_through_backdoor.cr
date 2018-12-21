@@ -6,7 +6,7 @@ module Auth::SignInThroughBackdoor
   private def sign_in_through_backdoor
     if Lucky::Env.test? && (user_id = params.get?(:backdoor_user_id))
       user = UserQuery.find(user_id)
-      sign_in user
+      create_session for: user
     end
     continue
   end
