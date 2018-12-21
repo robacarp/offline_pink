@@ -1,5 +1,5 @@
 class Home::Index < BrowserAction
-  include Auth::SkipRequireSignIn
+  dont_require_logged_in!
 
   get "/" do
     render HomePage

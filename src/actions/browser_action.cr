@@ -1,15 +1,17 @@
 abstract class BrowserAction < Lucky::Action
   include Lucky::ProtectFromForgery
-  include SessionManagement
+  include Auth::SessionManagement
+  include Auth::SessionEnforcement
 
   # When testing you can skip normal sign in by using `vist` with the `as` param
   #
   # flow.visit Me::Show, as: UserBox.create
-  include Auth::SignInThroughBackdoor
+  # include Auth::SignInThroughBackdoor
 
   # By default all actions require sign in, unless you use the
   # `Auth::SkipRequireSignIn` module in `src/mixins/auth/skip_require_sign_in.cr`
-  include Auth::RequireSignIn
+
+  require_logged_in!
 
   # `expose` means that `current_user` will be passed to pages automatically.
   #

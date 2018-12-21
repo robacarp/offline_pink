@@ -1,5 +1,5 @@
 class Registration::Create < BrowserAction
-  include Auth::RedirectIfSignedIn
+  dont_require_logged_in!
 
   route do
     RegistrationForm.create(params) do |form, user|

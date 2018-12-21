@@ -1,4 +1,4 @@
-module SessionManagement
+module Auth::SessionManagement
   SESSION_KEY = "user_id"
 
   def create_session(for user : User)

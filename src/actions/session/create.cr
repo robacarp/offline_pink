@@ -1,5 +1,5 @@
 class Session::Create < BrowserAction
-  include Auth::RedirectIfSignedIn
+  redirect_if_signed_in!
 
   post "/session/new" do
     SessionForm.new(params).submit do |form, authenticated_user|
