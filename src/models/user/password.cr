@@ -9,9 +9,13 @@ module Password
     end
   end
 
-  def valid_password?(password_guess : String)
-    if hash = @crypted_password
-      Crypto::Bcrypt::Password.new(hash) == password_guess
+  def valid_password?(password_guess : String?)
+    if password_guess
+      if hash = @crypted_password
+        Crypto::Bcrypt::Password.new(hash) == password_guess
+      end
+    else
+      false
     end
   end
 end
