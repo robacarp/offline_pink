@@ -73,9 +73,22 @@ abstract class Layout
 
   def user_menu
     ul class: "navbar-nav mr-auto" do
-      if activated_user?
-        li class: "nav-item" do
-          a "Domains", href: "/domains", class: "nav-link"
+      if @current_user
+        if activated_user?
+          li class: "nav-item" do
+            a "Domains", href: "/domains", class: "nav-link"
+          end
+        end
+
+        li class: "nav-item dropdown" do
+          a "Settings", class: "nav-link dropdown-toggle", href: "#", role: "button", "data-toggle": "dropdown"
+
+          div ".dropdown-menu" do
+            link "Account", to: Me::Show, class: "dropdown-item"
+
+            # if current_user.can? :use_pushover
+            a "Pushover", class: "dropdown-item", href: "/pushover_settings"
+          end
         end
       end
 

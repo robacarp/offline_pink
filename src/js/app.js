@@ -5,6 +5,7 @@ import RailsUjs from "rails-ujs";
 
 // Turbolinks is optional. Learn more: https://github.com/turbolinks/turbolinks/
 import Turbolinks from "turbolinks";
+import 'bootstrap';
 
 RailsUjs.start();
 Turbolinks.start();
