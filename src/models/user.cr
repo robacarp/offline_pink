@@ -1,4 +1,5 @@
 require "./user/*"
+require "./domain"
 
 class User < BaseModel
   include Carbon::Emailable
@@ -10,6 +11,8 @@ class User < BaseModel
     column email : String
     column crypted_password : String
     column features : Int32
+
+    has_many domains : Domain
   end
 
   def features

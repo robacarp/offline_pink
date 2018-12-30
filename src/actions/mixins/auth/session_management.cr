@@ -18,7 +18,7 @@ module Auth::SessionManagement
   def current_user?
     @user ||= begin
       if id = session.get? SESSION_KEY
-        UserQuery.find id
+        UserQuery.new.preload_domains.find id
       end
     end
   end
