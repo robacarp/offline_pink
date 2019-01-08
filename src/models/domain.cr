@@ -7,6 +7,8 @@ class Domain < BaseModel
     column status_code : Int32
 
     belongs_to user : User
+
+    has_many icmp_monitors : Monitors::ICMP
   end
 
   enum Status
