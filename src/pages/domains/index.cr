@@ -2,8 +2,6 @@ class Domains::IndexPage < MainLayout
   needs domains : Array(Domain)
 
   def content
-    pp @domains
-
     div ".row" do
       div ".col-md-4.offset-md-3" do
         h1 "Monitored Domains"
@@ -20,7 +18,7 @@ class Domains::IndexPage < MainLayout
           @domains.each do |domain|
             tr do
               td do
-                text domain.name
+                link domain.name, to: Domains::Show.with(id: domain.id)
               end
             end
           end

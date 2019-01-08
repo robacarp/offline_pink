@@ -1,7 +1,5 @@
 class Domains::Create < BrowserAction
-  require_logged_in!
-
-  route do
+  post "/my/domains/new" do
     DomainForm.create(params, user: current_user) do |form, domain|
       if domain
         flash.success = "Now monitoring #{domain.name}"
