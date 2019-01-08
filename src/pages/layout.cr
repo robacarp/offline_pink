@@ -76,7 +76,7 @@ abstract class Layout
       if @current_user
         if activated_user?
           li class: "nav-item" do
-            a "Domains", href: "/domains", class: "nav-link"
+            link "Domains", to: Domains::Index, class: "nav-link"
           end
         end
 

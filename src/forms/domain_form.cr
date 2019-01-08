@@ -3,7 +3,6 @@ class DomainForm < Domain::BaseForm
 
   needs user : User
 
-
   DNS_FORMAT = "should be the DNS name to be checked. For example: google.com instead of http://google.com/gmail"
   DUPLICATE = "is already being checked"
 
@@ -20,21 +19,3 @@ class DomainForm < Domain::BaseForm
     end
   end
 end
-
-  # def validate : Nil
-  #   messages = {
-  #     blank:      "cannot be blank",
-  #     dns_format: "should be the DNS name to be checked. For example: google.com instead of http://google.com/gmail",
-  #     assigned:   "must be assigned",
-  #     duplicate:  "is already being checked"
-  #   }
-
-  #   (add_error :name, messages[:blank];      return) unless @name
-  #   (add_error :name, messages[:blank];      return) if @name.try(&.blank?)
-  #   (add_error :name, messages[:dns_format]; return) if @name.try { |n| ! n.index("/").nil? || n[0...4] == "http" }
-  #   (add_error :user, messages[:assigned];   return) unless @user_id
-
-  #   if new_record?
-  #     (add_error :name, messages[:duplicate];  return) if Domain.where(user_id: @user_id, name: @name).any?
-  #   end
-  # end
