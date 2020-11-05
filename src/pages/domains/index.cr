@@ -1,19 +1,19 @@
-class Domains::IndexPage < MainLayout
+class Domains::IndexPage < AuthLayout
   needs domains : Array(Domain)
 
   def content
-    div ".row" do
-      div ".col-md-4.offset-md-3" do
+    div class: "row" do
+      div class: "col-md-4 offset-md-3" do
         h1 "Monitored Domains"
       end
 
-      div "col-md-2" do
+      div class: "col-md-2" do
         link "Monitor a new domain", to: Domains::New
       end
     end
 
-    div ".row" do
-      div ".col-md-6.offset-md-3" do
+    div class: "row" do
+      div class: "col-md-6 offset-md-3" do
         table class: "table table-dark" do
           @domains.each do |domain|
             tr do

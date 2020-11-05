@@ -1,14 +1,14 @@
-class PasswordResetRequests::NewPage < GuestLayout
-  needs form : PasswordResetRequestForm
+class PasswordResetRequests::NewPage < AuthLayout
+  needs operation : RequestPasswordReset
 
   def content
     h1 "Reset your password"
-    render_form(@form)
+    render_form(@operation)
   end
 
-  private def render_form(f)
+  private def render_form(op)
     form_for PasswordResetRequests::Create do
-      field(f.email) { |i| email_input i }
+      mount Shared::Field, attribute: op.email, label_text: "Email", &.email_input
       submit "Reset Password", flow_id: "request-password-reset-button"
     end
   end

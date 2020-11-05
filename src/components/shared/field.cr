@@ -1,37 +1,57 @@
-module Shared::Field
-  # This method is used to make it easier to render the same fields styles
-  # throughout your app
-  #
-  # ## Usage
-  #
-  #     field(form.email) { |i| email_input i }
-  #     field(form.email) { |i| email_input i, autofocus: "true" }
-  #
-  # ## Customization
-  #
-  # You can customize this method so that fields render like you expect
-  # For example, you might wrap it in a div with a "field-wrapper" class.
-  #
-  #    div class: "field-wrapper"
-  #      label_for field
-  #      yield field
-  #      errors_for fields
-  #    end
-  #
-  # You may also want to have more than one method if you render fields
-  # differently in different parts of your app, e.g. `compact_field`
-  private def field(field, hide_label : Bool = false, hide_errors : Bool = false, label_options = NamedTuple.new)
+# This component is used to make it easier to render the same fields styles
+# throughout your app.
+#
+# Extensive documentation at: https://luckyframework.org/guides/frontend/html-forms#shared-components
+#
+# ## Basic usage:
+#
+#    # Renders a text input by default and will guess the label name "Name"
+#    mount Shared::Field, op.name
+#    # Call any of the input methods on the block
+#    mount Shared::Field, op.email, &.email_input
+#    # Add other HTML attributes
+#    mount Shared::Field, op.email, &.email_input(autofocus: "true")
+#    # Pass an explicit label name
+#    mount Shared::Field, attribute: op.username, label_text: "Your username"
+#
+# ## Customization
+#
+# You can customize this component so that fields render like you expect.
+# For example, you might wrap it in a div with a "field-wrapper" class.
+#
+#    div class: "field-wrapper"
+#      label_for field
+#      yield field
+#      mount Shared::FieldErrors, field
+#    end
+#
+# You may also want to have more components if your fields look
+# different in different parts of your app, e.g. `CompactField` or
+# `InlineTextField`
+class Shared::Field(T) < BaseComponent
+  # Raises a helpful error if component receives an unpermitted attribute
+  include Lucky::CatchUnpermittedAttribute
 
-    div class: "form-group" do
-      unless hide_label
-        label_for field, **label_options
-      end
+  needs attribute : Avram::PermittedAttribute(T)
+  needs label_text : String?
 
-      yield field
+  def render
+    label_for attribute, label_text
 
-      unless hide_errors
-        errors_for field
-      end
+    # You can add more default options here. For example:
+    #
+    #    with_defaults field: attribute, class: "input"
+    #
+    # Will add the class "input" to the generated HTML.
+    with_defaults field: attribute do |input_builder|
+      yield input_builder
     end
+
+    mount Shared::FieldErrors, attribute
+  end
+
+  # Use a text_input by default
+  def render
+    render &.text_input
   end
 end

@@ -1,2 +1,5 @@
-abstract class BaseModel < LuckyRecord::Model
+abstract class BaseModel < Avram::Model
+  def self.database : Avram::Database.class
+    AppDatabase
+  end
 end

@@ -1,3 +1,3 @@
 Spec.before_each do
-  LuckyRecord::Repo.truncate
+  AppDatabase.truncate
 end

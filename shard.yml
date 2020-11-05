@@ -5,22 +5,31 @@ authors:
   - Robert L Carpenter <robert@robacarp.com>
 
 targets:
-  offline_pink:
-    main: src/offline_pink.cr
+  test:
+    main: src/test.cr
+  server:
+    main: src/start_server.cr
 
-crystal: 0.27.0
+crystal: 0.35.1
 
 dependencies:
+  myhtml:
+    github: kostya/myhtml
   lucky:
     github: luckyframework/lucky
-    version: ~> 0.12
+    version: ~> 0.24.0
   authentic:
     github: luckyframework/authentic
-    version: ~> 0.2
+    version: ~> 0.7.0
   carbon:
     github: luckyframework/carbon
-    version: ~> 0.1.0
-
+    version: ~> 0.1.2
+  dotenv:
+    github: gdotdesign/cr-dotenv
+    version: ~> 0.7.0
   lucky_flow:
     github: luckyframework/lucky_flow
-    version: ~> 0.3
+    version: ~> 0.7.0
+  jwt:
+    github: crystal-community/jwt
+    version: ~> 1.4.2

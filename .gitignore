@@ -11,3 +11,7 @@ server
 /public/js
 /public/css
 /public/mix-manifest.json
+.cache
+bin/*
+public/app.css
+public/app.css.map

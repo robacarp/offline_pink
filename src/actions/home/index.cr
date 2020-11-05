@@ -1,7 +1,7 @@
 class Home::Index < BrowserAction
-  dont_require_logged_in!
+  include Auth::AllowGuests
 
   get "/" do
-    render HomePage
+    html HomePage
   end
 end

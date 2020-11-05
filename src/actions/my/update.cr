@@ -1,12 +1,12 @@
 class Me::Update < BrowserAction
   post "/my/account" do
-    AccountForm.update(current_user, params) do |form, updated_user|
-      if form.saved?
+    SaveUser.update(current_user, params) do |operation, updated_user|
+      if operation.saved?
         flash.success = "Updated!"
         redirect to: Me::Show
       else
         flash.failure = "Could not save"
-        render ShowPage, form: form
+        html ShowPage, user: current_user
       end
     end
   end

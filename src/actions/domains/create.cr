@@ -1,13 +1,12 @@
 class Domains::Create < BrowserAction
   post "/my/domains/new" do
-    DomainForm.create(params, user: current_user) do |form, domain|
+    SaveDomain.create(params, user: current_user) do |operation, domain|
       if domain
         flash.success = "Now monitoring #{domain.name}"
         redirect Home::Index
       else
-        pp form.errors
         flash.failure = "Could not create domain"
-        render NewPage, form: form
+        html NewPage, save: operation
       end
     end
   end

@@ -1,16 +1,16 @@
-class PasswordResets::NewPage < GuestLayout
-  needs form : PasswordResetForm
-  needs user_id : Int32
+class PasswordResets::NewPage < AuthLayout
+  needs operation : ResetPassword
+  needs user_id : Int64
 
   def content
     h1 "Reset your password"
-    render_password_reset_form(@form)
+    render_password_reset_form(@operation)
   end
 
-  private def render_password_reset_form(f)
+  private def render_password_reset_form(op)
     form_for PasswordResets::Create.with(@user_id) do
-      field(f.password) { |i| password_input i, autofocus: "true" }
-      field(f.password_confirmation) { |i| password_input i }
+      mount Shared::Field, attribute: op.password, label_text: "Password", &.password_input(autofocus: "true")
+      mount Shared::Field, attribute: op.password_confirmation, label_text: "Confirm Password", &.password_input
 
       submit "Update Password", flow_id: "update-password-button"
     end

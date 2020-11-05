@@ -3,13 +3,13 @@ require "./domain"
 
 class User < BaseModel
   include Carbon::Emailable
+  include Authentic::PasswordAuthenticatable
 
-  include Password
   include Features
 
   table :users do
     column email : String
-    column crypted_password : String
+    column encrypted_password : String
     column features : Int32
 
     has_many domains : Domain
@@ -19,7 +19,7 @@ class User < BaseModel
     previous_def || 0
   end
 
-  def emailable
+  def emailable : Carbon::Address
     Carbon::Address.new(email)
   end
 

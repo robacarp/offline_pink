@@ -1,22 +1,25 @@
 class HomePage < GuestLayout
   def content
-    div ".row" do
-      div ".col-md-6.offset-md-3" do
+    div class: "row" do
+      div class: "col-md-6 offset-md-3" do
         para "Offline pink monitors domain and service availability and connectivity with a few simple principals:"
 
         ul do
           li do
             strong "No data warehousing."
+            br
             text "I don't want to monitor the entire internet and inspect it to see what's happening around the globe."
           end
 
           li do
             strong "No Soft Delete."
+            br
             text "If the monitor is no longer necessary, neither is the record of it having been monitored."
           end
 
           li do
             strong "Monitoring should be cheap."
+            br
             text "Real time monitoring is easy, reliable notifications aren't. But I don't think it has to be that way."
           end
         end
@@ -34,8 +37,7 @@ class HomePage < GuestLayout
         h4 "Membership"
 
         para <<-TEXT
-          Offline.pink is in private alpha testing. Membershipara is freely available but the ability to
-          monitor domains and services is limited to invited users.
+          Offline.pink is in private alpha testing. Membership is freely available but the ability to monitor domains and services is limited to invited users.
         TEXT
 
         para <<-TEXT

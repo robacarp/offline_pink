@@ -29,3 +29,4 @@ end
 private def should_be_signed_in(flow)
   flow.el("@sign-out-button").should be_on_page
 end
+
