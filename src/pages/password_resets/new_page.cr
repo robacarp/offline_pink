@@ -1,4 +1,4 @@
-class PasswordResets::NewPage < AuthLayout
+class PasswordResets::NewPage < GuestLayout
   needs operation : ResetPassword
   needs user_id : Int64
 

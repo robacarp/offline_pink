@@ -1,22 +1,25 @@
-class SignUps::NewPage < AuthLayout
+class SignUps::NewPage < GuestLayout
   needs operation : SignUpUser
 
   def content
-    h1 "Sign Up"
-    render_sign_up_form(@operation)
+    div class: "authentication-form" do
+      render_sign_up_form(@operation)
+    end
   end
 
   private def render_sign_up_form(op)
     form_for SignUps::Create do
-      sign_up_fields(op)
-      submit "Sign Up", flow_id: "sign-up-button"
-    end
-    link "Sign in instead", to: SignIns::New
-  end
+      mount Shared::Field, attribute: op.email, label_text: "Email", &.email_input(autofocus: "true")
+      mount Shared::Field, attribute: op.password, label_text: "Password", &.password_input(placeholder: "****************")
+      mount Shared::Field, attribute: op.password_confirmation, label_text: "Confirm Password", &.password_input(placeholder: "****************")
 
-  private def sign_up_fields(op)
-    mount Shared::Field, attribute: op.email, label_text: "Email", &.email_input(autofocus: "true")
-    mount Shared::Field, attribute: op.password, label_text: "Password", &.password_input
-    mount Shared::Field, attribute: op.password_confirmation, label_text: "Confirm Password", &.password_input
+      div class: "button-group" do
+        submit "Sign Up", flow_id: "sign-up-button"
+
+        div class: "flex flex-col items-end" do
+          link "Sign in instead", to: SignIns::New
+        end
+      end
+    end
   end
 end

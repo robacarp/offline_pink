@@ -10,13 +10,9 @@ class User < BaseModel
   table :users do
     column email : String
     column encrypted_password : String
-    column features : Int32
+    column features : Int32 = 0
 
     has_many domains : Domain
-  end
-
-  def features
-    previous_def || 0
   end
 
   def emailable : Carbon::Address

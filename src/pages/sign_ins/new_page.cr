@@ -1,23 +1,25 @@
-class SignIns::NewPage < AuthLayout
+class SignIns::NewPage < GuestLayout
   needs operation : SignInUser
 
   def content
-    h1 "Sign In"
-    render_sign_in_form(@operation)
+    div class: "authentication-form" do
+      render_sign_in_form @operation
+    end
   end
 
   private def render_sign_in_form(op)
     form_for SignIns::Create do
-      sign_in_fields(op)
-      submit "Sign In", flow_id: "sign-in-button"
-    end
-    link "Reset password", to: PasswordResetRequests::New
-    text " | "
-    link "Sign up", to: SignUps::New
-  end
+      mount Shared::Field, attribute: op.email, label_text: "Email", &.email_input(autofocus: "true")
+      mount Shared::Field, attribute: op.password, label_text: "Password", &.password_input(placeholder: "*************")
 
-  private def sign_in_fields(op)
-    mount Shared::Field, attribute: op.email, label_text: "Email", &.email_input(autofocus: "true")
-    mount Shared::Field, attribute: op.password, label_text: "Password", &.password_input
+      div class: "button-group" do
+        submit "Sign In", flow_id: "sign-in-button"
+
+        div class: "flex flex-col items-end" do
+          link "Sign up", to: SignUps::New
+          link "Forgot Password?", to: PasswordResetRequests::New
+        end
+      end
+    end
   end
 end

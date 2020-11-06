@@ -1,0 +1,39 @@
+body {
+  color: $font-color;
+  background: $background-color;
+}
+
+a {
+  color: $electric_blue;
+  &:hover { color: inherit; }
+}
+
+hr {
+  border: 1px solid $font-color;
+}
+
+.pink   { color: $bright_pink }
+.green  { color: $green }
+.red    { color: $dark_red }
+.yellow { color: $warm_yellow }
+
+.background-pink   { color: #000; background-color: $bright_pink }
+.background-green  { color: #000; background-color: $green }
+.background-red    { color: #000; background-color: $dark_red }
+.background-yellow { color: #000; background-color: $warm_yellow }
+
+.alert {
+  p {
+    margin-bottom: 0;
+  }
+
+  &.alert-info a {
+    color: #0291ff;
+  }
+}
+
+.fixed-width {
+  @apply max-w-screen-xl w-full mx-auto h-screen;
+  @apply p-4;
+  @apply text-gray-100 bg-gray-900;
+}

@@ -1,4 +1,4 @@
-class PasswordResetRequests::NewPage < AuthLayout
+class PasswordResetRequests::NewPage < GuestLayout
   needs operation : RequestPasswordReset
 
   def content

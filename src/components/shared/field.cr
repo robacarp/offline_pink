@@ -36,22 +36,25 @@ class Shared::Field(T) < BaseComponent
   needs label_text : String?
 
   def render
-    label_for attribute, label_text
-
-    # You can add more default options here. For example:
-    #
-    #    with_defaults field: attribute, class: "input"
-    #
-    # Will add the class "input" to the generated HTML.
-    with_defaults field: attribute do |input_builder|
-      yield input_builder
+    classes = ["field"]
+    unless attribute.valid?
+      classes << "error"
     end
 
-    mount Shared::FieldErrors, attribute
-  end
+    div class: classes.join(' ') do
+      label_for attribute, label_text
 
-  # Use a text_input by default
-  def render
-    render &.text_input
+      # You can add more default options here. For example:
+      #
+      #    with_defaults field: attribute, class: "input"
+      #
+      # Will add the class "input" to the generated HTML.
+
+      with_defaults field: attribute do |input_builder|
+        yield input_builder
+      end
+
+      mount Shared::FieldErrors, attribute
+    end
   end
 end
