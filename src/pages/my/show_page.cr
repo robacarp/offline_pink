@@ -2,22 +2,9 @@ class Me::ShowPage < AuthLayout
   needs user : User
 
   def content
-    h1 "This is your profile"
-    h3 "Email:  #{user.email}"
-    helpful_tips
-  end
-
-  private def helpful_tips
-    h3 "Next, you may want to:"
-    ul do
-      li { link_to_authentication_guides }
-      li "Modify this page: src/pages/me/show_page.cr"
-      li "Change where you go after sign in: src/actions/home/index.cr"
+    fixed_width do
+      h1 "This is your profile"
+      h3 "Email:  #{user.email}"
     end
-  end
-
-  private def link_to_authentication_guides
-    a "Check out the authentication guides",
-      href: "https://luckyframework.org/guides/authentication"
   end
 end

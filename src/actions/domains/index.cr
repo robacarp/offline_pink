@@ -1,5 +1,6 @@
 class Domains::Index < BrowserAction
   get "/my/domains" do
-    html IndexPage, domains: current_user.domains
+    domains = DomainQuery.new.user_id(current_user.id)
+    html IndexPage, domains: domains
   end
 end

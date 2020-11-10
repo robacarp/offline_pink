@@ -3,7 +3,7 @@ class Domains::Create < BrowserAction
     SaveDomain.create(params, user: current_user) do |operation, domain|
       if domain
         flash.success = "Now monitoring #{domain.name}"
-        redirect Home::Index
+        redirect Domains::Index
       else
         flash.failure = "Could not create domain"
         html NewPage, save: operation

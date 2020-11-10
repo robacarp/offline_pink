@@ -2,20 +2,25 @@ class Domains::ShowPage < AuthLayout
   needs domain : Domain
 
   def content
-    div class: "row" do
-      div class: "col-md-4 offset-md-3" do
-        h1 @domain.name
+    fixed_width do
+      h1 do
+        text "Monitoring "
+        text domain.name
       end
 
-      div class: "col-md-4" do
-      end
-    end
+      link "Stop Monitoring", to: Domains::Delete.with(domain), data_confirm: "Are you sure?"
 
-    div class: "row" do
-      div class: "col-md-8 offset-md-2" do
-        table class: "table table-dark" do
+      hr
+
+      table do
+        domain.monitors.each do |monitor|
+          tr do
+            td monitor.id
+            td monitor.type
+          end
         end
       end
+
     end
   end
 end

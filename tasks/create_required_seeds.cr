@@ -10,6 +10,9 @@ class Db::CreateRequiredSeeds < LuckyCli::Task
   summary "Add database records required for the app to work"
 
   def call
+    RegionBox.create do |region|
+      region.name("Region 1")
+    end
     # Using a LuckyRecord::Box:
     #
     # Use the defaults, but override just the email

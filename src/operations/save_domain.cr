@@ -6,16 +6,31 @@ class SaveDomain < Domain::SaveOperation
   DNS_FORMAT = "should be the DNS name to be checked. For example: google.com instead of http://google.com/gmail"
   DUPLICATE = "is already being checked"
 
-  def prepare
+  before_save do
+    validate_required name
+    validate_uniqueness_of name
+  end
+
+  before_save do
     user_id.value = user.id
     is_valid.value = true
     status_code.value = Domain::Status::UnChecked.value
+  end
 
-    validate_required name
-    validate_uniqueness_of name
+  before_save validate_dns_format
 
+  after_save attach_default_monitors
+
+  def attach_default_monitors(domain : Domain)
+    Monitors::SaveICMP.create! domain
+    Monitors::SaveHTTP.create! domain, path: "/", ssl: true, expected_status_code: 200
+  end
+
+  def validate_dns_format
     name.value.try do |domain_name|
-      name.add_error DNS_FORMAT if domain_name.index("/") || domain_name[0...4] == "http"
+      if domain_name.index("/") || domain_name[0...4] == "http"
+        name.add_error DNS_FORMAT
+      end
     end
   end
 end

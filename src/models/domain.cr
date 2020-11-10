@@ -3,12 +3,27 @@ require "./user"
 class Domain < BaseModel
   table :domains do
     column name : String
-    column is_valid : Bool
-    column status_code : Int32
+    column is_valid : Bool = false
+    column status_code : Int32 = 0
 
     belongs_to user : User
 
     has_many icmp_monitors : Monitors::ICMP
+    has_many http_monitors : Monitors::HTTP
+  end
+
+  def monitors : Array(BaseMonitor)
+    list = [] of BaseMonitor
+
+    icmp_monitors.each do |monitor|
+      list << monitor
+    end
+
+    http_monitors.each do |monitor|
+      list << monitor
+    end
+
+    list
   end
 
   enum Status
