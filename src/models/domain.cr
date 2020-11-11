@@ -8,12 +8,12 @@ class Domain < BaseModel
 
     belongs_to user : User
 
-    has_many icmp_monitors : Monitors::ICMP
-    has_many http_monitors : Monitors::HTTP
+    has_many icmp_monitors : Monitor::ICMP
+    has_many http_monitors : Monitor::HTTP
   end
 
-  def monitors : Array(BaseMonitor)
-    list = [] of BaseMonitor
+  def monitors : Array(Monitor::Base)
+    list = [] of Monitor::Base
 
     icmp_monitors.each do |monitor|
       list << monitor

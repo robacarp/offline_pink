@@ -1,4 +1,4 @@
-class Monitors::SaveHTTP < Monitors::HTTP::SaveOperation
+class Monitor::SaveHTTP < Monitor::HTTP::SaveOperation
   permit_columns ssl, path, expected_status_code
 
   needs domain : Domain

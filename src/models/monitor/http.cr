@@ -1,4 +1,4 @@
-class Monitors::HTTP < BaseMonitor
+class Monitor::HTTP < Monitor::Base
   table :http_monitors do
     belongs_to domain : Domain
     belongs_to region : Region
@@ -11,5 +11,9 @@ class Monitors::HTTP < BaseMonitor
 
   def type
     "HTTP"
+  end
+
+  def ssl?
+    ssl
   end
 end

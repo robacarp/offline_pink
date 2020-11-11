@@ -1,8 +1,8 @@
-class Monitors::HTTP::Create < BrowserAction
+class Monitor::HTTP::Create < BrowserAction
   post "/domain/:domain_id/monitors/create/http" do
     domain = DomainQuery.new.find domain_id
 
-    Monitors::SaveHTTP.create(domain: domain) do |form, monitor|
+    Monitor::SaveHTTP.create(domain: domain) do |form, monitor|
       if monitor
         flash.success = "Now monitoring #{domain.name} with HTTP"
         redirect Domains::Show.route(id: domain)

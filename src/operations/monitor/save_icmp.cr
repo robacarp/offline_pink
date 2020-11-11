@@ -1,4 +1,4 @@
-class Monitors::SaveICMP < Monitors::ICMP::SaveOperation
+class Monitor::SaveICMP < Monitor::ICMP::SaveOperation
   needs domain : Domain
 
   before_save do

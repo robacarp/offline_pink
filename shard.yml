@@ -9,15 +9,25 @@ targets:
     main: src/test.cr
   server:
     main: src/start_server.cr
+  worker:
+    main: src/app_worker.cr
 
 crystal: 0.35.1
 
 dependencies:
   myhtml:
     github: kostya/myhtml
+  icmp:
+    github: robacarp/icmp.cr
+  mosquito:
+    github: robacarp/mosquito
+
   lucky:
     github: luckyframework/lucky
     version: ~> 0.24.0
+  avram:
+    github: luckyframework/avram
+    branch: master
   authentic:
     github: luckyframework/authentic
     version: ~> 0.7.0

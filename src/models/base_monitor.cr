@@ -1,8 +1,12 @@
-abstract class BaseMonitor < BaseModel
-  abstract def type
-  abstract def id
+module Monitor
+  alias Any = Monitor::HTTP | Monitor::ICMP
 
-  def region
+  abstract class Base < BaseModel
+    abstract def type
+    abstract def id
 
+    def region
+
+    end
   end
 end
