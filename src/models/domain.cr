@@ -8,8 +8,8 @@ class Domain < BaseModel
 
     belongs_to user : User
 
-    has_many icmp_monitors : Monitor::ICMP
-    has_many http_monitors : Monitor::HTTP
+    has_many icmp_monitors : Monitor::Icmp
+    has_many http_monitors : Monitor::Http
   end
 
   def monitors : Array(Monitor::Base)

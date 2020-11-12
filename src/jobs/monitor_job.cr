@@ -26,11 +26,11 @@ class MonitorJob < Mosquito::QueuedJob
 
       results = domain.monitors.map do |monitor|
         case monitor
-        when Monitor::HTTP
-          Monitoring::HTTP.check host, with: monitor
+        when Monitor::Http
+          Monitoring::Http.check host, with: monitor
 
-        when Monitor::ICMP
-          Monitoring::ICMP.check host, with: monitor
+        when Monitor::Icmp
+          Monitoring::Icmp.check host, with: monitor
 
         else
           log "Unable to monitor a \"#{monitor.type}\" for #{domain_id} - Unknown monitor type"

@@ -1,2 +1,2 @@
-class Monitor::ICMPQuery < Monitor::ICMP::BaseQuery
+class Monitor::IcmpQuery < Monitor::Icmp::BaseQuery
 end

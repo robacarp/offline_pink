@@ -1,4 +1,4 @@
-class Monitor::ICMP < Monitor::Base
+class Monitor::Icmp < Monitor::Base
   table :icmp_monitors do
     belongs_to domain : Domain
     belongs_to region : Region

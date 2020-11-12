@@ -1,4 +1,5 @@
-class Monitor::HTTP < Monitor::Base
+# rot13(http) => uggc
+class Monitor::Http < Monitor::Base
   table :http_monitors do
     belongs_to domain : Domain
     belongs_to region : Region

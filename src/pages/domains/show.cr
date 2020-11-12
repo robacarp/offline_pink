@@ -9,6 +9,7 @@ class Domains::ShowPage < AuthLayout
       end
 
       link "Stop Monitoring", to: Domains::Delete.with(domain), data_confirm: "Are you sure?"
+      link "Add Another Monitor", to: Monitor::Create.with(domain), data_confirm: "Are you sure?"
 
       hr
 

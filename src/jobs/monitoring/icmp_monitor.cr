@@ -1,11 +1,11 @@
 require "icmp"
 
 module Monitoring
-  class ICMP < Base
+  class Icmp < Base
     def check : Nil
       log "Pinging #{host.ip_address}"
 
-      icmp = ::ICMP::Ping.new host.ip_address
+      icmp = ICMP::Ping.new host.ip_address
       statistics = icmp.ping timeout: 2 do |_|
         # shhhhhh
       end

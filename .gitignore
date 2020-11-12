@@ -16,3 +16,4 @@ bin/*
 public/app.css
 public/app.css.map
 start_server
+/tmp

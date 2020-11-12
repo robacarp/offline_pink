@@ -1,12 +1,12 @@
 module Monitoring
-  class HTTP < Base
+  class Http < Base
     # TODO prevent big pages from taking down the worker? Limit to 1KB or so?
     # TODO handle OpenSSL::SSL::Error: SSL_connect: error:14090086:SSL routines:ssl3_get_server_certificate:certificate verify failed
 
     @domain : Domain?
 
-    private def monitor : Monitor::HTTP
-      if (mon = @monitor) && mon.is_a? Monitor::HTTP
+    private def monitor : Monitor::Http
+      if (mon = @monitor) && mon.is_a? Monitor::Http
         return mon
       else
         raise "#{self.class.name} unexpectedly received a #{monitor.class.name}"
@@ -19,11 +19,11 @@ module Monitoring
 
     def check : Nil
       url = "#{protocol}#{host.ip_address}#{monitor.path}"
-      headers = ::HTTP::Headers{ "Host" => "#{domain.name}" }
+      headers = HTTP::Headers{ "Host" => "#{domain.name}" }
 
       log "GETing #{url} host=#{domain.name}"
 
-      response : ::HTTP::Client::Response
+      response : HTTP::Client::Response
 
       start_time = Time.monotonic
       response = http_client(host.ip_address).get monitor.path
@@ -68,14 +68,14 @@ module Monitoring
       end
     end
 
-    def http_client(ip_address : String) : ::HTTP::Client
+    def http_client(ip_address : String) : HTTP::Client
       client = if monitor.ssl?
         tls_config = OpenSSL::SSL::Context::Client.new
         tls_config.verify_mode = OpenSSL::SSL::VerifyMode::NONE
 
-        ::HTTP::Client.new "#{ip_address}", tls: tls_config
+        HTTP::Client.new "#{ip_address}", tls: tls_config
       else
-        ::HTTP::Client.new "#{ip_address}"
+        HTTP::Client.new "#{ip_address}"
       end
 
       client.connect_timeout = 2

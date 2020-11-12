@@ -1,5 +1,5 @@
 module Monitor
-  alias Any = Monitor::HTTP | Monitor::ICMP
+  alias Any = Monitor::Http | Monitor::Icmp
 
   abstract class Base < BaseModel
     abstract def type
