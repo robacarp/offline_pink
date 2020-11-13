@@ -1,11 +1,12 @@
 /* eslint no-console:0 */
 
 // RailsUjs is *required* for links in Lucky that use DELETE, POST and PUT.
-import RailsUjs from "rails-ujs";
+import Rails from "@rails/ujs";
 
 // Turbolinks is optional. Learn more: https://github.com/turbolinks/turbolinks/
 import Turbolinks from "turbolinks";
-import 'bootstrap';
 
-RailsUjs.start();
+import './components/notifications.js';
+
+Rails.start();
 Turbolinks.start();

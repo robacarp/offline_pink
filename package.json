@@ -2,20 +2,15 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
-    "@babel/compat-data": "^7.9.0",
     "@rails/ujs": "^6.0.0",
-    "bootstrap": "^4.5.3",
-    "jquery": "1.9.1 - 3",
     "parcel-bundler": "^1.12.4",
-    "popper.js": "^1.16.1",
-    "rails-ujs": "^5.2.4-4",
     "tailwindcss": "^1.9.6",
     "turbolinks": "^5.2.0"
   },
   "scripts": {
-    "dev": "npx parcel build -d public src/css/app.scss src/js/app.js",
-    "watch": "npx parcel watch -d public src/css/app.scss src/js/app.js",
-    "prod": "npx parcel build -d public src/css/app.scss src/js/app.js"
+    "dev": "npx parcel build --no-autoinstall -d public src/css/app.scss src/js/app.js",
+    "watch": "npx parcel watch --no-autoinstall -d public src/css/app.scss src/js/app.js",
+    "prod": "npx parcel build --no-autoinstall -d public src/css/app.scss src/js/app.js"
   },
   "devDependencies": {
     "browser-sync": "^2.26.7",
