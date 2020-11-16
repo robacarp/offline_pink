@@ -3,53 +3,84 @@ class Monitor::NewPage < AuthLayout
   needs icmp_op : Monitor::Icmp::Save
   needs http_op : Monitor::Http::Save
 
+  needs selected_monitor : Symbol?
+
   def content
-    h1 do
-      text "New monitor for "
-      text @domain.name
+    fixed_width do
+      h1 do
+        text "New monitor for "
+        text @domain.name
+      end
+
+      div class: "left-right-chooser" do
+
+        div class: "left tabs", data_behavior: "tabs" do
+          para "When checking to see the status of a domain, Offline.pink first checks DNS for a list of hosts. For each resolved host, additional monitoring can be performed."
+
+          a class: active_if(:http == selected_monitor, "tab"), data_toggle: "tab", href: "#http" do
+            text <<-TEXT
+              HTTP is a high level application monitor which checks to the correctness and responsiveness
+              of a web application. It is equivalent to the `curl` utility.
+            TEXT
+          end
+
+          a class: active_if(:icmp == selected_monitor, "tab"), data_toggle: "tab", href: "#icmp" do
+            text <<-TEXT
+              ICMP Echo is a low level network monitor which checks to see a host is responsive
+              and measures the time of that response. It is equivalent to the `ping` utility.
+            TEXT
+          end
+        end
+
+        div class: "right tab_panes" do
+
+          div class: active_if(:http == selected_monitor, "pane"), id: "http" do
+            h1 "HTTP"
+
+            html_form
+          end
+
+          div class: active_if(:icmp == selected_monitor, "pane"), id: "icmp" do
+            h1 "PING"
+
+            icmp_form
+          end
+
+        end
+
+      end
+
+
+
     end
+  end
 
-    para "When checking to see the status of a domain, Offline.pink first checks DNS for a list of hosts. For all resolved hosts, additional monitoring can be performed."
+  def active_if(statement : Bool, always base_classes : String) : String
+    base_classes += " active" if statement
+    base_classes
+  end
 
-    text "Monitor type"
-    a "HTTP", class: "nav-link", data_toggle: "tab", href: "#http"
-    a "ICMP", class: "nav-link", data_toggle: "tab", href: "#icmp"
-
-    h1 class: "PING"
-    para do
-      text <<-TEXT
-        ICMP Echo is a low level network monitor which checks to see a host is responsive
-        and measures the time of that response. It is equivalent to the 
-      TEXT
-      a "ping", href: "https://en.wikipedia.org/wiki/Ping_%28networking_utility%29"
-      text " utility."
+  def meta_error(operation)
+    unless operation.meta_error.blank?
+      div class: "error" do
+        text operation.meta_error
+      end
     end
-
-    # icmp_form
-
-    h1 "HTTP"
-    para do
-      text <<-TEXT
-        HTTP is a high level application monitor which checks to the correctness and responsiveness
-        of a web application. It is equivalent to the 
-      TEXT
-      a "curl", href: "https://en.wikipedia.org/wiki/CURL"
-      text " utility."
-    end
-
-    # html_form
   end
 
   def icmp_form
-    form_for Monitor::Icmp::Create.route(domain_id: @domain) do
-      submit "Add ICMP Ping Monitor", class: "btn"
+    form_for Monitor::Icmp::Create.with(id: @domain) do
+      meta_error icmp_op
+      submit "Add ICMP Ping Monitoring"
     end
   end
 
   def html_form
-    form_for Monitor::Http::Create.route(domain_id: @domain) do
-      field(@http_form.path) { |i| text_input i, class: "form-control" }
-      field(@http_form.ssl) { |i| check_box i, class: "form-control" }
+    form_for Monitor::Http::Create.with(id: @domain) do
+      meta_error http_op
+      mount Shared::Field, attribute: http_op.path, &.text_input
+      mount Shared::Checkbox, attribute: http_op.ssl, label_text: "SSL", &.checkbox
+      submit "Add new HTTP Monitor"
     end
   end
 end

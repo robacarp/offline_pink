@@ -1,14 +1,20 @@
-class Monitor::CreateIcmp < BrowserAction
-  post "/domain/:domain_id/monitors/create/icmp" do
-    domain = DomainQuery.new.find domain_id
+class Monitor::Icmp::Create < BrowserAction
+  post "/domain/:id/monitors/icmp/create" do
+    domain = DomainQuery.new.find id
 
     Monitor::Icmp::Save.create domain: domain do |operation, monitor|
       if monitor
+        flash.keep
         flash.success = "Now monitoring #{domain.name} with ICMP"
         redirect Domains::Show.route(id: domain)
+
       else
         flash.failure = "Could not create monitor : #{operation.errors}"
-        redirect Home::Index
+        html Monitor::NewPage,
+            domain: domain,
+            icmp_op: operation,
+            http_op: Monitor::Http::Save.new(domain: domain),
+            selected_monitor: :icmp
       end
     end
   end

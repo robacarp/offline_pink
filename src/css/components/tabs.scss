@@ -1,0 +1,21 @@
+nav.tabs {
+  @apply flex border-b;
+
+  a {
+    @apply mr-1 bg-white inline-block py-2 px-4 text-blue-500 font-semibold;
+
+    &:hover { @apply text-blue-800; }
+
+    &.active {
+      @apply border-l border-t border-r rounded-t text-blue-700;
+    }
+  }
+}
+
+.tab_panes {
+  .pane {
+    @apply hidden;
+
+    &.active { @apply block ; }
+  }
+}

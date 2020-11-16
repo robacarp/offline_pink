@@ -29,7 +29,10 @@ abstract class BaseLayout
     html lang: "en" do
       mount Shared::LayoutHead, page_title: page_title, context: context, current_user: current_user
 
-      body class: self.class.name.underscore do
+      classes = [] of String
+      classes << self.class.name.underscore.gsub(/::|_/, "-")
+
+      body class: classes.join(' ') do
         mount Shared::NavBar
         mount Shared::FlashMessages, context.flash
         content

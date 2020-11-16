@@ -37,6 +37,10 @@ form {
       @apply inline-block align-baseline font-bold text-sm text-blue-500;
     }
   }
+
+  .error {
+    @apply text-red-500;
+  }
 }
 
 .field.checkbox {

@@ -1,6 +1,6 @@
 class Monitor::Create < BrowserAction
-  get "/domain/:domain_id/monitors/create" do
-    domain = DomainQuery.new.user_id(current_user.id).find domain_id
+  get "/domain/:id/monitors/create" do
+    domain = DomainQuery.new.user_id(current_user.id).find id
 
     html NewPage,
       domain: domain,
