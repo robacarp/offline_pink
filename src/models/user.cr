@@ -13,6 +13,8 @@ class User < BaseModel
     column features : Int32 = 0
 
     has_many domains : Domain
+    has_many memberships : Membership
+    has_many organizations : Organization, through: :memberships
   end
 
   def emailable : Carbon::Address

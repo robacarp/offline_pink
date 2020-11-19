@@ -7,4 +7,8 @@ class Monitor::Icmp < Monitor::Base
   def type
     "ICMP"
   end
+
+  def summary : String
+    ""
+  end
 end

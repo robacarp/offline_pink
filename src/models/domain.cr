@@ -6,7 +6,9 @@ class Domain < BaseModel
     column is_valid : Bool = false
     column status_code : Int32 = 0
 
-    belongs_to user : User
+    belongs_to user : User?
+    belongs_to organization : Organization?
+    polymorphic owner, associations: [:user, :organization]
 
     has_many icmp_monitors : Monitor::Icmp
     has_many http_monitors : Monitor::Http

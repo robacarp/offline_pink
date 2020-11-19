@@ -16,4 +16,12 @@ class Monitor::Http < Monitor::Base
   def ssl?
     ssl
   end
+
+  def summary : String
+    String.build do |s|
+      s << "path:"
+      s << path
+      s << " with SSL" if ssl?
+    end
+  end
 end

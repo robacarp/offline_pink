@@ -4,21 +4,6 @@ abstract class BaseLayout
   abstract def content
   abstract def current_user
 
-  def div(selectors : String = "", *args, &block)
-    id : String
-    classes = ""
-
-    selectors.split(".").each do |selector|
-      if selector.starts_with? "#"
-        id = selector
-      else
-        classes += " #{selector}"
-      end
-    end
-
-    div(*args, id: id, class: classes)
-  end
-
   def page_title
     "Welcome"
   end

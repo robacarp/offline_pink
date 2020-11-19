@@ -4,9 +4,9 @@ module Monitor
   abstract class Base < BaseModel
     abstract def type
     abstract def id
+    abstract def summary : String
 
     def region
-
     end
   end
 end

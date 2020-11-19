@@ -16,8 +16,8 @@ class Domains::ShowPage < AuthLayout
       table do
         domain.monitors.each do |monitor|
           tr do
-            td monitor.id
             td monitor.type
+            td monitor.summary
           end
         end
       end

@@ -8,6 +8,25 @@ class Db::CreateSampleSeeds < LuckyCli::Task
   summary "Add sample database records helpful for development"
 
   def call
+    users = [
+      UserBox.create,
+      UserBox.create
+    ]
+
+    org = OrganizationBox.create
+
+
+    users.each do |user|
+      MembershipBox.create do |membership|
+        membership.admin false
+        membership.user_id user.id
+        membership.organization_id org.id
+        puts membership.attributes.inspect
+
+        membership
+      end
+    end
+
     # Using a LuckyRecord::Box:
     #
     # Use the defaults, but override just the email

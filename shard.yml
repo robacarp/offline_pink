@@ -2,7 +2,7 @@ name: offline_pink
 version: 0.1.0
 
 authors:
-  - Robert L Carpenter <robert@robacarp.com>
+  - Robert L Carpenter
 
 targets:
   test:
@@ -25,9 +25,11 @@ dependencies:
   lucky:
     github: luckyframework/lucky
     version: ~> 0.24.0
+
   avram:
     github: luckyframework/avram
     branch: master
+
   authentic:
     github: luckyframework/authentic
     version: ~> 0.7.0
