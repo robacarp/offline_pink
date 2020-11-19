@@ -21,7 +21,6 @@ class Db::CreateSampleSeeds < LuckyCli::Task
         membership.admin false
         membership.user_id user.id
         membership.organization_id org.id
-        puts membership.attributes.inspect
 
         membership
       end
