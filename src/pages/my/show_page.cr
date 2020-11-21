@@ -20,6 +20,8 @@ class Me::ShowPage < AuthLayout
       end
 
       link "Create a new Organization", to: Organizations::New
+
+      link "Sign out", to: SignIns::Delete
     end
   end
 end

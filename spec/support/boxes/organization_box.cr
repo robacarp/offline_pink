@@ -1,5 +1,5 @@
 class OrganizationBox < Avram::Box
   def initialize
-    name "organization"
+    name Faker::Address.country
   end
 end

@@ -2,14 +2,14 @@ class SignIns::NewPage < GuestLayout
   needs operation : SignInUser
 
   def content
-    div class: "authentication-form" do
+    shrink_to_fit do
       render_sign_in_form @operation
     end
   end
 
   private def render_sign_in_form(op)
     form_for SignIns::Create do
-      mount Shared::Field, attribute: op.email, label_text: "Email", &.email_input(autofocus: "true")
+      mount Shared::Field, attribute: op.email, label_text: "Email", &.email_input(autofocus: "true", placeholder: "me@offline.pink")
       mount Shared::Field, attribute: op.password, label_text: "Password", &.password_input(placeholder: "*************")
 
       div class: "button-group" do

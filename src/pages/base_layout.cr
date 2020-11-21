@@ -30,4 +30,10 @@ abstract class BaseLayout
       yield
     end
   end
+
+  def shrink_to_fit
+    div class: "shrink-to-fit" do
+      yield
+    end
+  end
 end

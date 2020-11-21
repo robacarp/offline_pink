@@ -9,7 +9,7 @@ class CreateOrganizations::V20201117222032 < Avram::Migrator::Migration::V1
     end
 
     alter :domains do
-      add_belongs_to organization : Organization?, on_delete: :nullify
+      add_belongs_to organization : Organization?, on_delete: :cascade
     end
   end
 

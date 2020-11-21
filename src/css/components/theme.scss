@@ -10,6 +10,7 @@ a {
 
 hr {
   border: 1px solid $font-color;
+  @apply my-1;
 }
 
 .pink   { color: $bright_pink }
@@ -36,4 +37,8 @@ hr {
   @apply max-w-screen-xl w-full mx-auto h-screen;
   @apply p-4;
   @apply text-gray-100 bg-gray-900;
+}
+
+.shrink-to-fit {
+  @apply w-full flex justify-center;
 }

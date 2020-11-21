@@ -10,7 +10,7 @@ shards:
 
   bindata:
     git: https://github.com/spider-gazelle/bindata.git
-    version: 1.8.0
+    version: 1.8.1
 
   blank:
     git: https://github.com/kostya/blank.git
@@ -44,6 +44,10 @@ shards:
     git: https://github.com/crystal-loot/exception_page.git
     version: 0.1.4
 
+  faker:
+    git: https://github.com/askn/faker.git
+    version: 0.4.1
+
   future:
     git: https://github.com/crystal-community/future.cr.git
     version: 0.1.0
@@ -54,7 +58,7 @@ shards:
 
   icmp:
     git: https://github.com/robacarp/icmp.cr.git
-    version: 0.0.3
+    version: 0.1.0
 
   jwt:
     git: https://github.com/crystal-community/jwt.git
