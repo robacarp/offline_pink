@@ -14,6 +14,8 @@ class Domain < BaseModel
     has_many http_monitors : Monitor::Http
   end
 
+  policy!
+
   def monitors : Array(Monitor::Base)
     list = [] of Monitor::Base
 

@@ -15,11 +15,12 @@ class Db::Seed::SampleData < LuckyCli::Task
 
   def call
     dev_user_email = "test@example.com"
-    dev_user = UserQuery.new.email(dev_user_email) || UserBox.create do |user|
+    dev_user = UserQuery.new.email(dev_user_email).first? || UserBox.create do |user|
       user.email dev_user_email
     end
 
     users = [
+      dev_user,
       UserBox.create,
       UserBox.create
     ]

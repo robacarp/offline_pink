@@ -1,11 +1,10 @@
 class Domains::Show < BrowserAction
-  get "/domains/:id" do
-    d = DomainQuery.new
-      .user_id(current_user.id)
-      .preload_icmp_monitors
-      .preload_http_monitors
-      .find(id)
+  authorized_lookup Domain do |query|
+    query.preload_icmp_monitors
+         .preload_http_monitors
+  end
 
-    html ShowPage, domain: d
+  get "/domains/:id" do
+    html ShowPage, domain: domain
   end
 end

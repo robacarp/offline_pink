@@ -72,13 +72,11 @@ module PolymorphicOwnership
     end
 
     owner_objects.map do |obj|
-      gid = "gid://#{obj.class.name}/#{obj.id}"
-
       case obj
       when User
-        NamedValue.new(obj.email, gid)
+        NamedValue.new("You (#{obj.email})", obj.global_id)
       when Organization
-        NamedValue.new(obj.name, gid)
+        NamedValue.new("Organization: #{obj.name}", obj.global_id)
       end
     end.compact
   end
