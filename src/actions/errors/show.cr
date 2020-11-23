@@ -6,6 +6,14 @@ class Errors::Show < Lucky::ErrorAction
   default_format :html
   dont_report [Lucky::RouteNotFoundError, Avram::RecordNotFoundError]
 
+  def render(error : Sift::NotAuthorized)
+    if html?
+      error_html "You're not authorized to view that resource", status: 401
+    else
+      error_json "Not Authorized", status: 401
+    end
+  end
+
   def render(error : Lucky::RouteNotFoundError | Avram::RecordNotFoundError)
     if html?
       error_html "Sorry, we couldn't find that page.", status: 404

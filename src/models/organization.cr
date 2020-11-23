@@ -5,4 +5,6 @@ class Organization < BaseModel
     has_many memberships : Membership
     has_many users : User, through: :memberships
   end
+
+  policy!
 end
