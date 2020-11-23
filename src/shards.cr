@@ -6,3 +6,4 @@ require "mosquito"
 
 require "./lib/authorized_lookup"
 require "./lib/authorized_scope"
+require "./lib/enforced_authorization"
