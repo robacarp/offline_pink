@@ -1,4 +1,8 @@
 class PolymorphicDomainOwnershipQuery
+  def self.run(user : User)
+    run user.id
+  end
+
   def self.run(user_id : Number) : DomainQuery
     sql = <<-SQL
       select domains.id

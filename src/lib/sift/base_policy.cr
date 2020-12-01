@@ -2,38 +2,48 @@ module Sift
   module BasePolicy
     getter user, object
 
-    def authorize(action : Symbol)
-      case action
-      when :new    then new?
-      when :create then create?
-      when :show   then read?
-      when :edit, :update then update?
-      when :delete then delete?
+    macro included
+      def self.resolve(action : Symbol) : Symbol
+        case action
+        when :new, :create     then :create?
+        when :show, :read      then :read?
+        when :edit, :update    then :update?
+        when :delete, :destroy then :delete?
+        else
+          raise "Sift Unknown Action: #{action}"
+        end
       end
     end
 
-    def user_is_owner
-      object.user_id == user.id
+    def authorize(action : Symbol) : Bool
+      case self.class.resolve(action)
+      when :create? then create?
+      when :read?   then read?
+      when :update? then update?
+      when :delete? then delete?
+      else
+        raise "Sift Unknown Action: #{action}"
+      end
     end
 
     def new?
-      true
+      false
     end
 
     def create?
-      user_is_owner
+      false
     end
 
     def read?
-      user_is_owner
+      false
     end
 
     def update?
-      user_is_owner
+      false
     end
 
     def delete?
-      user_is_owner
+      false
     end
   end
 end

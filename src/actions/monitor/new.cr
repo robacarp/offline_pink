@@ -1,7 +1,7 @@
 class Monitor::Create < BrowserAction
-  get "/domain/:id/monitors/create" do
-    domain = DomainQuery.new.user_id(current_user.id).find id
+  authorized_lookup Domain, :update
 
+  get "/domain/:id/monitors/create" do
     html NewPage,
       domain: domain,
       icmp_op: Monitor::Icmp::Save.new(domain: domain),

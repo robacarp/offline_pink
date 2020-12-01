@@ -1,7 +1,7 @@
 class Monitor::Icmp::Create < BrowserAction
-  post "/domain/:id/monitors/icmp/create" do
-    domain = DomainQuery.new.find id
+  authorized_lookup Domain, :update
 
+  post "/domain/:id/monitors/icmp/create" do
     Monitor::Icmp::Save.create domain: domain do |operation, monitor|
       if monitor
         flash.keep

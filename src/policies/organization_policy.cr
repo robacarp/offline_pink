@@ -1,6 +1,10 @@
 class OrganizationPolicy < Organization::BasePolicy
   def member_of_org
-    Scope.new(user, OrganizationQuery.new).scoped_query.first?
+    if Scope.new(user, OrganizationQuery.new).scoped_query.first?
+      true
+    else
+      false
+    end
   end
 
   def user_is_owner

@@ -4,7 +4,7 @@ module Sift
     def _policy_query_class ; end
     def _scope_class ; end
 
-    macro authorized_scope_for(model, &block)
+    macro authorized_scope_for(model)
       {%
         query_class = model.id + "Query"
         policy_class = model.id + "Policy"

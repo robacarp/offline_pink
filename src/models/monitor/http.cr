@@ -1,4 +1,6 @@
 class Monitor::Http < Monitor::Base
+  policy!
+
   table :http_monitors do
     belongs_to domain : Domain
     belongs_to region : Region

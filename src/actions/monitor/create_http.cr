@@ -1,7 +1,7 @@
 class Monitor::Http::Create < BrowserAction
-  post "/domain/:id/monitors/http/create" do
-    domain = DomainQuery.new.user_id(current_user.id).find id
+  authorized_lookup Domain, :update
 
+  post "/domain/:id/monitors/http/create" do
     Monitor::Http::Save.create(domain: domain) do |operation, monitor|
       if monitor
         flash.keep
