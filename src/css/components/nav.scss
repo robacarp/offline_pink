@@ -12,7 +12,7 @@ header {
   }
 
   nav {
-    @apply w-full hidden;
+    @apply w-full hidden mt-1;
 
     .items {
       @apply w-full block w-auto flex flex-col text-center;
@@ -20,6 +20,7 @@ header {
       a { @apply block py-4 inline-block text-teal-200; }
     }
   }
+
 
   #hamburger-menu-toggle { @apply hidden; }
   #hamburger-menu-toggle:checked ~ nav { @apply block; }

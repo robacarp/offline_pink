@@ -33,6 +33,14 @@ abstract class BaseLayout
 
   def shrink_to_fit
     div class: "shrink-to-fit" do
+      div do
+        yield
+      end
+    end
+  end
+
+  def small_frame
+    div class: "small-frame" do
       yield
     end
   end

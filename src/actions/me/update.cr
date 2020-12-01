@@ -8,7 +8,7 @@ class Me::Update < BrowserAction
         redirect to: Me::Show
       else
         flash.failure = "Could not save"
-        html ShowPage, user: current_user
+        html ShowPage, user: current_user, save: operation
       end
     end
   end

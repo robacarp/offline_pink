@@ -1,6 +1,5 @@
 body {
-  color: $font-color;
-  background: $background-color;
+  @apply text-gray-100 bg-gray-900;
 }
 
 a {
@@ -10,18 +9,12 @@ a {
 
 hr {
   border: 1px solid $font-color;
-  @apply my-1;
+  @apply my-2;
 }
 
-.pink   { color: $bright_pink }
-.green  { color: $electric_green }
-.red    { color: $dark_red }
-.yellow { color: $warm_yellow }
-
-.background-pink   { color: #000; background-color: $bright_pink }
-.background-green  { color: #000; background-color: $electric_green }
-.background-red    { color: #000; background-color: $dark_red }
-.background-yellow { color: #000; background-color: $warm_yellow }
+.pink {
+  @apply text-brand;
+}
 
 .alert {
   p {
@@ -36,9 +29,13 @@ hr {
 .fixed-width {
   @apply max-w-screen-xl w-full mx-auto h-screen;
   @apply p-4;
-  @apply text-gray-100 bg-gray-900;
 }
 
 .shrink-to-fit {
   @apply w-full flex justify-center;
+}
+
+.small-frame {
+  @apply mx-auto;
+  width: 48rem;
 }

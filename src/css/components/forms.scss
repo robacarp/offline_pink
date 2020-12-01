@@ -1,18 +1,19 @@
 form {
-  @apply bg-white text-gray-900 shadow-md rounded px-8 pt-6 pb-8 mb-4;
+  // @apply bg-white text-gray-900 shadow-md
+  @apply rounded pt-6 pb-8 mb-4;
 
   .field {
     @apply mb-4;
 
     label {
-      @apply block text-gray-700 text-sm font-bold mb-2;
+      @apply block text-sm font-bold mb-2;
     }
 
     input[type=text],
     input[type=email],
     input[type=password],
     select {
-      @apply shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight;
+      @apply shadow appearance-none border rounded py-2 px-3 text-gray-700 mb-3 leading-tight;
     }
 
     &.error {
@@ -58,4 +59,11 @@ form {
   }
 }
 
-
+.small-frame {
+  input[type=text],
+  input[type=email],
+  input[type=password],
+  select {
+    @apply w-64
+  }
+}
