@@ -1,4 +1,4 @@
-class Me::Show < BrowserAction
+class My::Account::Show < BrowserAction
   include Sift::DontEnforceAuthorization
 
   get "/my/account" do

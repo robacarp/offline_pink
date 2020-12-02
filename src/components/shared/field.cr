@@ -34,6 +34,7 @@ class Shared::Field(T) < BaseComponent
 
   needs attribute : Avram::PermittedAttribute(T)
   needs label_text : String?
+  needs button : NamedTuple(text: String)?
 
   def render
     classes = ["field"]
@@ -54,7 +55,13 @@ class Shared::Field(T) < BaseComponent
         yield input_builder
       end
 
+      render_button
       mount Shared::FieldErrors, attribute
     end
+  end
+
+  def render_button
+    return unless config = button
+    submit config[:text], class: "inline-button"
   end
 end

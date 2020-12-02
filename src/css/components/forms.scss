@@ -42,6 +42,10 @@ form {
     }
   }
 
+  .inline-button {
+    @apply ml-2;
+  }
+
   .error {
     @apply text-red-500;
   }

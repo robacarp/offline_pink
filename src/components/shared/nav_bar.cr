@@ -17,7 +17,7 @@ class Shared::NavBar < BaseComponent
       nav do
         div class: "items" do
           link "Monitored Domains", to: Domains::Index
-          link "Account", to: Me::Show
+          link "Account", to: My::Account::Show
         end
       end
     end
