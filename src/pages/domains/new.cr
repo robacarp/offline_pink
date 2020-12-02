@@ -3,8 +3,9 @@ class Domains::NewPage < AuthLayout
 
   def content
     small_frame do
-      h1 "Monitor new domain"
-      hr
+      header_and_links do
+        h1 "Monitor new domain"
+      end
 
       shrink_to_fit do
         form_for Domains::Create do

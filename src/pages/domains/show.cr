@@ -2,16 +2,16 @@ class Domains::ShowPage < AuthLayout
   needs domain : Domain
 
   def content
-    fixed_width do
-      h1 do
-        text "Monitoring "
-        text domain.name
+    small_frame do
+      header_and_links do
+        h1 domain.name
+
+        div do
+          link "Stop Monitoring", to: Domains::Delete.with(domain), data_confirm: "Are you sure?"
+          middot_sep
+          link "Add Another Monitor", to: Monitor::Create.with(domain)
+        end
       end
-
-      link "Stop Monitoring", to: Domains::Delete.with(domain), data_confirm: "Are you sure?"
-      link "Add Another Monitor", to: Monitor::Create.with(domain)
-
-      hr
 
       table do
         domain.monitors.each do |monitor|

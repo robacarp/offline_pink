@@ -44,4 +44,16 @@ abstract class BaseLayout
       yield
     end
   end
+
+  def header_and_links
+    div class: "flex justify-between items-end" do
+      yield
+    end
+
+    hr
+  end
+
+  def middot_sep
+    raw "&nbsp;&middot;&nbsp;"
+  end
 end

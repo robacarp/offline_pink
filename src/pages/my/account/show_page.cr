@@ -4,17 +4,15 @@ class My::Account::ShowPage < AuthLayout
 
   def content
     small_frame do
-      div class: "flex justify-between items-end" do
+      header_and_links do
         h1 "Your Account"
 
         div do
-        link "Sign out", to: SignIns::Delete
-        raw "&nbsp;&middot;&nbsp;"
-        link "Change your password", to: My::Password::Change
+          link "Sign out", to: SignIns::Delete
+          middot_sep
+          link "Change your password", to: My::Password::Change
         end
       end
-
-      hr
 
       form_for My::Account::Update do
         mount Shared::Field, attribute: save.email, button: { text: "Save" }, &.text_input
@@ -22,12 +20,10 @@ class My::Account::ShowPage < AuthLayout
 
 
       if (memberships = user.memberships!).any?
-        div class: "flex justify-between items-end" do
+        header_and_links do
           h1 "Organization Membership"
           link "Create a new Organization", to: Organizations::New
         end
-
-        hr
 
         table do
          memberships.each do |membership|

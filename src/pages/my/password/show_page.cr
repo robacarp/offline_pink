@@ -4,8 +4,9 @@ class My::Password::ShowPage < AuthLayout
 
   def content
     small_frame do
-      h1 "Change Password"
-      hr
+      header_and_links do
+        h1 "Change Password"
+      end
 
       shrink_to_fit do
         form_for My::Password::Update do
