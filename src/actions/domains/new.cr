@@ -1,7 +1,7 @@
 class Domains::New < BrowserAction
-  include Sift::DontEnforceAuthorization
-
   get "/my/domains/new" do
-    html NewPage, save: SaveDomain.new
+    authorize_operation(->SaveDomain.new) do |authorized_operation|
+      html NewPage, save: authorized_operation
+    end
   end
 end

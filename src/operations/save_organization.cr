@@ -1,4 +1,6 @@
 class SaveOrganization < Organization::SaveOperation
+  include Sift::AuthorizedOperation
+
   permit_columns name
 
   needs user : User

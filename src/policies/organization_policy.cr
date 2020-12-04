@@ -21,4 +21,11 @@ class OrganizationPolicy < Organization::BasePolicy
         .where_memberships(MembershipQuery.new.user_id(user.id))
     end
   end
+
+  class Create < Organization::BaseCreator
+    def authorize
+      # todo
+      true
+    end
+  end
 end

@@ -23,6 +23,7 @@ class DomainPolicy < Domain::BasePolicy
 
   class Create < Domain::BaseCreator
     def authorize
+      # todo
       true
     end
   end

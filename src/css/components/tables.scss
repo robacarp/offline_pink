@@ -1,15 +1,27 @@
-.result-table {
-  .row {
-    background-color: rgb(33, 37, 41);
+table {
+  @apply w-full table-auto;
+
+  th {
+    @apply text-center font-bold;
   }
 
-  .result-type {
-    padding-top: 2em;
-    background-color: transparent;
+  td {
   }
 
-  .result-header {
-    padding-top: 1.5em;
-    border-bottom: 1px solid #868686
+  &.table-zebra {
+    tr:nth-child(even) {
+      background-color: #444;
+    }
+    tr:nth-child(odd) {
+      background-color: #666;
+    }
+  }
+
+  &.table-borders {
+    @apply border-collapse;
+
+    td {
+      @apply border border-gray-700;
+    }
   }
 }

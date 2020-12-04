@@ -13,7 +13,7 @@ class Domains::ShowPage < AuthLayout
         end
       end
 
-      table do
+      table class: "mx-auto w-64 table-zebra table-borders" do
         domain.monitors.each do |monitor|
           tr do
             td monitor.type

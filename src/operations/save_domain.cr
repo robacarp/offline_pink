@@ -1,4 +1,6 @@
 class SaveDomain < Domain::SaveOperation
+  include Sift::AuthorizedOperation
+
   permit_columns name
 
   attribute owner : String

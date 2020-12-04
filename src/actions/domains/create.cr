@@ -12,8 +12,8 @@ class Domains::Create < BrowserAction
       organization_id = owner.id
     end
 
-
-    SaveDomain.create(
+    authorize_create(
+      SaveDomain,
       params,
       user_id: user_id,
       organization_id: organization_id
