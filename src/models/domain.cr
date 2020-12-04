@@ -1,10 +1,17 @@
 require "./user"
 
 class Domain < BaseModel
+  avram_enum Status do
+    UnChecked = -1
+    Up = 0
+    PartiallyDown = 1
+    Down = 2
+  end
+
   table :domains do
     column name : String
     column is_valid : Bool = false
-    column status_code : Int32 = 0
+    column status_code : Domain::Status = Domain::Status.new(:un_checked).to_i
 
     belongs_to user : User?
     belongs_to organization : Organization?
@@ -28,25 +35,6 @@ class Domain < BaseModel
     end
 
     list
-  end
-
-  enum Status
-    UnChecked = -1
-    Up = 0
-    PartiallyDown = 1
-    Down = 2
-  end
-
-  def status : Status
-    if s = @status_code
-      Status.new s
-    else
-      Status::UnChecked
-    end
-  end
-
-  def status=(s : Status)
-    @status_code = s.value
   end
 
   # def grouped_monitors

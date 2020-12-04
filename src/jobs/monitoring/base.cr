@@ -4,32 +4,26 @@ module Monitoring
     getter host : Host
 
     private getter monitor : Monitor::Any
+    private getter logger : LogArchiver
+    delegate :successful!, :failed!, to: @result
 
-    def self.check(hosts : Array(Host), with monitor : Monitor::Any) : Array(Result)
-      hosts.map do |host|
-        check host, with: monitor
-      end
-    end
-
-    def self.check(host : Host, with monitor : Monitor::Any) : Result
-      instance = new(host, monitor)
+    def self.check(host : Host, with monitor : Monitor::Any, logger : LogArchiver) : Result
+      instance = new(host, monitor, logger)
       instance.check
       instance.result
     end
 
-    def initialize(@host : Host, @monitor : Monitor::Any)
+    def initialize(@host : Host, @monitor : Monitor::Any, @logger : LogArchiver)
       @result = Result.new host
     end
 
-    delegate :successful!, :failed!, to: @result
-
-    def log(message : String)
-      result.log "#{self.class.log_identifier} - #{message}"
+    def log(message : String, severity : LogEntry::Severity = LogArchiver::DEFAULT_SEVERITY)
+      logger.emit "#{log_identifier} #{message}", severity, from: monitor
     end
 
     protected abstract def check : Nil
 
-    def self.log_identifier : String
+    def log_identifier : String
       ""
     end
   end

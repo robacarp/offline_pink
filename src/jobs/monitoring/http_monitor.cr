@@ -7,7 +7,7 @@ module Monitoring
 
     private def monitor : Monitor::Http
       if (mon = @monitor) && mon.is_a? Monitor::Http
-        return mon
+        mon
       else
         raise "#{self.class.name} unexpectedly received a #{monitor.class.name}"
       end
@@ -21,16 +21,16 @@ module Monitoring
       url = "#{protocol}#{host.ip_address}#{monitor.path}"
       headers = HTTP::Headers{ "Host" => "#{domain.name}" }
 
-      log "GETing #{url} host=#{domain.name}"
 
       response : HTTP::Client::Response
 
+      client = http_client(host.ip_address)
+
       start_time = Time.monotonic
-      response = http_client(host.ip_address).get monitor.path
+      response = client.get monitor.path, headers
       response_time = Time.monotonic - start_time
 
-      log "response code: #{response.status_code}"
-      log "response time: #{response_time.total_milliseconds}ms"
+      log "GETing #{url} host=#{domain.name} response: #{response.status_code} in #{response_time.total_milliseconds}ms"
 
       # result = MonitorResult.new(
       #   ok: response.status_code == monitor.http_expected_status_code,
@@ -83,7 +83,7 @@ module Monitoring
       client
     end
 
-    def self.log_identifier
+    def log_identifier
       "HTTP Monitor"
     end
   end

@@ -1,6 +1,5 @@
 module Monitoring
   class Result
-    getter log : Array(String)
     getter host : Host
     getter success : Bool?
 
@@ -15,10 +14,5 @@ module Monitoring
     protected def failed!
       @success = false
     end
-
-    def log(message : String)
-      @log << "#{host.ip_address} - #{message}"
-    end
-
   end
 end

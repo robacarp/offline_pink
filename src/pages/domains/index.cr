@@ -8,7 +8,7 @@ class Domains::IndexPage < AuthLayout
         link "Monitor a new domain", to: Domains::New
       end
 
-      table do
+      table class: "mx-auto w-64 table-zebra table-borders" do
         tr do
           th "DNS Name"
           th "Status"
@@ -27,7 +27,7 @@ class Domains::IndexPage < AuthLayout
         end
       end
 
-      td domain.status.to_s
+      td domain.status_code.to_s
     end
   end
 end

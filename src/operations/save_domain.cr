@@ -12,7 +12,7 @@ class SaveDomain < Domain::SaveOperation
 
   before_save do
     is_valid.value = true
-    status_code.value = Domain::Status::UnChecked.value
+    status_code.value = Domain::Status.new(:un_checked)
 
     validate_required owner
     validate_required name
