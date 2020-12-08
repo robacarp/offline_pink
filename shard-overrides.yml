@@ -1,0 +1,10 @@
+dependencies:
+  lucky_cli:
+    github: luckyframework/lucky_cli
+    branch: master
+  lucky:
+    github: luckyframework/lucky
+    branch: master
+  avram:
+    github: luckyframework/avram
+    branch: master

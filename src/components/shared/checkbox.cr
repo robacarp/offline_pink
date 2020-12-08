@@ -12,7 +12,7 @@ class Shared::Checkbox(T) < BaseComponent
     end
 
     div class: classes.join(' ') do
-      with_defaults field: attribute do |input_builder|
+      tag_defaults field: attribute do |input_builder|
         yield input_builder
       end
 

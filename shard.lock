@@ -1,12 +1,13 @@
+# NOTICE: This lockfile contains some overrides from /Users/robert/documents/repositories/robacarp/offline_pink/shard-overrides.yml
 version: 2.0
 shards:
   authentic:
     git: https://github.com/luckyframework/authentic.git
     version: 0.7.0
 
-  avram:
+  avram: # Overridden
     git: https://github.com/luckyframework/avram.git
-    version: 0.17.0
+    version: 0.17.0+git.commit.38c74a71d12ff51a1bbfab77fdd2acf18d118e52
 
   bindata:
     git: https://github.com/spider-gazelle/bindata.git
@@ -30,7 +31,7 @@ shards:
 
   db:
     git: https://github.com/crystal-lang/crystal-db.git
-    version: 0.9.0
+    version: 0.10.0
 
   dexter:
     git: https://github.com/luckyframework/dexter.git
@@ -64,13 +65,13 @@ shards:
     git: https://github.com/crystal-community/jwt.git
     version: 1.4.2
 
-  lucky:
+  lucky: # Overridden
     git: https://github.com/luckyframework/lucky.git
-    version: 0.24.0
+    version: 0.24.0+git.commit.49f1021a76c49ca7d14a3d636ebea0244671d97b
 
-  lucky_cli:
+  lucky_cli: # Overridden
     git: https://github.com/luckyframework/lucky_cli.git
-    version: 0.24.0
+    version: 0.24.0+git.commit.dfd34e5a569f14f5f910851221ff2624b5965cd6
 
   lucky_flow:
     git: https://github.com/luckyframework/lucky_flow.git
@@ -81,7 +82,7 @@ shards:
     version: 0.3.1
 
   mosquito:
-    git: https://github.com/robacarp/mosquito.git
+    path: /Users/robert/Documents/repositories/robacarp/mosquito
     version: 0.9.0
 
   myhtml:
@@ -94,7 +95,7 @@ shards:
 
   pg:
     git: https://github.com/will/crystal-pg.git
-    version: 0.21.1
+    version: 0.22.1
 
   pool:
     git: https://github.com/ysbaddaden/pool.git

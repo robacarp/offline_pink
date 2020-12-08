@@ -14,7 +14,7 @@ class User < BaseModel
 
     has_many domains : Domain
     has_many memberships : Membership
-    has_many organizations : Organization, through: :memberships
+    has_many organizations : Organization, through: [:memberships, :user]
   end
 
   def emailable : Carbon::Address
