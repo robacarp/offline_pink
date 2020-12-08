@@ -3,6 +3,7 @@
   "private": true,
   "dependencies": {
     "@rails/ujs": "^6.0.0",
+    "@tailwindcss/typography": "^0.2.0",
     "parcel-bundler": "^1.12.4",
     "tailwindcss": "^1.9.6",
     "turbolinks": "^5.2.0"
