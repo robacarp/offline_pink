@@ -1,6 +1,6 @@
 class LogArchiver
   DEFAULT_SEVERITY = LogEntry::Severity.new :notice
-  @monitor_event : Int64 = 0
+  getter monitor_event : Int64 = 0
 
   def initialize(@domain : Domain, @logger : Log)
     AppDatabase.run do |db|

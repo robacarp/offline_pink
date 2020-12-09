@@ -14,7 +14,7 @@ module Monitoring
     end
 
     def initialize(@host : Host, @monitor : Monitor::Any, @logger : LogArchiver)
-      @result = Result.new host
+      @result = Result.new host, monitor
     end
 
     def log(message : String, severity : LogEntry::Severity = LogArchiver::DEFAULT_SEVERITY)

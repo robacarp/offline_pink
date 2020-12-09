@@ -8,7 +8,7 @@ module Monitoring
         # shhhhhh
       end
 
-      if false #statistics[:success] == 1
+      if statistics[:success] == 1
         log "response time: #{statistics[:average_response]}"
         successful!
 

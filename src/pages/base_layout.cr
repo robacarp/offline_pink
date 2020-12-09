@@ -56,4 +56,8 @@ abstract class BaseLayout
   def middot_sep
     raw "&nbsp;&middot;&nbsp;"
   end
+
+  def formatted_status(for domain : Domain)
+    domain.status_code.to_s.downcase
+  end
 end

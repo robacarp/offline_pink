@@ -37,7 +37,9 @@ class MonitorJob < Mosquito::QueuedJob
   end
 
   def perform
-    log "Starting monitor for Domain##{domain_id}"
+    results = [] of Monitoring::Result
+
+    log "Starting monitor for Domain##{domain_id} at #{Time.utc.to_s("%Y-%m-%d %H:%M:%S %:z")}"
 
     ensure_domain
     setup_logs
@@ -50,15 +52,19 @@ class MonitorJob < Mosquito::QueuedJob
       l << hosts.map(&.ip_address).join(", ")
     end
 
-    hosts.each do |host|
+    log do |l|
+      l << "Monitors: "
+      l << domain.monitors.map(&.summary).join("; ")
+    end
 
-      results = domain.monitors.map do |monitor|
+    hosts.each do |host|
+      domain.monitors.map do |monitor|
         case monitor
         when Monitor::Http
-          Monitoring::Http.check host, with: monitor, logger: log_archiver
+          results << Monitoring::Http.check host, with: monitor, logger: log_archiver
 
         when Monitor::Icmp
-          Monitoring::Icmp.check host, with: monitor, logger: log_archiver
+          results << Monitoring::Icmp.check host, with: monitor, logger: log_archiver
 
         else
           log "Unable to monitor a \"#{monitor.type}\" for #{domain_id} - Unknown monitor type"
@@ -69,6 +75,7 @@ class MonitorJob < Mosquito::QueuedJob
   ensure
     domain_name = ""
     domain.try { |domain_| domain_name = " (#{domain_.name})" }
+    update_domain_health(results || [] of Monitoring::Result)
     log "Finished monitoring Domain##{domain_id}#{domain_name}"
   end
 
@@ -84,14 +91,12 @@ class MonitorJob < Mosquito::QueuedJob
     mark_domain_invalid("DNS failure, no hosts resolved") if resolver.hosts.empty?
   end
 
-  # Job failed! Raised Errno: connect: Network is down
-
   def rescheduleable?
     false
   end
 
   def mark_domain_invalid(reason)
-    Domain::SetInvalid.update domain do |operation, domain|
+    Domain::SaveOperation.update domain, is_valid: false do |operation, domain|
       if operation.saved?
         log "Marking domain as invalid : #{reason}"
       else
@@ -103,5 +108,36 @@ class MonitorJob < Mosquito::QueuedJob
     end
 
     log reason, severity: LogEntry.fatal
+  end
+
+  def update_domain_health(results : Array(Monitoring::Result))
+    puts "updating domain health:"
+    status = Domain::Status.new :stable
+
+    grouped_results = results.group_by &.success
+    successful = grouped_results[true]?.try(&.size) || 0
+    failed = grouped_results[false]?.try(&.size) || 0
+
+    case
+    when successful + failed == 0
+      status = Domain::Status.new :offline
+    when successful > 0 && failed > 0
+      status = Domain::Status.new :degraded
+    when successful == 0 && failed > 0
+      status = Domain::Status.new :offline
+    when successful > 0 && failed == 0
+      status = Domain::Status.new :stable
+    else
+      puts "not sure what happened"
+    end
+
+    save = Domain::SaveOperation.new(domain)
+    save.status_code.value = status
+
+    if log_archive = @_log_archiver
+      save.last_monitor_event.value = log_archive.monitor_event
+    end
+
+    save.save!
   end
 end

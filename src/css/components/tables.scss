@@ -6,6 +6,7 @@ table {
   }
 
   td {
+    @apply p-1;
   }
 
   &.table-zebra {

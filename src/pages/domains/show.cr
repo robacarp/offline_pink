@@ -2,9 +2,13 @@ class Domains::ShowPage < AuthLayout
   needs domain : Domain
 
   def content
-    small_frame do
+    div class: "w-1/2 mx-auto" do
       header_and_links do
-        h1 domain.name
+        h1 do
+          text domain.name
+          middot_sep
+          text formatted_status for: domain
+        end
 
         div do
           link "Stop Monitoring", to: Domains::Delete.with(domain), data_confirm: "Are you sure?"
@@ -17,11 +21,35 @@ class Domains::ShowPage < AuthLayout
         domain.monitors.each do |monitor|
           tr do
             td monitor.type
-            td monitor.summary
+            td monitor.string_config
           end
         end
       end
 
+      last_monitor_output
+    end
+  end
+
+  def last_monitor_output
+    output = domain.last_monitor_output
+
+    if output.select_count <= 0
+      para "No monitor logs"
+      return
+    end
+
+    header_and_links do
+      h1 "Last Montor Run"
+    end
+
+    div class: "log-output" do
+      output.each do |log_line|
+        span class: log_line.severity.to_s do
+          text log_line.text
+        end
+
+        br
+      end
     end
   end
 end

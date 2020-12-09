@@ -19,7 +19,7 @@ class Monitor::Http < Monitor::Base
     ssl
   end
 
-  def summary : String
+  def string_config : String
     String.build do |s|
       s << "path:"
       s << path

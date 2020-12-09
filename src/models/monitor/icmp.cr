@@ -10,7 +10,7 @@ class Monitor::Icmp < Monitor::Base
     "ICMP"
   end
 
-  def summary : String
+  def string_config : String
     ""
   end
 end

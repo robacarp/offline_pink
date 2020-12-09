@@ -32,19 +32,19 @@ module Monitoring
 
       log "GETing #{url} host=#{domain.name} response: #{response.status_code} in #{response_time.total_milliseconds}ms"
 
-      # result = MonitorResult.new(
-      #   ok: response.status_code == monitor.http_expected_status_code,
-      #   http_response_code: response.status_code,
-      #   http_response_time: response_time.milliseconds.to_f32,
-      # )
+      if response.status_code != monitor.expected_status_code
+        log "Expected status #{monitor.expected_status_code} but got #{response.status_code}"
+        result.failed!
+      end
 
-      # if monitor.search_content?
-      #   if search_text = monitor.http_expected_content
-      #     index = response.body.lines.join(" ").index search_text
-      #     result.http_content_found = ! index.nil?
-      #     result.ok = result.ok && result.http_content_found
-      #   end
-      # end
+      if search_string = monitor.expected_content
+        unless response.body.lines.join(" ").index search_string
+          log "Plain text search for '#{monitor.expected_content}' did not succeed"
+          result.failed!
+        end
+      end
+
+      result.successful!
 
       # result
       # rescue err : Errno
@@ -56,8 +56,6 @@ module Monitoring
       # else
       #   log "http check failed with errno #{err.errno}"
       # end
-
-      # MonitorResult.new(ok: false)
     end
 
     def protocol

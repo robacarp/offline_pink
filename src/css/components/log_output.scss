@@ -1,0 +1,19 @@
+.log-output {
+  @apply font-mono;
+
+  .info { }
+
+  .notice { }
+
+  .warn {
+    @apply text-yellow-400;
+  }
+
+  .error {
+    @apply text-red-400;
+  }
+
+  .fatal {
+    @apply text-red-900;
+  }
+}
