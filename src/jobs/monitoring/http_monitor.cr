@@ -30,7 +30,7 @@ module Monitoring
       response = client.get monitor.path, headers
       response_time = Time.monotonic - start_time
 
-      log "GETing #{url} host=#{domain.name} response: #{response.status_code} in #{response_time.total_milliseconds}ms"
+      log "GET #{domain.name} via #{url} => #{response.status_code}, ∆t=#{format_time response_time}"
 
       if response.status_code != monitor.expected_status_code
         log "Expected status #{monitor.expected_status_code} but got #{response.status_code}"
@@ -39,7 +39,7 @@ module Monitoring
 
       if search_string = monitor.expected_content
         unless response.body.lines.join(" ").index search_string
-          log "Plain text search for '#{monitor.expected_content}' did not succeed"
+          log "Plain text search for '#{monitor.expected_content}' failed"
           result.failed!
         end
       end
@@ -82,7 +82,7 @@ module Monitoring
     end
 
     def log_identifier
-      "HTTP Monitor"
+      "HTTP"
     end
   end
 end

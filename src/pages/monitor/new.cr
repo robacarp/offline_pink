@@ -50,8 +50,6 @@ class Monitor::NewPage < AuthLayout
 
       end
 
-
-
     end
   end
 
@@ -78,8 +76,17 @@ class Monitor::NewPage < AuthLayout
   def html_form
     form_for Monitor::Http::Create.with(id: @domain) do
       meta_error http_op
-      mount Shared::Field, attribute: http_op.path, &.text_input
-      mount Shared::Checkbox, attribute: http_op.ssl, label_text: "SSL", &.checkbox
+
+      div class: "flex justify-between items-start" do
+        div do
+          mount Shared::Field, attribute: http_op.path, &.text_input
+          mount Shared::Checkbox, attribute: http_op.ssl, label_text: "SSL", &.checkbox
+          mount Shared::Field, attribute: http_op.expected_status_code, &.number_input(min: 100, max: 599)
+        end
+
+        mount Shared::Field, attribute: http_op.expected_content, &.textarea
+      end
+
       submit "Add new HTTP Monitor"
     end
   end

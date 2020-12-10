@@ -26,6 +26,22 @@ module Monitoring
     def log_identifier : String
       ""
     end
+
+    def format_time(span : Time::Span) : String
+      number = span.total_seconds
+      unit = "s"
+
+      case
+      when span.total_milliseconds > 0
+        number = span.total_milliseconds
+        unit = "ms"
+      when span.total_nanoseconds > 0
+        number = span.total_nanoseconds
+        unit = "ns"
+      end
+
+      "#{number.*(100).trunc./(100)}#{unit}"
+    end
   end
 end
 

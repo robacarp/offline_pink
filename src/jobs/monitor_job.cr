@@ -111,8 +111,7 @@ class MonitorJob < Mosquito::QueuedJob
   end
 
   def update_domain_health(results : Array(Monitoring::Result))
-    puts "updating domain health:"
-    status = Domain::Status.new :stable
+    status = Domain::Status.new :system_failure
 
     grouped_results = results.group_by &.success
     successful = grouped_results[true]?.try(&.size) || 0
@@ -120,15 +119,13 @@ class MonitorJob < Mosquito::QueuedJob
 
     case
     when successful + failed == 0
-      status = Domain::Status.new :offline
+      status = Domain::Status.new :un_checked
     when successful > 0 && failed > 0
       status = Domain::Status.new :degraded
     when successful == 0 && failed > 0
       status = Domain::Status.new :offline
     when successful > 0 && failed == 0
       status = Domain::Status.new :stable
-    else
-      puts "not sure what happened"
     end
 
     save = Domain::SaveOperation.new(domain)

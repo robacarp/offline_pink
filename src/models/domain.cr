@@ -6,6 +6,7 @@ class Domain < BaseModel
     Stable = 0
     Degraded = 1
     Offline = 2
+    SystemFailure = 3
   end
 
   table :domains do

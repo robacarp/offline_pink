@@ -12,8 +12,15 @@ form {
     input[type=text],
     input[type=email],
     input[type=password],
-    select {
+    input[type=number],
+    select,
+    textarea {
       @apply shadow appearance-none border rounded py-2 px-3 text-gray-700 mb-3 leading-tight;
+    }
+
+    textarea {
+      @apply h-16;
+      width: 18rem;
     }
 
     &.error {

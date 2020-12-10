@@ -2,7 +2,7 @@ class Monitor::Http::Create < BrowserAction
   authorized_lookup Domain, :update
 
   post "/domain/:id/monitors/http/create" do
-    Monitor::Http::Save.create(domain: domain) do |operation, monitor|
+    Monitor::Http::Save.create(params, domain) do |operation, monitor|
       if monitor
         flash.keep
         flash.success = "Now monitoring #{domain.name} with HTTP"

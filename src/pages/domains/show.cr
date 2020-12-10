@@ -44,7 +44,7 @@ class Domains::ShowPage < AuthLayout
 
     div class: "log-output" do
       output.each do |log_line|
-        span class: log_line.severity.to_s do
+        span class: log_line.severity.to_s.downcase do
           text log_line.text
         end
 
