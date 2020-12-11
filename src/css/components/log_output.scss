@@ -1,6 +1,8 @@
 .log-output {
   @apply font-mono;
 
+  .entry { @apply inline-block }
+
   .info { }
 
   .notice { }
@@ -15,5 +17,9 @@
 
   .fatal {
     @apply text-red-900;
+  }
+
+  .monitor {
+    @apply ml-6;
   }
 }

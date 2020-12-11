@@ -17,16 +17,32 @@ class Domains::ShowPage < AuthLayout
         end
       end
 
-      table class: "mx-auto w-64 table-zebra table-borders" do
-        domain.monitors.each do |monitor|
-          tr do
-            td monitor.type
-            td monitor.string_config
+      shrink_to_fit do
+        ul do
+          domain.monitors.each do |monitor|
+            li do
+              link_to_monitor monitor
+            end
           end
         end
       end
 
       last_monitor_output
+    end
+  end
+
+  def link_to_monitor(monitor : Monitor::Any)
+    action = case monitor
+             when Monitor::Http
+               Monitor::Http::Show.with(monitor.id)
+             when Monitor::Icmp
+               Monitor::Icmp::Show.with(monitor.id)
+             end
+
+    if action
+      link monitor.summary, to: action
+    else
+      text monitor.summary
     end
   end
 
@@ -44,7 +60,11 @@ class Domains::ShowPage < AuthLayout
 
     div class: "log-output" do
       output.each do |log_line|
-        span class: log_line.severity.to_s.downcase do
+        classes = ["entry"]
+        classes << log_line.severity.to_s.downcase
+        classes << "monitor" if log_line.attached_monitor?
+
+        span class: classes.join(' ') do
           text log_line.text
         end
 

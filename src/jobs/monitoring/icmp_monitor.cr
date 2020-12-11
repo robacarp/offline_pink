@@ -9,6 +9,7 @@ module Monitoring
       end
 
       if statistics[:success] == 1
+        duration = Time::Span.new milliseconds: statistics[:average_response]
         log "response time: #{statistics[:average_response]}"
         successful!
 

@@ -35,11 +35,15 @@ class Monitor::Http < Monitor::Base
     String.build do |s|
       s << "http"
       s << "s" if ssl?
-      s << " '"
-      s << path
-      s << "' => "
+
+      if path
+        s << " "
+        s << path
+      end
+
+      s << " => "
       s << expected_status_code
-      s << "(with search content)" unless expected_content.blank?
+      s << " (with search content)" unless expected_content.blank?
     end
   end
 end

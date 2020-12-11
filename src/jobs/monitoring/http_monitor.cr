@@ -33,13 +33,13 @@ module Monitoring
       log "GET #{domain.name} via #{url} => #{response.status_code}, ∆t=#{format_time response_time}"
 
       if response.status_code != monitor.expected_status_code
-        log "Expected status #{monitor.expected_status_code} but got #{response.status_code}"
+        log "Expected status #{monitor.expected_status_code} but got #{response.status_code}", LogEntry.error
         result.failed!
       end
 
       if search_string = monitor.expected_content
         unless response.body.lines.join(" ").index search_string
-          log "Plain text search for '#{monitor.expected_content}' failed"
+          log "Plain text search for '#{monitor.expected_content}' failed", LogEntry.error
           result.failed!
         end
       end
