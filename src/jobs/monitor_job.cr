@@ -54,18 +54,23 @@ class MonitorJob < Mosquito::QueuedJob
 
     log do |l|
       l << "Monitors: "
-      l << domain.monitors.map(&.summary).join("; ")
+
+      if domain.monitors.any?
+        l << domain.monitors.map(&.summary).join("; ")
+      else
+        l << "none"
+      end
     end
 
     hosts.each do |host|
       log "#{host.ip_address}:"
 
       domain.monitors.map do |monitor|
-        case Monitor::Type.new monitor.monitor_type
-        when Monitor.http
+        case monitor.monitor_type
+        when Monitor.http.to_i
           results << Monitoring::Http.check host, with: monitor, logger: log_archiver
 
-        when Monitor.icmp
+        when Monitor.icmp.to_i
           results << Monitoring::Icmp.check host, with: monitor, logger: log_archiver
 
         else

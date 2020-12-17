@@ -13,7 +13,7 @@ module Monitoring
       if (monitor_config = monitor.monitor_config).is_a? Monitor::Http
         monitor_config
       else
-        raise "#{self.class.name} unexpectedly received a #{monitor.class.name}"
+        raise "#{self.class.name} unexpectedly received a #{monitor_config.class.name}"
       end
     end
 

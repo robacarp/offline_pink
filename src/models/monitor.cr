@@ -38,4 +38,19 @@ class Monitor < BaseModel
       raise "cannot produce a monitor config for #{monitor_type}"
     end
   end
+
+  def last_monitor_output
+    last_run = LogEntryQuery.new
+      .monitor_id(id)
+      .monitor_event
+      .select_max
+
+    if last_run
+      LogEntryQuery.new
+        .monitor_id(id)
+        .monitor_event(last_run)
+    else
+      LogEntryQuery.new.none
+    end
+  end
 end
