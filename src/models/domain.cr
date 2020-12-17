@@ -21,25 +21,12 @@ class Domain < BaseModel
 
     has_many log_entries : LogEntry
 
-    has_many icmp_monitors : Monitor::Icmp
-    has_many http_monitors : Monitor::Http
+    has_many monitors : Monitor
+    # has_many icmp_monitors : Monitor::Icmp
+    # has_many http_monitors : Monitor::Http
   end
 
   policy!
-
-  def monitors : Array(Monitor::Base)
-    list = [] of Monitor::Base
-
-    icmp_monitors.each do |monitor|
-      list << monitor
-    end
-
-    http_monitors.each do |monitor|
-      list << monitor
-    end
-
-    list
-  end
 
   def is_valid?
     is_valid

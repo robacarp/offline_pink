@@ -34,7 +34,7 @@ class SaveDomain < Domain::SaveOperation
   end
 
   def attach_default_monitors(domain : Domain)
-    Monitor::Icmp::Save.create! domain
-    Monitor::Http::Save.create! domain, path: "/", ssl: true, expected_status_code: 200
+#    Monitor::Icmp::Save.create! domain
+#    Monitor::Http::Save.create! domain, path: "/", ssl: true, expected_status_code: 200
   end
 end

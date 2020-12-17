@@ -1,5 +1,5 @@
 class Monitor::Icmp::ShowPage < AuthLayout
-  needs monitor : Monitor::Icmp
+  needs monitor : Monitor
 
   def content
     small_frame do

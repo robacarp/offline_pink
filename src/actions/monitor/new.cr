@@ -4,7 +4,7 @@ class Monitor::Create < BrowserAction
   get "/domain/:id/monitors/create" do
     html NewPage,
       domain: domain,
-      icmp_op: Monitor::Icmp::Save.new(domain: domain),
-      http_op: Monitor::Http::Save.new(domain: domain)
+      icmp_op: SaveIcmpMonitor.new(domain: domain),
+      http_op: SaveHttpMonitor.new(domain: domain)
   end
 end

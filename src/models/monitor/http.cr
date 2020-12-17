@@ -1,18 +1,20 @@
-class Monitor::Http < Monitor::Base
-  policy!
+class Monitor::Http
+  include JSON::Serializable
+  include JsonHelpers
 
-  table :http_monitors do
-    belongs_to domain : Domain
-    belongs_to region : Region
+  @[JSON::Field]
+  property ssl : Bool = true
 
-    column ssl : Bool = true
-    column path : String = "/"
-    column expected_status_code : Int32 = 200
-    column expected_content : String?
-  end
+  @[JSON::Field]
+  property path : String = "/"
 
-  def type
-    "HTTP"
+  @[JSON::Field]
+  property expected_status_code : Int64 = 200
+
+  @[JSON::Field]
+  property expected_content : String?
+
+  def initialize
   end
 
   def ssl?
@@ -45,5 +47,14 @@ class Monitor::Http < Monitor::Base
       s << expected_status_code
       s << " (with search content)" unless expected_content.blank?
     end
+  end
+
+  def to_any : JSON::Any
+    any({
+      "ssl" => any(ssl),
+      "path" => any(path),
+      "expected_status_code" => any(expected_status_code),
+      "expected_content" => any(expected_content)
+    })
   end
 end

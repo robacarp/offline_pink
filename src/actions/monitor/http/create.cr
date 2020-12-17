@@ -2,7 +2,7 @@ class Monitor::Http::Create < BrowserAction
   authorized_lookup Domain, :update
 
   post "/domain/:id/monitors/http/create" do
-    Monitor::Http::Save.create(params, domain) do |operation, monitor|
+    SaveHttpMonitor.create(params, domain) do |operation, monitor|
       if monitor
         flash.keep
         flash.success = "Now monitoring #{domain.name} with HTTP"
@@ -12,7 +12,7 @@ class Monitor::Http::Create < BrowserAction
         flash.failure = "Could not create monitor : #{operation.errors}"
         html Monitor::NewPage,
             domain: domain,
-            icmp_op: Monitor::Icmp::Save.new(domain: domain),
+            icmp_op: SaveIcmpMonitor.new(domain: domain),
             http_op: operation,
             selected_monitor: :http
       end

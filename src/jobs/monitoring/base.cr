@@ -3,7 +3,7 @@ module Monitoring
     getter result : Result
     getter host : Host
 
-    private getter monitor : Monitor::Any
+    private getter monitor : Monitor
     private getter logger : LogArchiver
     delegate :successful!, :failed!, to: @result
 

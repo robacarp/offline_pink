@@ -2,7 +2,7 @@ class Monitor::Icmp::Create < BrowserAction
   authorized_lookup Domain, :update
 
   post "/domain/:id/monitors/icmp/create" do
-    Monitor::Icmp::Save.create domain: domain do |operation, monitor|
+    SaveIcmpMonitor.create domain: domain do |operation, monitor|
       if monitor
         flash.keep
         flash.success = "Now monitoring #{domain.name} with ICMP"
@@ -13,7 +13,7 @@ class Monitor::Icmp::Create < BrowserAction
         html Monitor::NewPage,
             domain: domain,
             icmp_op: operation,
-            http_op: Monitor::Http::Save.new(domain: domain),
+            http_op: SaveHttpMonitor.new(domain: domain),
             selected_monitor: :icmp
       end
     end

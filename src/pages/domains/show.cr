@@ -31,13 +31,8 @@ class Domains::ShowPage < AuthLayout
     end
   end
 
-  def link_to_monitor(monitor : Monitor::Any)
-    action = case monitor
-             when Monitor::Http
-               Monitor::Http::Show.with(monitor.id)
-             when Monitor::Icmp
-               Monitor::Icmp::Show.with(monitor.id)
-             end
+  def link_to_monitor(monitor : Monitor)
+    action = Monitor::Show.with monitor
 
     if action
       link monitor.summary, to: action

@@ -1,7 +1,7 @@
 class Monitor::NewPage < AuthLayout
   needs domain : Domain
-  needs icmp_op : Monitor::Icmp::Save
-  needs http_op : Monitor::Http::Save
+  needs icmp_op : SaveIcmpMonitor
+  needs http_op : SaveHttpMonitor
 
   needs selected_monitor : Symbol?
 

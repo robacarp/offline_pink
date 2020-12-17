@@ -1,5 +1,5 @@
 class Monitor::Http::ShowPage < AuthLayout
-  needs monitor : Monitor::Http
+  needs monitor : Monitor
 
   def content
     small_frame do
