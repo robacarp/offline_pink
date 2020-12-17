@@ -7,14 +7,18 @@ module Monitoring
     private getter logger : LogArchiver
     delegate :successful!, :failed!, to: @result
 
-    def self.check(host : Host, with monitor : Monitor::Any, logger : LogArchiver) : Result
+    def self.check(host : Host, with monitor : Monitor, logger : LogArchiver) : Result
       instance = new(host, monitor, logger)
       instance.check
       instance.result
     end
 
-    def initialize(@host : Host, @monitor : Monitor::Any, @logger : LogArchiver)
+    def initialize(@host : Host, @monitor : Monitor, @logger : LogArchiver)
       @result = Result.new host, monitor
+    end
+
+    def config
+      monitor.monitor_config
     end
 
     def log(message : String, severity : LogEntry::Severity = LogArchiver::DEFAULT_SEVERITY)

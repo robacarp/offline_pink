@@ -9,8 +9,6 @@ class CreateLogEntries::V20201204230100 < Avram::Migrator::Migration::V1
       add monitor_event : Int64
 
       add_belongs_to domain : Domain?, on_delete: :cascade
-      add_belongs_to icmp_monitor : Monitor::Icmp?, on_delete: :cascade, references: "icmp_monitors"
-      add_belongs_to http_monitor : Monitor::Http?, on_delete: :cascade, references: "http_monitors"
 
       add_timestamps
     end

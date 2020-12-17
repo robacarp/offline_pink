@@ -13,9 +13,7 @@ class LogEntry < BaseModel
     column monitor_event : Int64
 
     belongs_to domain : Domain?
-    # belongs_to icmp_monitor : Monitor::Icmp?
-    # belongs_to http_monitor : Monitor::Http?
-    # polymorphic monitor, associations: [:icmp_monitor, :http_monitor], optional: true
+    belongs_to monitor : Monitor?
   end
 
   {% begin %}

@@ -10,9 +10,18 @@ class CreateMonitors::V20201216181913 < Avram::Migrator::Migration::V1
 
       add_timestamps
     end
+
+
+    alter :log_entries do
+      add_belongs_to monitor : Monitor?, on_delete: :cascade
+    end
   end
 
   def rollback
+    alter :log_entries do
+      remove_belongs_to :monitor
+    end
+
     drop :monitors
   end
 end

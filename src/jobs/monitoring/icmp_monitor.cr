@@ -9,7 +9,7 @@ module Monitoring
       end
 
       if statistics[:success] == 1
-        duration = Time::Span.new milliseconds: statistics[:average_response]
+        duration = Time::Span.new nanoseconds: (statistics[:average_response] * 1000000).to_i
         log "response time: #{statistics[:average_response]}"
         successful!
 

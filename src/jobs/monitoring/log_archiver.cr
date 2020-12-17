@@ -28,17 +28,9 @@ class LogArchiver
     end
   end
 
-  def emit(message : String, severity : LogEntry::Severity = DEFAULT_SEVERITY, *, from monitor : Monitor::Base)
+  def emit(message : String, severity : LogEntry::Severity = DEFAULT_SEVERITY, *, from monitor : Monitor)
     emit message, severity do |entry|
-      case monitor
-      when Monitor::Icmp
-        entry.icmp_monitor_id.value = monitor.id
-      when Monitor::Http
-        entry.http_monitor_id.value = monitor.id
-      else
-        emit "could not resolve monitor type: #{monitor.class.name}"
-        nil
-      end
+      entry.monitor_id.value = monitor.id
     end
   end
 end

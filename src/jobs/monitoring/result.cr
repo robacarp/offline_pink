@@ -3,7 +3,7 @@ module Monitoring
     getter host : Host
     getter success : Bool = false
 
-    def initialize(@host : Host, @monitor : Monitor::Base)
+    def initialize(@host : Host, @monitor : Monitor)
     end
 
     protected def successful!

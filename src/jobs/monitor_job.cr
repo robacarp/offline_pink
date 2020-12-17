@@ -61,15 +61,15 @@ class MonitorJob < Mosquito::QueuedJob
       log "#{host.ip_address}:"
 
       domain.monitors.map do |monitor|
-        case monitor
-        when Monitor::Http
+        case Monitor::Type.new monitor.monitor_type
+        when Monitor.http
           results << Monitoring::Http.check host, with: monitor, logger: log_archiver
 
-        when Monitor::Icmp
+        when Monitor.icmp
           results << Monitoring::Icmp.check host, with: monitor, logger: log_archiver
 
         else
-          raise "Unable to monitor a \"#{monitor.type}\" for #{domain_id} - Unknown monitor type"
+          raise "Unable to monitor a \"#{monitor.monitor_type}\" for domain##{domain_id} - Unknown monitor type for Monitor##{monitor.id}"
           nil
         end
 
@@ -84,8 +84,7 @@ class MonitorJob < Mosquito::QueuedJob
 
   def ensure_domain
     @_domain = DomainQuery.new
-      .preload_icmp_monitors
-      .preload_http_monitors
+      .preload_monitors
       .find domain_id
   end
 

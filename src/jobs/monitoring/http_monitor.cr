@@ -5,20 +5,20 @@ module Monitoring
 
     @domain : Domain?
 
-    private def monitor : Monitor::Http
-      if (mon = @monitor) && mon.is_a? Monitor::Http
-        mon
+    private def domain : Domain
+      @domain ||= monitor.domain!
+    end
+
+    def config
+      if (monitor_config = monitor.monitor_config).is_a? Monitor::Http
+        monitor_config
       else
         raise "#{self.class.name} unexpectedly received a #{monitor.class.name}"
       end
     end
 
-    private def domain : Domain
-      @domain ||= monitor.domain!
-    end
-
     def check : Nil
-      url = "#{protocol}#{host.ip_address}#{monitor.path}"
+      url = "#{protocol}#{host.ip_address}#{config.path}"
       headers = HTTP::Headers{ "Host" => "#{domain.name}" }
 
 
@@ -27,19 +27,19 @@ module Monitoring
       client = http_client(host.ip_address)
 
       start_time = Time.monotonic
-      response = client.get monitor.path, headers
+      response = client.get config.path, headers
       response_time = Time.monotonic - start_time
 
       log "GET #{domain.name} via #{url} => #{response.status_code}, ∆t=#{format_time response_time}"
 
-      if response.status_code != monitor.expected_status_code
-        log "Expected status #{monitor.expected_status_code} but got #{response.status_code}", LogEntry.error
+      if response.status_code != config.expected_status_code
+        log "Expected status #{config.expected_status_code} but got #{response.status_code}", LogEntry.error
         result.failed!
       end
 
-      if search_string = monitor.expected_content
+      if search_string = config.expected_content
         unless response.body.lines.join(" ").index search_string
-          log "Plain text search for '#{monitor.expected_content}' failed", LogEntry.error
+          log "Plain text search for '#{config.expected_content}' failed", LogEntry.error
           result.failed!
         end
       end
@@ -59,7 +59,7 @@ module Monitoring
     end
 
     def protocol
-      if monitor.ssl?
+      if config.ssl?
         "https://"
       else
         "http://"
@@ -67,7 +67,7 @@ module Monitoring
     end
 
     def http_client(ip_address : String) : HTTP::Client
-      client = if monitor.ssl?
+      client = if config.ssl?
         tls_config = OpenSSL::SSL::Context::Client.new
         tls_config.verify_mode = OpenSSL::SSL::VerifyMode::NONE
 
