@@ -31,9 +31,6 @@ class SaveMetric < Metric::SaveOperation
 
   def set_metric_type
     case
-    when success.value == false
-      metric_type.value = Metric.none
-
     when boolean_value.value.present?
       metric_type.value = Metric.bool
 
@@ -47,14 +44,8 @@ class SaveMetric < Metric::SaveOperation
       metric_type.value = Metric.string
 
     else
-      message = <<-MSG
-      Unable to determine metric_type for
-        bool: #{boolean_value.value}
-        float: #{float_value.value}
-        integer: #{integer_value.value}
-        string: #{string_value.value}
-      MSG
-      raise message
+      metric_type.value = Metric.none
+
     end
   end
 end
