@@ -10,10 +10,13 @@ module Monitoring
 
       if statistics[:success] == 1
         duration = Time::Span.new nanoseconds: (statistics[:average_response] * 1000000).to_i
-        log "response time: #{statistics[:average_response]}"
+        save_metric "icmp_response_time", duration
+
+        log "response time: #{format_time duration}"
         successful!
 
       else
+        save_failed_metric "response_time"
         log "failure.", LogEntry.error
         failed!
 

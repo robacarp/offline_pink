@@ -9,6 +9,7 @@ class Monitor < BaseModel
     column config : JSON::Any
     belongs_to domain : Domain
     belongs_to region : Region
+    has_many metrics : Metric
   end
 
   policy!

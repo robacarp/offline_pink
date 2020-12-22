@@ -30,11 +30,16 @@ module Monitoring
       response = client.get config.path, headers
       response_time = Time.monotonic - start_time
 
+      save_metric "http_response_time", response_time
+
       log "GET #{domain.name} via #{url} => #{response.status_code}, ∆t=#{format_time response_time}"
 
       if response.status_code != config.expected_status_code
         log "Expected status #{config.expected_status_code} but got #{response.status_code}", LogEntry.error
+        save_metric "http_status_code", response.status_code, units: "http_status_code", success: false
         result.failed!
+      else
+        save_metric "http_status_code", response.status_code, units: "http_status_code"
       end
 
       if search_string = config.expected_content

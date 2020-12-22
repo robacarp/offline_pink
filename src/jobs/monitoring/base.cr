@@ -25,6 +25,30 @@ module Monitoring
       logger.emit "#{log_identifier} #{message}", severity, from: monitor
     end
 
+    def save_metric(name : String, data : String, units : String, *, success = true)
+      SaveMetric.create! monitor, name: name, string_value: data, units: units, success: success
+    end
+
+    def save_metric(name : String, data : Float64, units : String, *, success = true)
+      SaveMetric.create! monitor, name: name, float_value: data, units: units, success: success
+    end
+
+    def save_metric(name : String, data : Int32, units : String, *, success = true)
+      SaveMetric.create! monitor, name: name, integer_value: data, units: units, success: success
+    end
+
+    def save_metric(name : String, data : Bool, *, success = true)
+      SaveMetric.create! monitor, name: name, boolean_value: data, units: "boolean", success: success
+    end
+
+    def save_metric(name : String, data : Time::Span, *, success = true)
+      save_metric name: name, data: data.milliseconds, units: "ms", success: success
+    end
+
+    def save_failed_metric(name : String)
+      SaveMetric.create! monitor, name: name, success: false
+    end
+
     protected abstract def check : Nil
 
     def log_identifier : String
