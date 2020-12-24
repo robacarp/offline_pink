@@ -46,8 +46,8 @@ abstract class Monitor::ShowPage < AuthLayout
     end
   end
 
-  def chart_for(endpoint, name = yolo)
-    div "", {data_chart_url: endpoint.path, data_chart_name: name}, [:data_chart]
+  def chart_for(endpoint, *, name : String = "chart", type : String = "chart" )
+    div "", {data_chart_url: endpoint.path, data_chart_name: name, data_chart_type: type}, [:data_chart]
   end
 
 end

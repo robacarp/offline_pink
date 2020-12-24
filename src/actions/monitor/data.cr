@@ -1,4 +1,4 @@
-class Monitor::Http::Data < BrowserAction
+class Monitor::Data < BrowserAction
   authorized_lookup Monitor, :read
   param metric : String = "none"
 
