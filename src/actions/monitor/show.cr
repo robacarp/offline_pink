@@ -5,9 +5,9 @@ class Monitor::Show < BrowserAction
 
   get "/monitor/:id" do
     case monitor.monitor_type
-    when Monitor.http.to_i
+    when Monitor::Type::Http
       html Monitor::Http::ShowPage, monitor: monitor, domain: monitor.domain
-    when Monitor.icmp.to_i
+    when Monitor::Type::Icmp
       html Monitor::Icmp::ShowPage, monitor: monitor, domain: monitor.domain
     else
       flash.keep

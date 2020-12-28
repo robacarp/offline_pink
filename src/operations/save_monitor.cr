@@ -33,7 +33,7 @@ class SaveHttpMonitor < Monitor::SaveOperation
   end
 
   def type
-    Monitor.http
+    Monitor::Type::Http
   end
 
   def monitor_config
@@ -122,7 +122,7 @@ class SaveIcmpMonitor < Monitor::SaveOperation
   end
 
   def type
-    Monitor.icmp
+    Monitor::Type::Icmp
   end
 
   def monitor_config

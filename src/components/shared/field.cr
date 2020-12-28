@@ -29,7 +29,6 @@
 # different in different parts of your app, e.g. `CompactField` or
 # `InlineTextField`
 class Shared::Field(T) < BaseComponent
-  # Raises a helpful error if component receives an unpermitted attribute
   include Lucky::CatchUnpermittedAttribute
 
   needs attribute : Avram::PermittedAttribute(T)
@@ -44,12 +43,6 @@ class Shared::Field(T) < BaseComponent
 
     div class: classes.join(' ') do
       label_for attribute, label_text
-
-      # You can add more default options here. For example:
-      #
-      #    tag_defaults field: attribute, class: "input"
-      #
-      # Will add the class "input" to the generated HTML.
 
       tag_defaults field: attribute do |input_builder|
         yield input_builder

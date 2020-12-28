@@ -22,14 +22,4 @@ class Metric < BaseModel
   end
 
   policy!
-
-  {% begin %}
-  {% types = [:none, :integer, :float, :string, :bool] %}
-
-  {% for type, index in types %}
-      def self.{{ type.id }}
-        Metric::Type.new( {{ type }} ).to_i
-      end
-  {% end %}
-  {% end %}
 end

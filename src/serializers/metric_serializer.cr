@@ -13,10 +13,10 @@ class MetricSerializer < BaseSerializer
 
   def render_value
     case @metric.metric_type
-    when Metric.integer then @metric.integer_value
-    when Metric.float   then @metric.float_value
-    when Metric.string  then @metric.string_value
-    when Metric.bool    then @metric.boolean_value
+    when Metric::Type::Integer then @metric.integer_value
+    when Metric::Type::Float   then @metric.float_value
+    when Metric::Type::String  then @metric.string_value
+    when Metric::Type::Bool    then @metric.boolean_value
     else
       -1
     end

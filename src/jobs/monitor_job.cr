@@ -67,10 +67,10 @@ class MonitorJob < Mosquito::QueuedJob
 
       domain.monitors.map do |monitor|
         case monitor.monitor_type
-        when Monitor.http.to_i
+        when Monitor::Type::Http
           results << Monitoring::Http.check host, with: monitor, logger: log_archiver
 
-        when Monitor.icmp.to_i
+        when Monitor::Type::Icmp
           results << Monitoring::Icmp.check host, with: monitor, logger: log_archiver
 
         else
