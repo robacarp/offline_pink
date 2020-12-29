@@ -15,6 +15,8 @@ class CreateMetrics::V20201221173335 < Avram::Migrator::Migration::V1
       add string_value : String?
       add units : String?
 
+      add monitor_event : Time
+
       add_timestamps
     end
   end

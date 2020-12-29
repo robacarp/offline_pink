@@ -1,12 +1,15 @@
 class MonitorJob < Mosquito::QueuedJob
   params(domain_id : Int64)
 
+  alias ResultLogger = Monitoring::ResultLogger
+
   @_domain : Domain?
   @_resolver : Monitoring::HostResolver?
-  @_log_archiver : LogArchiver?
+  @_result_logger : ResultLogger?
+  @monitor_event : Int64 = 0
 
-  def log_archiver : LogArchiver
-    @_log_archiver.not_nil!
+  def result_logger : ResultLogger
+    @_result_logger.not_nil!
   end
 
   def domain : Domain
@@ -18,18 +21,25 @@ class MonitorJob < Mosquito::QueuedJob
   end
 
   def setup_logs
-    @_log_archiver = LogArchiver.new domain, Log
+    @_result_logger = ResultLogger.new domain, Log
   end
 
-  def log(message, severity = LogArchiver::DEFAULT_SEVERITY)
-    if archiver = @_log_archiver
-      archiver.emit message, severity
+  def create_monitor_event
+    AppDatabase.run do |db|
+      @monitor_event = db.scalar("SELECT NEXTVAL('log_entry_run_sequence')").as(Int64)
+    end
+  end
+
+
+  def log(message, severity = ResultLogger::DEFAULT_SEVERITY)
+    if archiver = @_result_logger
+      archiver.log message, severity
     else
       super message
     end
   end
 
-  def log(severity = LogArchiver::DEFAULT_SEVERITY, &block)
+  def log(severity = ResultLogger::DEFAULT_SEVERITY, &block)
     message = String.build do |builder|
       yield builder
     end
@@ -37,7 +47,7 @@ class MonitorJob < Mosquito::QueuedJob
   end
 
   def perform
-    results = [] of Monitoring::Result
+    create_monitor_event
 
     log "Starting monitor for Domain##{domain_id} at #{Time.utc.to_s("%Y-%m-%d %H:%M:%S %:z")}"
 
@@ -62,16 +72,18 @@ class MonitorJob < Mosquito::QueuedJob
       end
     end
 
-    hosts.each do |host|
-      log "#{host.ip_address}:"
+    domain.monitors.map do |monitor|
+      log "#{Monitor::AvramType.new(monitor.monitor_type)}:"
 
-      domain.monitors.map do |monitor|
+      hosts.each do |host|
+        args = { host: host, with: monitor, logger: result_logger.for(host) }
+
         case monitor.monitor_type
         when Monitor::Type::Http
-          results << Monitoring::Http.check host, with: monitor, logger: log_archiver
+          Monitoring::Http.check(**args)
 
         when Monitor::Type::Icmp
-          results << Monitoring::Icmp.check host, with: monitor, logger: log_archiver
+          Monitoring::Icmp.check(**args)
 
         else
           raise "Unable to monitor a \"#{monitor.monitor_type}\" for domain##{domain_id} - Unknown monitor type for Monitor##{monitor.id}"
@@ -83,7 +95,7 @@ class MonitorJob < Mosquito::QueuedJob
   ensure
     domain_name = ""
     domain.try { |domain_| domain_name = " (#{domain_.name})" }
-    update_domain_health(results || [] of Monitoring::Result)
+    update_domain_health
     log "Finished monitoring Domain##{domain_id}#{domain_name}"
   end
 
@@ -117,12 +129,11 @@ class MonitorJob < Mosquito::QueuedJob
     log reason, severity: LogEntry.fatal
   end
 
-  def update_domain_health(results : Array(Monitoring::Result))
+  def update_domain_health
     status = Domain::Status.new :system_failure
 
-    grouped_results = results.group_by &.success
-    successful = grouped_results[true]?.try(&.size) || 0
-    failed = grouped_results[false]?.try(&.size) || 0
+    successful = result_logger.successful_results.size
+    failed = result_logger.failed_results.size
 
     case
     when successful + failed == 0
@@ -138,8 +149,8 @@ class MonitorJob < Mosquito::QueuedJob
     save = Domain::SaveOperation.new(domain)
     save.status_code.value = status
 
-    if log_archive = @_log_archiver
-      save.last_monitor_event.value = log_archive.monitor_event
+    if result_logger = @_result_logger
+      save.last_monitor_event.value = result_logger.monitor_event
     end
 
     save.save!

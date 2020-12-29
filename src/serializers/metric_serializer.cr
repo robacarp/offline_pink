@@ -5,7 +5,7 @@ class MetricSerializer < BaseSerializer
   def render
     {
       name: @metric.name,
-      timestamp: @metric.created_at.to_unix,
+      timestamp: @metric.monitor_event.to_unix,
       value: render_value,
       success: @metric.success
     }

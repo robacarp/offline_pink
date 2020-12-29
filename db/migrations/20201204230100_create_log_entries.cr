@@ -1,12 +1,12 @@
 class CreateLogEntries::V20201204230100 < Avram::Migrator::Migration::V1
   def migrate
     # Learn about migrations at: https://luckyframework.org/guides/database/migrations
-    create table_for(LogEntry) do
+    create :log_entries do
       primary_key id : Int64
 
       add text : String
       add severity : Int32
-      add monitor_event : Int64
+      add monitor_event : Time
 
       add_belongs_to domain : Domain?, on_delete: :cascade
 
@@ -21,6 +21,6 @@ class CreateLogEntries::V20201204230100 < Avram::Migrator::Migration::V1
   end
 
   def rollback
-    drop table_for(LogEntry)
+    drop :log_entries
   end
 end

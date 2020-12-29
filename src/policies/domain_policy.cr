@@ -15,6 +15,10 @@ class DomainPolicy < Domain::BasePolicy
     user_is_owner_or_member_of_organization_owner?
   end
 
+  def delete?
+    user_is_owner_or_member_of_organization_owner?
+  end
+
   class Scope < Domain::BaseScope
     def scoped_query
       PolymorphicDomainOwnershipQuery.run(user)

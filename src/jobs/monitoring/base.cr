@@ -1,58 +1,44 @@
 module Monitoring
   abstract class Base
-    getter result : Result
     getter host : Host
 
     private getter monitor : Monitor
-    private getter logger : LogArchiver
-    delegate :successful!, :failed!, to: @result
+    private getter logger : ResultHostLogger
 
-    def self.check(host : Host, with monitor : Monitor, logger : LogArchiver) : Result
+    def self.check(host : Host, with monitor : Monitor, logger : ResultHostLogger)
       instance = new(host, monitor, logger)
       instance.check
-      instance.result
     end
 
-    def initialize(@host : Host, @monitor : Monitor, @logger : LogArchiver)
-      @result = Result.new host, monitor
+    delegate :failed!, to: @logger
+
+    protected abstract def check : Nil
+
+    def initialize(@host : Host, @monitor : Monitor, @logger : ResultHostLogger)
     end
 
     def config
       monitor.monitor_config
     end
 
-    def log(message : String, severity : LogEntry::Severity = LogArchiver::DEFAULT_SEVERITY)
-      logger.emit "#{log_identifier} #{message}", severity, from: monitor
+    def log(message : String, severity : LogEntry::Severity = ResultLogger::DEFAULT_SEVERITY)
+      logger.log "#{log_identifier} #{message}", severity, from: monitor
     end
 
-    def save_metric(name : String, data : String, units : String, *, success = true)
-      SaveMetric.create! monitor, name: name, string_value: data, units: units, success: success
-    end
-
-    def save_metric(name : String, data : Float64, units : String, *, success = true)
-      SaveMetric.create! monitor, name: name, float_value: data, units: units, success: success
-    end
-
-    def save_metric(name : String, data : Int32, units : String, *, success = true)
-      SaveMetric.create! monitor, name: name, integer_value: data, units: units, success: success
-    end
-
-    def save_metric(name : String, data : Bool, *, success = true)
-      SaveMetric.create! monitor, name: name, boolean_value: data, units: "boolean", success: success
+    def save_metric(name : String, data : String | Float64 | Int32 | Bool, units : String, *, success = true)
+      logger.save_metric monitor, name: name, data: data, units: units
     end
 
     def save_metric(name : String, data : Time::Span, *, success = true)
-      save_metric name: name, data: data.milliseconds, units: "ms", success: success
+      logger.save_metric monitor, name: name, data: data
     end
 
     def save_failed_metric(name : String)
-      SaveMetric.create! monitor, name: name, success: false
+      logger.save_metric monitor, name: name, success: false
     end
 
-    protected abstract def check : Nil
-
-    def log_identifier : String
-      ""
+    def log_identifier
+      host.ip_address
     end
 
     def format_time(span : Time::Span) : String

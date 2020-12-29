@@ -18,9 +18,7 @@ module Monitoring
     end
 
     def check : Nil
-      url = "#{protocol}#{host.ip_address}#{config.path}"
       headers = HTTP::Headers{ "Host" => "#{domain.name}" }
-
 
       response : HTTP::Client::Response
 
@@ -32,12 +30,12 @@ module Monitoring
 
       save_metric "http_response_time", response_time
 
-      log "GET #{domain.name} via #{url} => #{response.status_code}, ∆t=#{format_time response_time}"
+      log "GET #{protocol}#{domain.name}#{config.path} => #{response.status_code}, ∆t=#{format_time response_time}"
 
       if response.status_code != config.expected_status_code
         log "Expected status #{config.expected_status_code} but got #{response.status_code}", LogEntry.error
         save_metric "http_status_code", response.status_code, units: "http_status_code", success: false
-        result.failed!
+        failed!
       else
         save_metric "http_status_code", response.status_code, units: "http_status_code"
       end
@@ -45,11 +43,9 @@ module Monitoring
       if search_string = config.expected_content
         unless response.body.lines.join(" ").index search_string
           log "Plain text search for '#{config.expected_content}' failed", LogEntry.error
-          result.failed!
+          failed!
         end
       end
-
-      result.successful!
 
       # result
       # rescue err : Errno
@@ -84,10 +80,6 @@ module Monitoring
       client.connect_timeout = 2
       client.read_timeout = 2
       client
-    end
-
-    def log_identifier
-      "HTTP"
     end
   end
 end

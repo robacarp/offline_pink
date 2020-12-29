@@ -19,6 +19,8 @@ class Metric < BaseModel
     column float_value : Float64?
     column string_value : String?
     column units : String?
+
+    column monitor_event : Time
   end
 
   policy!

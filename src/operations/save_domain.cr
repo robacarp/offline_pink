@@ -20,6 +20,7 @@ class SaveDomain < Domain::SaveOperation
   end
 
   after_save attach_default_monitors
+  after_save enqueue_monitor
 
   def validate_dns_format
     name.value.try do |domain_name|
@@ -34,7 +35,11 @@ class SaveDomain < Domain::SaveOperation
   end
 
   def attach_default_monitors(domain : Domain)
-#    Monitor::Icmp::Save.create! domain
-#    Monitor::Http::Save.create! domain, path: "/", ssl: true, expected_status_code: 200
+    SaveIcmpMonitor.create! domain
+    SaveHttpMonitor.create! domain, path: "/", ssl: true, expected_status_code: 200
+  end
+
+  def enqueue_monitor(domain : Domain)
+    MonitorJob.new(domain_id: domain.id).enqueue
   end
 end

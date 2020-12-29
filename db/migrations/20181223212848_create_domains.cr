@@ -8,7 +8,7 @@ class CreateDomains::V20181223212848 < Avram::Migrator::Migration::V1
 
       add is_valid : Bool, default: true
       add status_code : Int32, default: -1
-      add last_monitor_event : Int64?
+      add last_monitor_event : Time?
       add_timestamps
     end
   end

@@ -13,7 +13,7 @@ class Domain < BaseModel
     column name : String
     column is_valid : Bool = false
     column status_code : Domain::Status = Domain::Status.new(:un_checked).to_i
-    column last_monitor_event : Int64?
+    column last_monitor_event : Time?
 
     belongs_to user : User?
     belongs_to organization : Organization?
@@ -22,8 +22,6 @@ class Domain < BaseModel
     has_many log_entries : LogEntry
 
     has_many monitors : Monitor
-    # has_many icmp_monitors : Monitor::Icmp
-    # has_many http_monitors : Monitor::Http
   end
 
   policy!

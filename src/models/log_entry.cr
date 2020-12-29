@@ -10,7 +10,7 @@ class LogEntry < BaseModel
   table do
     column text : String
     column severity : LogEntry::Severity
-    column monitor_event : Int64
+    column monitor_event : Time
 
     belongs_to domain : Domain?
     belongs_to monitor : Monitor?

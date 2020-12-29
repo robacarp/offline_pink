@@ -12,8 +12,7 @@ module Monitoring
         duration = Time::Span.new nanoseconds: (statistics[:average_response] * 1000000).to_i
         save_metric "icmp_response_time", duration
 
-        log "response time: #{format_time duration}"
-        successful!
+        log "∆t=#{format_time duration}"
 
       else
         save_failed_metric "response_time"
@@ -21,10 +20,6 @@ module Monitoring
         failed!
 
       end
-    end
-
-    def log_identifier
-      "ICMP Ping #{host.ip_address}"
     end
   end
 end
