@@ -1,0 +1,15 @@
+div[data-chart] {
+  &::before {
+    content: " ";
+    background: $electric_green;
+    transition: width 500ms;
+    height: 1px;
+    display: block;
+  }
+
+  @for $i from 1 through 100 {
+    &[data-refresh-progress="#{$i}"]::before {
+      width: $i * 1%;
+    }
+  }
+}

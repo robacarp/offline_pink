@@ -9,13 +9,29 @@ class Chart {
     this.url = container.dataset.chartUrl
     this.name = container.dataset.chartName
     this.type = container.dataset.chartType || "basic"
+    this.refreshInterval = container.dataset.refreshInterval || 250
+    this.fetchInterval = container.dataset.fetchInterval || 30000
+
     this.data = {}
     this.chart = null
+
+    this.counter = 0
   }
 
-  render () {
-    this.populate()
-    setInterval(this.populate.bind(this), 30000)
+  begin () {
+    this.updateCounter()
+    setInterval(this.updateCounter.bind(this), this.refreshInterval)
+  }
+
+  updateCounter () {
+    this.counter -= this.refreshInterval
+    this.container.dataset.refreshProgress = Math.trunc(100 * this.counter / this.fetchInterval)
+
+    if (this.counter <= 0) {
+      console.log(this.counter)
+      this.populate()
+      this.counter = this.fetchInterval
+    }
   }
 
   async makeRequest () {
@@ -60,14 +76,26 @@ class Chart {
     }
   }
 
+  httpResponseTimeOptions() {
+    return {
+      chart: { type: 'scatter' },
+      markers: {
+        size: 2,
+        hover: { size: 5 }
+      }
+    }
+  }
+
   optionsForType() {
     switch(this.type) {
       case "http_response_time":
+        return this.httpResponseTimeOptions()
+        break
+      case "http_status_code":
         return this.httpCodeOptions()
         break
-      case "http_code":
-        return this.httpCodeOptions()
-        break
+      default:
+        console.log(`could not provide options for ${this.type}`)
     }
   }
 
@@ -110,7 +138,7 @@ class Chart {
       },
       markers: {
         hover: {
-          size: 1
+          size: 3
         }
       }
     }
@@ -120,6 +148,6 @@ class Chart {
 document.addEventListener("turbolinks:load", () => {
   document.querySelectorAll("[data-chart]").forEach(chart => {
     let apex = new Chart(chart)
-    apex.render()
+    apex.begin()
   })
 })

@@ -47,7 +47,12 @@ abstract class Monitor::ShowPage < AuthLayout
   end
 
   def chart_for(endpoint, *, name : String = "chart", type : String = "chart" )
-    div "", {data_chart_url: endpoint.path, data_chart_name: name, data_chart_type: type}, [:data_chart]
+    div("", {
+        data_chart_url: endpoint.path,
+        data_chart_name: name,
+        data_chart_type: type,
+        data_refresh_progress: 0
+      }, [:data_chart]
+    )
   end
-
 end
