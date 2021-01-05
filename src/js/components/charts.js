@@ -70,40 +70,15 @@ class Chart {
     return `${this.pad(date.getHours())}:${this.pad(date.getMinutes())}:${this.pad(date.getSeconds())}`
   }
 
-  httpCodeOptions() {
-    return {
-      stroke: { curve: "smooth" }
-    }
-  }
-
-  httpResponseTimeOptions() {
-    return {
-      chart: { type: 'scatter' },
-      markers: {
-        size: 2,
-        hover: { size: 5 }
-      }
-    }
-  }
-
-  optionsForType() {
-    switch(this.type) {
-      case "http_response_time":
-        return this.httpResponseTimeOptions()
-        break
-      case "http_status_code":
-        return this.httpCodeOptions()
-        break
-      default:
-        console.log(`could not provide options for ${this.type}`)
-    }
+  optionsForType () {
+    return {}
   }
 
   options () {
-    return _.merge(this.basicOptions(), this.optionsForType())
+    return _.merge(this.defaultOptions(), this.optionsForType())
   }
 
-  basicOptions () {
+  defaultOptions () {
     return {
       series: [{ name: this.name, data: this.data }],
       chart: {
@@ -129,7 +104,8 @@ class Chart {
       },
       yaxis: {
         crosshairs: { show: true },
-        show: true
+        show: true,
+        title: { text: this.name }
       },
       tooltip: {
         fixed: { enabled: true },
@@ -137,17 +113,55 @@ class Chart {
         y: { show: true }
       },
       markers: {
-        hover: {
-          size: 3
-        }
+        size: 2,
+        fillColors: "#ED03FF",
+        strokeColors: "#ED03FF",
+        strokeWidth: 2,
+        hover: { size: 5 }
+      },
+    }
+  }
+}
+
+
+class ResponseTimeChart extends Chart {
+  optionsForType () {
+    return {
+      chart: { type: 'scatter' },
+    }
+  }
+}
+
+class HttpStatusCodeChart extends Chart {
+  optionsForType () {
+    return {
+      chart: { type: 'scatter' },
+      yaxis: {
+        forceNiceScale: false,
+        min: 100,
+        max: 500,
+        tickAmount: 4
       }
     }
   }
 }
 
 document.addEventListener("turbolinks:load", () => {
-  document.querySelectorAll("[data-chart]").forEach(chart => {
-    let apex = new Chart(chart)
-    apex.begin()
+  document.querySelectorAll("[data-chart]").forEach(div => {
+    let chart
+
+    switch(div.dataset.chartType) {
+      case "http_response_time":
+      case "icmp_response_time":
+        chart = new ResponseTimeChart(div)
+        break
+      case "http_status_code":
+        chart = new HttpStatusCodeChart(div)
+        break
+      default:
+        console.log(`could not build chart for ${this.type}`)
+    }
+
+    chart.begin()
   })
 })
