@@ -1,3 +1,3 @@
-web: crystal run src/start_server.cr --error-trace
-worker: crystal run src/app_worker.cr --error-trace
+web: ./bin/server
+worker: ./bin/worker
 release: lucky db.migrate

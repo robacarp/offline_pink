@@ -5,8 +5,6 @@ authors:
   - Robert L Carpenter
 
 targets:
-  test:
-    main: src/test.cr
   server:
     main: src/start_server.cr
   worker:
