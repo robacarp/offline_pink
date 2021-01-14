@@ -21,30 +21,31 @@ dependencies:
     github: robacarp/icmp.cr
   mosquito:
     github: robacarp/mosquito
+      # path: /Users/robert/Documents/repositories/robacarp/mosquito
 
   lucky:
     github: luckyframework/lucky
-    version: ~> 0.24.0 # branch: master
+    version: ~> 0.24 # branch: master
 
   avram:
     github: luckyframework/avram
-    version: ~> 0.17.0 # branch: master
+    version: ~> 0.17 # branch: master
 
   faker:
     github: askn/faker
 
   authentic:
     github: luckyframework/authentic
-    version: ~> 0.7.0 # branch: master
+    version: ~> 0.7 # branch: master
   carbon:
     github: luckyframework/carbon
-    version: ~> 0.1.2
+    version: ~> 0.1
   dotenv:
     github: gdotdesign/cr-dotenv
-    version: ~> 0.7.0
+    version: ~> 0.7
   lucky_flow:
     github: luckyframework/lucky_flow
-    version: ~> 0.7.0
+    version: ~> 0.7
   jwt:
     github: crystal-community/jwt
-    version: ~> 1.4.2
+    version: ~> 1.4

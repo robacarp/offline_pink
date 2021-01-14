@@ -1,10 +1,11 @@
 dependencies:
   lucky_cli:
     github: luckyframework/lucky_cli
-    branch: master
+      # branch: master
   lucky:
     github: luckyframework/lucky
-    branch: master
+      #    branch: master
   avram:
-    github: luckyframework/avram
-    branch: master
+    # github: luckyframework/avram
+    # branch: master
+    path: /Users/robert/Documents/repositories/luckyframework/avram
