@@ -11,6 +11,9 @@ class User < BaseModel
     column email : String
     column encrypted_password : String
     column features : Int32 = 0
+    column pushover_key : String?
+    column pushover_key_valid : Bool = false
+    column email_valid : Bool = false
 
     has_many domains : Domain
     has_many memberships : Membership

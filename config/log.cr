@@ -32,7 +32,7 @@ Lucky::ContinuedPipeLog.dexter.configure(:none)
 # Lucky only logs failed queries by default.
 #
 # Set the log to ':info' to log all queries
-Avram::QueryLog.dexter.configure(:none)
+Avram::QueryLog.dexter.configure(:info)
 
 # Skip logging static assets requests in development
 Lucky::LogHandler.configure do |settings|

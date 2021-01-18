@@ -15,9 +15,10 @@ class My::Account::ShowPage < AuthLayout
       end
 
       form_for My::Account::Update do
-        mount Shared::Field, attribute: save.email, button: { text: "Save" }, &.text_input
+        mount Shared::Field, attribute: save.email, &.text_input
+        mount Shared::Field, attribute: save.pushover_key, &.text_input
+        submit "Save"
       end
-
 
       if (memberships = user.memberships!).any?
         header_and_links do

@@ -37,7 +37,9 @@ module Monitoring
     end
 
     def for(host : Host)
-      ResultHostLogger.new(self, host)
+      ResultHostLogger.new(self, host).tap do |host_logger|
+        results << host_logger
+      end
     end
 
     def successful_results : Array(ResultHostLogger)

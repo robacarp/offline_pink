@@ -115,7 +115,7 @@ class MonitorJob < Mosquito::QueuedJob
   end
 
   def mark_domain_invalid(reason)
-    Domain::SaveOperation.update domain, is_valid: false do |operation, domain|
+    DomainOp::UpdateValidity.update domain, is_valid: false do |operation, domain|
       if operation.saved?
         log "Marking domain as invalid : #{reason}"
       else
@@ -135,6 +135,8 @@ class MonitorJob < Mosquito::QueuedJob
     successful = result_logger.successful_results.size
     failed = result_logger.failed_results.size
 
+    log "succesful #{successful} / failed #{failed}"
+
     case
     when successful + failed == 0
       status = Domain::Status.new :un_checked
@@ -146,7 +148,7 @@ class MonitorJob < Mosquito::QueuedJob
       status = Domain::Status.new :stable
     end
 
-    save = Domain::SaveOperation.new(domain)
+    save = DomainOp::UpdateHealth.new(domain)
     save.status_code.value = status
 
     if result_logger = @_result_logger
