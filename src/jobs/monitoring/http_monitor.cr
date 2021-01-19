@@ -47,6 +47,12 @@ module Monitoring
         end
       end
 
+    rescue e : OpenSSL::SSL::Error
+      log "SSL error"
+      failed!
+
+      # ▸ Job failed! Raised OpenSSL::SSL::Error: SSL_connect: error:14094438:SSL routines:ssl3_read_bytes:tlsv1 alert internal error
+
       # result
       # rescue err : Errno
       # case err.errno
