@@ -1,4 +1,6 @@
 class Shared::NavBar < BaseComponent
+  needs current_user : User?
+
   def render
     header do
       div class: "logo" do
@@ -16,8 +18,10 @@ class Shared::NavBar < BaseComponent
       input type: "checkbox", id: "hamburger-menu-toggle"
       nav do
         div class: "items" do
-          link "Monitored Domains", to: Domains::Index
-          link "Account", to: My::Account::Show
+          if current_user
+            link "Monitored Domains", to: Domains::Index
+            link "Account", to: My::Account::Show
+          end
         end
       end
     end

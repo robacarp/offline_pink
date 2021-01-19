@@ -18,7 +18,7 @@ abstract class BaseLayout
       classes << self.class.name.underscore.gsub(/::|_/, "-")
 
       body class: classes.join(' ') do
-        mount Shared::NavBar
+        mount Shared::NavBar, current_user
         mount Shared::FlashMessages, context.flash
         content
       end
