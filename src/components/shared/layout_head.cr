@@ -7,8 +7,8 @@ class Shared::LayoutHead < BaseComponent
     head do
       utf8_charset
       title "Offline.pink - #{@page_title}"
-      css_link "/css/app.css", data_turbolinks_track: "reload"
-      js_link "/js/app.js", defer: "true", data_turbolinks_track: "reload"
+      css_link asset("css/app.scss"), data_turbolinks_track: "reload"
+      js_link asset("js/app.js"), defer: "true", data_turbolinks_track: "reload"
       meta name: "turbolinks-cache-control", content: "no-cache"
       csrf_meta_tags
       responsive_meta_tag

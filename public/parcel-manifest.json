@@ -1,0 +1,6 @@
+{
+  "_entrypoint.html": "/_entrypoint.html",
+  "css/app.scss": "/app.b7af7c5c.css",
+  "js/app.js": "/app.c3f9f951.js",
+  "../node_modules/parcel-bundler/src/builtins/css-loader.js": "/app.b7af7c5c.js.map"
+}

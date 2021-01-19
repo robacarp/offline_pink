@@ -7,12 +7,13 @@
     "apexcharts": "^3.23.0",
     "lodash": "^4.17.20",
     "parcel-bundler": "^1.12.4",
+    "parcel-plugin-bundle-manifest": "^0.2.0",
     "tailwindcss": "^1.9.6",
     "turbolinks": "^5.2.0"
   },
   "scripts": {
-    "watch": "npx parcel watch --no-autoinstall -d public src/css/app.scss src/js/app.js",
-    "prod": "npx parcel build --no-autoinstall -d public src/css/app.scss src/js/app.js"
+    "watch": "npx parcel watch --no-autoinstall -d public --log-level 3 src/_entrypoint.html",
+    "prod": "npx parcel build --no-autoinstall -d public --log-level 3 src/_entrypoint.html"
   },
   "devDependencies": {
     "browser-sync": "^2.26.7",

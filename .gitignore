@@ -18,3 +18,7 @@ public/app.css.map
 start_server
 /tmp
 .parcel-cache
+public/_entrypoint.html
+public/*.js
+public/*.css
+public/*.map
