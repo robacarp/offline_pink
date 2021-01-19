@@ -7,6 +7,7 @@ class Monitor < BaseModel
   table do
     column monitor_type : Int32
     column config : JSON::Any
+    column last_succeeded_at : Time
     belongs_to domain : Domain
     belongs_to region : Region
     has_many metrics : Metric

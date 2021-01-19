@@ -18,6 +18,12 @@ abstract class Monitor::ShowPage < AuthLayout
         end
       end
 
+      if monitor.last_succeeded_at < 3.days.ago
+        para do
+          text "This monitor hasn't succeded in over 3 days and will be disabled soon"
+        end
+      end
+
       last_monitor_output
       graphs
     end
