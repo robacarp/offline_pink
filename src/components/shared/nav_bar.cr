@@ -21,6 +21,8 @@ class Shared::NavBar < BaseComponent
           if current_user
             link "Monitored Domains", to: Domains::Index
             link "Account", to: My::Account::Show
+          else
+            link "Login", to: SignIns::Create
           end
         end
       end
