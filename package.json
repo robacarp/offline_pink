@@ -11,7 +11,6 @@
     "turbolinks": "^5.2.0"
   },
   "scripts": {
-    "dev": "npx parcel build --no-autoinstall -d public src/css/app.scss src/js/app.js",
     "watch": "npx parcel watch --no-autoinstall -d public src/css/app.scss src/js/app.js",
     "prod": "npx parcel build --no-autoinstall -d public src/css/app.scss src/js/app.js"
   },
