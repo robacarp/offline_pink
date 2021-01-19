@@ -12,7 +12,6 @@ require "./models/**"
 require "./policies/**"
 
 require "./jobs/**"
-require "./queries/mixins/**"
 require "./queries/**"
 require "./operations/mixins/**"
 require "./operations/**"
