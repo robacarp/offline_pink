@@ -22,7 +22,7 @@ class Shared::NavBar < BaseComponent
             link "Monitored Domains", to: Domains::Index
             link "Account", to: My::Account::Show
           else
-            link "Login", to: SignIns::Create
+            link "Login", to: SignIns::New
           end
         end
       end
