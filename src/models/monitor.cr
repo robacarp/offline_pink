@@ -7,7 +7,7 @@ class Monitor < BaseModel
   table do
     column monitor_type : Int32
     column config : JSON::Any
-    column last_succeeded_at : Time
+    column last_succeeded_at : Time?
     belongs_to domain : Domain
     belongs_to region : Region
     has_many metrics : Metric
@@ -17,6 +17,11 @@ class Monitor < BaseModel
 
   def summary
     monitor_config.summary
+  end
+
+  def will_disable_for_failure?
+    return false unless last_success = last_succeeded_at
+    last_success < 3.days.ago
   end
 
   alias Any = Icmp | Http
