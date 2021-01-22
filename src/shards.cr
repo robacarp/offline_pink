@@ -5,3 +5,4 @@ require "authentic"
 require "mosquito"
 
 require "./lib/sift"
+require "./apis/pushover"

@@ -1,51 +1,73 @@
 require "http"
 require "json"
+require "habitat"
+
+require "./pushover/*"
 
 class Pushover
-  class Settings
-    property app_key = ""
+  API_VERSION = 1
+
+  Habitat.create do
+    setting app_key : String, example: "a12345678912345678912345678912"
+    setting redis_url : String, example: "redis://localhost:6379"
   end
 
-  def self.settings
-    @@_settings ||= Settings.new
-  end
-
-  record MessageLimit, limit : Int32, remaining : Int32, reset_at : Time
-
-  def initialize(@user_key : String)
-  end
-
-  def request_headers
+  def self.request_headers
     HTTP::Headers { "Content-Type" => "application/json" }
   end
 
-  def send(title : String, message : String, link : Tuple(String, String)? = nil, priority = 0)
-    message_body = JSON.build do |j|
-      j.object do
-        j.field "token", self.class.settings.app_key
-        j.field "user", @user_key
-        j.field "priority", 0 # -2, -1, 0, 1, 2
-        j.field "title", title
-        j.field "message", message
+  def send(
+    user_key : String,
+    title : String,
+    message : String,
+    link : Tuple(String, String)? = nil,
+    priority = 0
+  )
 
-        if link
-          j.field "url_text", link[0]
-          j.field "url", link[1]
-        end
+    return false unless APILimits.can_send?
+
+    response = make_request url: "messages.json" do |builder|
+      builder.field "user", user_key
+      builder.field "priority", 0 # -2, -1, 0, 1, 2
+      builder.field "title", title
+      builder.field "message", message
+
+      if link
+        builder.field "url_text", link[0]
+        builder.field "url", link[1]
       end
     end
 
-    endpoint = "https://api.pushover.net/1/messages.json"
+    api_limits = APILimits.from response.raw
+    api_limits.update
+  end
 
-    response = HTTP::Client.post(endpoint, request_headers, body: message_body)
+  def validate_user_key(key : String) : Bool
+    response = make_request url: "users/validate.json" do |builder|
+      builder.field "user", key
+    end
 
-    limits = MessageLimit.new(
-      response.headers["X-Limit-App-Limit"].to_i,
-      response.headers["X-Limit-App-Remaining"].to_i,
-      Time.epoch response.headers["X-Limit-App-Reset"].to_i
-    )
+    response.success
+  end
 
-    return {response.status_code == 200, limits, response.status_code, response.body}
+
+
+
+
+  private def make_request(url : String) : Response
+    message_body = JSON.build do |builder|
+      builder.object do
+        builder.field "token", self.class.settings.app_key
+
+        yield builder
+      end
+    end
+
+    Response.from(request(url, message_body))
+  end
+
+  private def request(path : String, message_body : String)
+    endpoint = Path["https://api.pushover.net/"].join API_VERSION, path
+    HTTP::Client.post endpoint.to_s, self.class.request_headers, body: message_body
   end
 end
-
