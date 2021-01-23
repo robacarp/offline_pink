@@ -3,7 +3,7 @@ class DomainOp::UpdateHealth < Domain::SaveOperation
 
   def send_notification(domain)
     if status_code.changed?
-#      NotificationJob.new(domain.id, notification_message(domain)).enqueue
+      Notify::Domain.new(domain).update_stability
     end
   end
 

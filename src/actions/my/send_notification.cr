@@ -1,11 +1,11 @@
-class My::SendTestNotification < BrowserAction
+class My::TestPushNotification < BrowserAction
   include Sift::DontEnforceAuthorization
 
   post "/my/notification/test" do
     flash.keep
 
     if current_user.valid_pushover_settings?
-      NotificationJob.new(
+      PushNotificationJob.new(
         user_id: current_user.id,
         title: "Offline.pink test",
         notification: "This is a test message from offline.pink"

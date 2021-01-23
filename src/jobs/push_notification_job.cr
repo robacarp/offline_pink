@@ -1,4 +1,4 @@
-class NotificationJob < Mosquito::QueuedJob
+class PushNotificationJob < Mosquito::QueuedJob
   params(
     user_id : Int64,
     title : String,

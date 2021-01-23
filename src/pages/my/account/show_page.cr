@@ -47,7 +47,7 @@ class My::Account::ShowPage < AuthLayout
           br
 
           if user.valid_pushover_settings == User::Validity.new(:valid)
-            link "Send Test Notification", to: My::SendTestNotification
+            link "Send Test Notification", to: My::TestPushNotification
           end
         end
 

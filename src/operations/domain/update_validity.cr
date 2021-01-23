@@ -9,15 +9,7 @@ class DomainOp::UpdateValidity < Domain::SaveOperation
 
   def send_notification(domain)
     if is_valid.changed?
-#      NotificationJob.new(domain.id, notification_message(domain)).enqueue
-    end
-  end
-
-  def notification_message(domain)
-    if is_valid.value
-      "#{domain.name} is now valid for monitoring"
-    else
-      "#{domain.name} is no longer valid for monitoring"
+      Notify::Domain.new(domain).update_validity
     end
   end
 end

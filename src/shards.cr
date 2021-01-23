@@ -5,4 +5,5 @@ require "authentic"
 require "mosquito"
 
 require "./lib/sift"
+require "./lib/notifier"
 require "./apis/pushover"
