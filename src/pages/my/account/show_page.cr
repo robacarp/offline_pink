@@ -15,9 +15,44 @@ class My::Account::ShowPage < AuthLayout
       end
 
       form_for My::Account::Update do
-        mount Shared::Field, attribute: save.email, button: { text: "Save" }, &.text_input
-      end
+        mount Shared::Field, attribute: save.email, &.text_input
 
+        div class: "field" do
+          div class: "flex" do
+            label_for save.pushover_key, "Pushover Settings"
+
+            nbsp
+
+            classes = ["text-sm mb-2"]
+            valid_text = ""
+
+            if user.valid_pushover_settings == User::Validity.new(:valid)
+              classes << "text-limegreen-500"
+              valid_text = "valid"
+            elsif user.valid_pushover_settings == User::Validity.new(:invalid)
+              classes << "text-crimson-500"
+              valid_text = "invalid"
+            elsif user.valid_pushover_settings == User::Validity.new(:unchecked)
+              classes << "text-crimson-500"
+              valid_text = "unchecked"
+            end
+
+            span class: classes.join(' ') do
+              text valid_text
+            end
+          end
+
+          text_input field: save.pushover_key, placeholder: "Pushover key"
+          text_input field: save.pushover_device, placeholder: "(optional) Device"
+          br
+
+          if user.valid_pushover_settings == User::Validity.new(:valid)
+            link "Send Test Notification", to: My::TestPushNotification
+          end
+        end
+
+        submit "Save"
+      end
 
       if (memberships = user.memberships!).any?
         header_and_links do
