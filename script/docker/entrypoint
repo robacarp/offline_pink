@@ -1,0 +1,18 @@
+#!/bin/sh
+
+case "${1:-}" in
+  "") # no arguments, start server
+    ;;
+
+  "worker")
+    echo "Starting worker"
+    exec /app/bin/worker
+    ;;
+
+  *)
+    echo "Execing ${*}"
+    exec "$@"
+esac
+
+echo "Starting server"
+exec /app/bin/server

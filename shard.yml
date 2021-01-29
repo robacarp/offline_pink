@@ -1,9 +1,6 @@
 name: offline_pink
 version: 0.1.0
 
-authors:
-  - Robert L Carpenter
-
 targets:
   server:
     main: src/start_server.cr

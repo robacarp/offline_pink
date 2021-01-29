@@ -20,6 +20,7 @@ class AppServer < Lucky::BaseAppServer
 
   def listen
     # Learn about bind_tcp: https://tinyurl.com/bind-tcp-docs
+    puts "Listening on #{host} #{port}..."
     server.bind_tcp(host, port, reuse_port: false)
     server.listen
   end

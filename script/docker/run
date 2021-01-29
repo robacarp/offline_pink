@@ -1,0 +1,10 @@
+#!/bin/bash
+
+set -euo pipefail
+
+docker run -it \
+  -e DATABASE_URL=postgresql://$(whoami)@host.docker.internal/offline_pink_development \
+  -e REDIS_URL=redis://host.docker.internal \
+  -p 3001:3001 \
+  offline_pink \
+  $@
