@@ -22,3 +22,4 @@ public/_entrypoint.html
 public/*.js
 public/*.css
 public/*.map
+public/parcel-manifest.json

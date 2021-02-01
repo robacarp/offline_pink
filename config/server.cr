@@ -36,7 +36,13 @@ Lucky::Server.configure do |settings|
 end
 
 Lucky::ForceSSLHandler.configure do |settings|
-  settings.enabled = Lucky::Env.production?
+  force_ssl = ENV["FORCE_SSL"]? == "true"
+
+  if force_ssl.nil?
+    force_ssl = Lucky::Env.production?
+  end
+
+  settings.enabled = force_ssl
   settings.strict_transport_security = {max_age: 1.year, include_subdomains: true}
 end
 

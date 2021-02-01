@@ -1,0 +1,14 @@
+#!/bin/bash
+
+set -evuo pipefail
+
+docker tag offline_pink registry.heroku.com/offline-pink/web
+docker push registry.heroku.com/offline-pink/web
+
+docker tag offline_pink registry.heroku.com/offline-pink/worker
+docker push registry.heroku.com/offline-pink/worker
+
+heroku container:release web
+heroku container:release worker
+
+# heroku run bin/tasks db.migrate

@@ -15,4 +15,5 @@ case "${1:-}" in
 esac
 
 echo "Starting server"
-exec /app/bin/server
+exec /crystal-build/bin/server
+#exec /app/bin/server

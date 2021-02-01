@@ -14,7 +14,7 @@
   "scripts": {
     "heroku-postbuild": "yarn run prod",
     "watch": "yarn run parcel watch --no-autoinstall -d public --log-level 3 src/_entrypoint.html",
-    "prod": "yarn run parcel build --no-autoinstall -d public --log-level 3 src/_entrypoint.html"
+    "prod": "yarn run parcel build --no-autoinstall -d public --log-level 4 src/_entrypoint.html"
   },
   "devDependencies": {
     "browser-sync": "^2.26.7",

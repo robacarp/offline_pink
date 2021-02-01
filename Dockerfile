@@ -1,19 +1,36 @@
-FROM node:14.15.4-alpine3.12 AS frontend
-WORKDIR /node-build
-
-# yarn install dependencies
-COPY package.json yarn.lock ./
-RUN yarn install
-
-# yarn run prod dependencies
-ENV PARCEL_WORKERS=1
-COPY postcss.config.js bs-config.js tailwind.config.js /
-COPY src/js src/js
-COPY src/css src/css
-COPY src/_entrypoint.html src/
-RUN yarn run prod
-
+# FROM node:14.15.4-alpine3.12 AS frontend
+# WORKDIR /node-build
+# 
+# # yarn install dependencies
+# COPY package.json yarn.lock ./
+# RUN yarn install
+# 
+# # yarn run prod dependencies
+# ENV PARCEL_WORKERS=1
+# COPY .sassrc postcss.config.js bs-config.js tailwind.config.js /
+# COPY src/js src/js
+# COPY src/css src/css
+# COPY src/_entrypoint.html src/
+# RUN yarn run prod
+# 
 FROM crystallang/crystal:0.35.1-alpine-build
+
+
+# Install lucky
+WORKDIR /lucky
+RUN git clone https://github.com/luckyframework/lucky_cli
+WORKDIR lucky_cli
+RUN git checkout v0.25.0
+RUN shards install
+RUN crystal build src/lucky.cr
+RUN mv lucky /usr/local/bin
+RUN lucky -v
+
+
+
+
+
+
 WORKDIR /crystal-build
 
 # shards dependencies
@@ -32,28 +49,34 @@ COPY tasks ./tasks
 
 # copy front end assets
 COPY public/assets ./public/assets/
-COPY public/mix-manifest.json public/robots.txt public/favicon.ico public/
-COPY --from=frontend /node-build/public public/
+COPY public/robots.txt public/favicon.ico public/
 
-RUN shards build --production
+# assume the assets have already been generated
+COPY public public/
+
+# COPY --from=frontend /node-build/public public/
+RUN cp public/parcel-manifest.json public/mix-manifest.json
+
+RUN shards build #--production
 
 # setup for execution
 COPY script/docker/entrypoint /usr/local/bin/
 ENV DATABASE_URL postgresql://host.docker.internal/production
 ENV REDIS_URL redis://host.docker.internal:6379
 ENV LUCKY_ENV production
-ENV SECRET_KEY_BASE 00000000000000000000000000000
+ENV SECRET_KEY_BASE 00000000000000000000000000000000
 ENV PORT 3001
 ENV SEND_GRID_KEY unused
 ENV HOST 0.0.0.0
+ENV FORCE_SSL true
 ENV APP_DOMAIN http://localhost:3001
 
 # move everything into it's final place
-WORKDIR /app
-RUN cp -r /crystal-build/bin .
-RUN cp -r /crystal-build/config .
-RUN cp -r /crystal-build/db .
-RUN cp -r /crystal-build/public .
+# WORKDIR /app
+# RUN cp -r /crystal-build/bin .
+# RUN cp -r /crystal-build/config .
+# RUN cp -r /crystal-build/db .
+# RUN cp -r /crystal-build/public .
 
 ENTRYPOINT ["/usr/local/bin/entrypoint"]
 CMD []
