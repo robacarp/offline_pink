@@ -2,8 +2,8 @@
 
 set -euo pipefail
 
-docker run -it \
-  -e DATABASE_URL=postgresql://$(whoami)@host.docker.internal/offline_pink_development \
+docker run --rm -it --init \
+  -e DATABASE_URL="postgresql://$(whoami)@host.docker.internal/offline_pink_development" \
   -e REDIS_URL=redis://host.docker.internal \
   -e FORCE_SSL=false \
   -e APP_DOMAIN=localhost:3001 \
