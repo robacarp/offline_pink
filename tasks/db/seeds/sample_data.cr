@@ -1,5 +1,5 @@
 require "faker"
-require "../../../spec/support/boxes/**"
+require "../../../spec/support/factories/**"
 
 # Add sample data helpful for development, e.g. (fake users, blog posts, etc.)
 #
@@ -15,21 +15,21 @@ class Db::Seed::SampleData < LuckyCli::Task
 
   def call
     dev_user_email = "test@example.com"
-    dev_user = UserQuery.new.email(dev_user_email).first? || UserBox.create do |user|
+    dev_user = UserQuery.new.email(dev_user_email).first? || UserFactory.create do |user|
       user.email dev_user_email
     end
 
     users = [
       dev_user,
-      UserBox.create,
-      UserBox.create
+      UserFactory.create,
+      UserFactory.create
     ]
 
-    org = OrganizationBox.create
+    org = OrganizationFactory.create
 
 
     users.each do |user|
-      MembershipBox.create do |membership|
+      MembershipFactory.create do |membership|
         membership.admin false
         membership.user_id user.id
         membership.organization_id org.id

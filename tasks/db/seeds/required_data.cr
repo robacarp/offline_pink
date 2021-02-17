@@ -1,4 +1,4 @@
-require "../../../spec/support/boxes/**"
+require "../../../spec/support/factories/**"
 
 # Add seeds here that are *required* for your app to work.
 # For example, you might need at least one admin user or you might need at least
@@ -10,7 +10,7 @@ class Db::Seed::RequiredData < LuckyCli::Task
   summary "Add database records required for the app to work"
 
   def call
-    RegionBox.create do |region|
+    RegionFactory.create do |region|
       region.name("Region 1")
     end
     # Using a LuckyRecord::Box:

@@ -13,7 +13,7 @@
 # COPY src/_entrypoint.html src/
 # RUN yarn run prod
 
-FROM crystallang/crystal:0.35.1-alpine-build
+FROM crystallang/crystal:0.36.1-alpine-build
 
 WORKDIR /crystal-build
 

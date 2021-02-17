@@ -9,11 +9,9 @@ targets:
   tasks:
     main: tasks.cr
 
-crystal: 0.35.1
+crystal: 0.36.1
 
 dependencies:
-  myhtml:
-    github: kostya/myhtml
   icmp:
     github: robacarp/icmp.cr
   mosquito:
@@ -22,18 +20,21 @@ dependencies:
 
   lucky:
     github: luckyframework/lucky
-    version: ~> 0.25 # branch: master
+    version: ~> 0.26 # branch: master
 
   avram:
     github: luckyframework/avram
-    version: ~> 0.17 # branch: master
+    version: ~> 0.19 # branch: master
 
   faker:
     github: askn/faker
 
+  myhtml:
+    github: kostya/myhtml
+
   authentic:
     github: luckyframework/authentic
-    version: ~> 0.7 # branch: master
+    version: ~> 0.7.2 # branch: master
   carbon:
     github: luckyframework/carbon
     version: ~> 0.1

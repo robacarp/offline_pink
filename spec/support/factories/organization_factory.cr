@@ -1,4 +1,4 @@
-class OrganizationBox < Avram::Box
+class OrganizationFactory < Avram::Factory
   def initialize
     name Faker::Address.country
   end
