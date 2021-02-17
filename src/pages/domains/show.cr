@@ -2,7 +2,7 @@ class Domains::ShowPage < AuthLayout
   needs domain : Domain
 
   def content
-    div class: "w-1/2 mx-auto" do
+    small_frame do
       header_and_links do
         h1 do
           text domain.name

@@ -46,7 +46,7 @@ abstract class BaseLayout
   end
 
   def header_and_links
-    div class: "flex justify-between items-end" do
+    div class: "header-and-links" do
       yield
     end
 

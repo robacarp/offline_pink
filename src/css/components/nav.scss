@@ -33,7 +33,8 @@ header {
 
 @screen md {
   header {
-    @apply justify-start;
+    @apply justify-start mx-auto px-0;
+    width: 48rem;
 
     .hamburger { @apply hidden; }
 
