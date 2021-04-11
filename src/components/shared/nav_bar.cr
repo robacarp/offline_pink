@@ -3,7 +3,7 @@ class Shared::NavBar < BaseComponent
 
   def render
     header do
-      div class: "logo" do
+      link to: Home::Index, class: "logo" do
         text "Offline."
         span "pink", class: "pink"
       end
