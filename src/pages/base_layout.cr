@@ -60,4 +60,8 @@ abstract class BaseLayout
   def formatted_status(for domain : Domain)
     domain.status_code.to_s.downcase
   end
+
+  def text(time : Time)
+    text time.to_rfc3339
+  end
 end

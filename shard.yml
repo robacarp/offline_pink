@@ -6,7 +6,7 @@ targets:
     main: src/start_server.cr
   worker:
     main: src/app_worker.cr
-  l:
+  tasks:
     main: tasks.cr
 
 crystal: 0.36.1
