@@ -10,7 +10,7 @@ class SimpleSaveDomain < Domain::SaveOperation
   permit_columns name, user_id, organization_id
 end
 
-class Db::Seed::SampleData < LuckyCli::Task
+class Db::Seed::SampleData < LuckyTask::Task
   summary "Add sample database records helpful for development"
 
   def call
