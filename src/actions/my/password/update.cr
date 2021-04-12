@@ -1,6 +1,4 @@
 class My::Password::Update < BrowserAction
-  include Sift::DontEnforceAuthorization
-
   post "/my/password" do
     ChangePassword.update(current_user, params) do |operation, _|
       if operation.saved?

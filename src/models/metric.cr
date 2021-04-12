@@ -22,6 +22,4 @@ class Metric < BaseModel
 
     column monitor_event : Time
   end
-
-  policy!
 end

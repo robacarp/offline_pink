@@ -1,11 +1,10 @@
 class Organizations::Show < BrowserAction
-  authorized_lookup Organization do |query|
-    query
+  get "/organization/:id" do
+    organization = OrganizationQuery.new
       .preload_memberships(MembershipQuery.new.preload_user)
       .preload_domains
-  end
+      .find(id)
 
-  get "/organization/:id" do
     html ShowPage, organization: organization
   end
 end

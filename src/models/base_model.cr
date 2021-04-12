@@ -1,6 +1,4 @@
 abstract class BaseModel < Avram::Model
-  include Sift::Model
-
   def to_param
     id.to_s
   end

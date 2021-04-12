@@ -1,10 +1,12 @@
-class DomainPolicy < Domain::BasePolicy
+class DomainPolicy < ApplicationPolicy(Domain)
   def user_is_owner_or_member_of_organization_owner?
-    return true if object.user_id == user.id
+    return false unless user_id = record.user_id
+
+    return true if record.user_id == user.id
     PolymorphicDomainOwnershipQuery
       .run(user)
       .map(&.id)
-      .includes?(object.id)
+      .includes?(record.id)
   end
 
   def update?
@@ -17,18 +19,5 @@ class DomainPolicy < Domain::BasePolicy
 
   def delete?
     user_is_owner_or_member_of_organization_owner?
-  end
-
-  class Scope < Domain::BaseScope
-    def scoped_query
-      PolymorphicDomainOwnershipQuery.run(user)
-    end
-  end
-
-  class Create < Domain::BaseCreator
-    def authorize
-      # todo
-      true
-    end
   end
 end

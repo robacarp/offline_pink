@@ -1,7 +1,9 @@
 class Domains::Delete < BrowserAction
-  authorized_lookup Domain
-
   delete "/domain/:id" do
+    domain = DomainQuery.new.find(id)
+
+    authorize domain
+
     domain.delete
     redirect Domains::Index
   end

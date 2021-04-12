@@ -1,7 +1,8 @@
 class Monitor::Http::Create < BrowserAction
-  authorized_lookup Domain, :update
-
   post "/domain/:id/monitors/http/create" do
+    domain = DomainQuery.new.find(id)
+    authorize domain, DomainPolicy, :update?
+
     SaveHttpMonitor.create(params, domain) do |operation, monitor|
       if monitor
         flash.keep

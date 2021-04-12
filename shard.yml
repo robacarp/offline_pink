@@ -6,7 +6,7 @@ targets:
     main: src/start_server.cr
   worker:
     main: src/app_worker.cr
-  tasks:
+  l:
     main: tasks.cr
 
 crystal: 0.36.1
@@ -18,9 +18,12 @@ dependencies:
     github: robacarp/mosquito
       # path: /Users/robert/Documents/repositories/robacarp/mosquito
 
+  pundit:
+    github: stephendolan/pundit
+
   lucky:
     github: luckyframework/lucky
-    version: ~> 0.27 # branch: master
+    version: ~> 0.27.1 # branch: master
 
   avram:
     github: luckyframework/avram

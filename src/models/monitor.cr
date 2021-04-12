@@ -13,8 +13,6 @@ class Monitor < BaseModel
     has_many metrics : Metric
   end
 
-  policy!
-
   def summary
     monitor_config.summary
   end

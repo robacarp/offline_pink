@@ -6,8 +6,8 @@ abstract class BrowserAction < Lucky::Action
   include Auth::TestBackdoor
   include Auth::RequireSignIn
   include PolymorphicOwnership
+  include Pundit::ActionHelpers(User)
 
-  include Sift::AuthorizingAction
   expose current_user
 
   # This method tells Authentic how to find the current user

@@ -1,7 +1,8 @@
 class Monitor::Delete < BrowserAction
-  authorized_lookup Monitor
-
   delete "/monitor/:id" do
+    monitor = MonitorQuery.new.find(id)
+    authorize monitor
+
     monitor.delete
     redirect Domains::Show.with(monitor.domain_id)
   end

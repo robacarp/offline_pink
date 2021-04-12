@@ -1,6 +1,4 @@
 class My::Account::Update < BrowserAction
-  include Sift::DontEnforceAuthorization
-
   post "/my/account" do
     SaveUser.update(current_user, params) do |operation, _updated_user|
       if operation.saved?

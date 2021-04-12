@@ -1,6 +1,6 @@
-class MonitorPolicy < Monitor::BasePolicy
+class MonitorPolicy < ApplicationPolicy(Monitor)
   private def domain_policy
-    DomainPolicy.new(user, object.domain!)
+    DomainPolicy.new(user, record.domain!)
   end
 
   def read?

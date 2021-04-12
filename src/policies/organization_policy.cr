@@ -1,4 +1,4 @@
-class OrganizationPolicy < Organization::BasePolicy
+class OrganizationPolicy < ApplicationPolicy(Organization)
   def member_of_org
     if Scope.new(user, OrganizationQuery.new).scoped_query.first?
       true
@@ -13,19 +13,5 @@ class OrganizationPolicy < Organization::BasePolicy
 
   def read?
     member_of_org
-  end
-
-  class Scope < Organization::BaseScope
-    def scoped_query
-      OrganizationQuery.new
-        .where_memberships(MembershipQuery.new.user_id(user.id))
-    end
-  end
-
-  class Create < Organization::BaseCreator
-    def authorize
-      # todo
-      true
-    end
   end
 end

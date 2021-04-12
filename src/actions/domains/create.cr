@@ -12,12 +12,7 @@ class Domains::Create < BrowserAction
       organization_id = owner.id
     end
 
-    authorize_create(
-      SaveDomain,
-      params,
-      user_id: user_id,
-      organization_id: organization_id
-    ) do |operation, domain|
+    SaveDomain.create(params, user_id: user_id, organization_id: organization_id) do |operation, domain|
       if domain
         flash.success = "Now monitoring #{domain.name}"
         redirect Domains::Index

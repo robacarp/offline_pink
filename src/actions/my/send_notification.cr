@@ -1,6 +1,4 @@
 class My::TestPushNotification < BrowserAction
-  include Sift::DontEnforceAuthorization
-
   post "/my/notification/test" do
     flash.keep
 

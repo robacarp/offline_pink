@@ -11,6 +11,7 @@ require "lucky_task"
 
 # You can add your own tasks here in the ./tasks folder
 require "./tasks/**"
+require "pundit/tasks/**"
 
 # Load migrations
 require "./db/migrations/**"

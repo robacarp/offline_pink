@@ -1,6 +1,5 @@
 class SignUps::Create < BrowserAction
   include Auth::RedirectSignedInUsers
-  include Sift::DontEnforceAuthorization
 
   post "/sign_up" do
     SignUpUser.create(params) do |operation, user|

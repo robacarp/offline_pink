@@ -1,9 +1,7 @@
 class Monitor::Show < BrowserAction
-  authorized_lookup Monitor do |query|
-    query.preload_domain
-  end
-
   get "/monitor/:id" do
+    monitor = MonitorQuery.new.preload_domain.find(id)
+
     case monitor.monitor_type
     when Monitor::Type::Http
       html Monitor::Http::ShowPage, monitor: monitor, domain: monitor.domain

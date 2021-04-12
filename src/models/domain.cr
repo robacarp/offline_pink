@@ -24,8 +24,6 @@ class Domain < BaseModel
     has_many monitors : Monitor
   end
 
-  policy!
-
   def is_valid?
     is_valid
   end
