@@ -10,10 +10,6 @@ class Features::ShowPage < AuthLayout
           middot_sep
           text feature.state.to_s.downcase
         end
-
-        div do
-          text "Delete"
-        end
       end
 
       unless feature.grants.empty?

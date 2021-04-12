@@ -7,6 +7,7 @@ abstract class BrowserAction < Lucky::Action
   include Auth::RequireSignIn
   include PolymorphicOwnership
   include Pundit::ActionHelpers(User)
+  include Featurette::ActionHelpers
 
   expose current_user
 
@@ -14,9 +15,10 @@ abstract class BrowserAction < Lucky::Action
   @users : Hash(String, User?)?
   private def find_current_user(id) : User?
     @users ||= Hash(String, User?).new do |hash, key|
-      hash[key] = UserQuery.new.id(key).first?
+      hash[key] = UserQuery.new
+        .preload_enabled_features.preload_features
+        .id(key).first?
     end
     @users.try { |users| users[id] }
   end
-
 end

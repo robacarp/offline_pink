@@ -6,4 +6,5 @@ require "mosquito"
 require "pundit"
 
 require "./lib/notifier"
+require "./lib/featurette"
 require "./apis/pushover"

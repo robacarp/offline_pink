@@ -2,7 +2,8 @@ module Sift
   module AuthorizedLookup
     macro authorized_lookup(model, explicit_action = nil, &block)
       {%
-        getter = model.id.downcase
+        concrete_model = model.id
+        getter = model.id.downcase.gsub(/:/, "")
         ivar = ("@_" + getter.stringify).id
         policy_class = model.id + "Policy"
         query_class = model.id + "Query"
@@ -11,14 +12,14 @@ module Sift
 
       before lookup_and_authorize
 
-      {{ ivar }} : {{ model }}?
+      {{ ivar }} : {{ concrete_model }}?
 
       def {{ getter }}
         # the #find(id) call below will return a model or raise 404
         {{ ivar }}.not_nil!
       end
 
-      def policy_object_lookup : {{ model }}
+      def policy_object_lookup : {{ concrete_model }}
         %query = policy_query.new
 
         {% if block %}
@@ -54,10 +55,10 @@ module Sift
           continue
         else
           # Log the unathorized request
-          Log.warn { "Sift Unauthorized: #{policy_class}##{policy_class.resolve policy_action} did not authorize a '#{policy_action}' request for #{ {{ model }} }##{id}. This will render as a 404." }
+          Log.warn { "Sift Unauthorized: #{policy_class}##{policy_class.resolve policy_action} did not authorize a '#{policy_action}' request for #{ {{ concrete_model }} }##{id}. This will render as a 404." }
 
           # pretend we don't even know that record exists
-          raise Avram::RecordNotFoundError.new :{{ model }}, id
+          raise Avram::RecordNotFoundError.new :{{ getter }}, id
         end
       end
     end

@@ -1,11 +1,8 @@
-require "./user/*"
 require "./domain"
 
 class User < BaseModel
   include Carbon::Emailable
   include Authentic::PasswordAuthenticatable
-
-  include Features
 
   avram_enum Validity do
     Unchecked = 1024
@@ -16,7 +13,6 @@ class User < BaseModel
   table :users do
     column email : String
     column encrypted_password : String
-    column features : Int32 = 0
 
     column pushover_key : String?
     column pushover_device : String?
@@ -27,6 +23,9 @@ class User < BaseModel
     has_many domains : Domain
     has_many memberships : Membership
     has_many organizations : Organization, through: [:memberships, :user]
+
+    has_many enabled_features : EnabledFeature
+    has_many features : Feature, through: [:enabled_features, :feature]
   end
 
   def emailable : Carbon::Address

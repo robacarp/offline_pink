@@ -26,23 +26,23 @@ module Sift
       end
     end
 
-    def new?
+    def new? : Bool
       false
     end
 
-    def create?
+    def create? : Bool
       false
     end
 
-    def read?
+    def read? : Bool
       false
     end
 
-    def update?
+    def update? : Bool
       false
     end
 
-    def delete?
+    def delete? : Bool
       false
     end
   end
