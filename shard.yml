@@ -9,7 +9,7 @@ targets:
   tasks:
     main: tasks.cr
 
-crystal: 0.36.1
+crystal: 1.0.0
 
 dependencies:
   icmp:
@@ -19,7 +19,8 @@ dependencies:
       # path: /Users/robert/Documents/repositories/robacarp/mosquito
 
   pundit:
-    github: stephendolan/pundit
+    github: robacarp/pundit
+    commit: c92eff360b1d652234337ec46bf9f055cd5ea77e
 
   lucky:
     github: luckyframework/lucky

@@ -101,8 +101,8 @@ shards:
     version: 0.2.2
 
   pundit:
-    git: https://github.com/stephendolan/pundit.git
-    version: 0.9.0
+    git: https://github.com/robacarp/pundit.git
+    version: 0.9.0+git.commit.c92eff360b1d652234337ec46bf9f055cd5ea77e
 
   redis:
     git: https://github.com/stefanwille/crystal-redis.git
