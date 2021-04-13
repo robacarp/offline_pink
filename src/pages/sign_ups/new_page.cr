@@ -2,7 +2,7 @@ class SignUps::NewPage < GuestLayout
   needs operation : SignUpUser
 
   def content
-    div class: "authentication-form" do
+    shrink_to_fit do
       render_sign_up_form(@operation)
     end
   end

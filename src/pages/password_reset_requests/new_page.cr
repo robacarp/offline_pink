@@ -2,8 +2,9 @@ class PasswordResetRequests::NewPage < GuestLayout
   needs operation : RequestPasswordReset
 
   def content
-    h1 "Reset your password"
-    render_form(@operation)
+    shrink_to_fit do
+      render_form(@operation)
+    end
   end
 
   private def render_form(op)
