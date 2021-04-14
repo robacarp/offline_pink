@@ -12,4 +12,12 @@ class Feature < BaseModel
 
     has_many grants : EnabledFeature
   end
+
+  def self.query
+    FeatureQuery.new
+  end
+
+  def self.states_for_select
+    AvramState.names.zip(AvramState.values.map(&.to_i)).to_h
+  end
 end

@@ -19,8 +19,7 @@ dependencies:
       # path: /Users/robert/Documents/repositories/robacarp/mosquito
 
   pundit:
-    github: robacarp/pundit
-    commit: c92eff360b1d652234337ec46bf9f055cd5ea77e
+    github: stephendolan/pundit
 
   lucky:
     github: luckyframework/lucky

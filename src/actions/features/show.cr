@@ -6,6 +6,11 @@ class Features::Show < AdminAction
 
     authorize feature
 
-    html ShowPage, feature: feature, create_op: GrantFeature.new(feature)
+    html(
+      ShowPage,
+      feature: feature,
+      grant_op: GrantFeature.new(feature),
+      toggle_op: ToggleFeature.new(feature)
+    )
   end
 end
