@@ -19,13 +19,25 @@ class Shared::NavBar < BaseComponent
       nav do
         div class: "items" do
           if current_user
-            link "Monitored Domains", to: Domains::Index
-            link "Account", to: My::Account::Show
+            logged_in_menu 
           else
-            link "Login", to: SignIns::New
+            logged_out_menu
           end
         end
       end
     end
+  end
+
+  def logged_in_menu
+    link "Monitored Domains", to: Domains::Index
+    link "Account", to: My::Account::Show
+
+    if feature_enabled?(:admin)
+      link "Features", to: Features::Index
+    end
+  end
+
+  def logged_out_menu
+    link "Login", to: SignIns::New
   end
 end

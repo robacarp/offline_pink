@@ -9,7 +9,11 @@ module Featurette
       when .enabled?
         true
       when .grantable?
-        current_user.features.map(&.id).includes?(feature.id)
+        if user = current_user
+          user.features.map(&.id).includes?(feature.id)
+        else
+          false
+        end
       when .disabled?
         false
       else
