@@ -53,6 +53,10 @@ class Features::ShowPage < AuthLayout
                   td do
                     text grant.created_at.to_rfc3339
                   end
+
+                  td do
+                    link "Delete", to: Features::Enabled::Destroy.with(grant), data_confirm: "Are you sure?"
+                  end
                 end
               end
           end
@@ -61,7 +65,7 @@ class Features::ShowPage < AuthLayout
         end
 
         h3 "Grant a user this feature"
-        form_for Features::Grant.with(grant_op.feature) do
+        form_for Features::Enabled::Create.with(grant_op.feature) do
           mount Shared::Field, attribute: grant_op.user_id, label_text: "User ID", &.number_input
 
           submit "Grant"

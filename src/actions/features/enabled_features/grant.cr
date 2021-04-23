@@ -1,4 +1,4 @@
-class Features::Grant < AdminAction
+class Features::Enabled::Create < AdminAction
   post "/features/:id/grant" do
     feature = FeatureQuery.new
       .preload_grants(EnabledFeatureQuery.new.preload_user)
