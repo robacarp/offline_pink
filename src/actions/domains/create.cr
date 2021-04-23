@@ -1,4 +1,6 @@
 class Domains::Create < BrowserAction
+  ensure_feature_permitted :domain_monitoring
+
   post "/my/domains/new" do
     owner = decode_owner params.nested(:domain)["owner"]
 

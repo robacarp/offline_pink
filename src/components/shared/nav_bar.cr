@@ -19,7 +19,7 @@ class Shared::NavBar < BaseComponent
       nav do
         div class: "items" do
           if current_user
-            logged_in_menu 
+            logged_in_menu
           else
             logged_out_menu
           end
@@ -29,7 +29,7 @@ class Shared::NavBar < BaseComponent
   end
 
   def logged_in_menu
-    link "Monitored Domains", to: Domains::Index
+    link "Monitored Domains", to: Domains::Index if feature_enabled?(:domain_monitoring)
     link "Account", to: My::Account::Show
 
     if feature_enabled?(:admin)

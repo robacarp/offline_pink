@@ -14,7 +14,15 @@ class Errors::Show < Lucky::ErrorAction
     end
   end
 
-  def render(error : Lucky::RouteNotFoundError | Avram::RecordNotFoundError | Featurette::DisabledFeatureError)
+  def render(error : Featurette::DisabledFeatureError)
+    if html?
+      error_html "Sorry, we couldn't find that page.", status: 404
+    else
+      error_json "Not found", status: 404
+    end
+  end
+
+  def render(error : Lucky::RouteNotFoundError | Avram::RecordNotFoundError)
     if html?
       error_html "Sorry, we couldn't find that page.", status: 404
     else
