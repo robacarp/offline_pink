@@ -9,7 +9,7 @@ class Features::Grant < AdminAction
     GrantFeature.create(params, feature) do |operation, feature_grant|
       if feature_grant
         flash.info = "Access to #{feature.name} granted to #{user.email}"
-        redirect to: Features::Index
+        redirect to: Features::Show.with(feature)
       else
         html(
           ShowPage,

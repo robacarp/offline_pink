@@ -11,6 +11,10 @@ class Features::ShowPage < AuthLayout
           middot_sep
           text feature.state.to_s.downcase
         end
+
+        div do
+          link "Delete", to: Features::Delete.with(feature), data_confirm: "Are you sure?"
+        end
       end
 
       h3 "Enable or Disable"

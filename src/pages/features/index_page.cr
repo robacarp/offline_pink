@@ -5,6 +5,10 @@ class Features::IndexPage < AuthLayout
     small_frame do
       header_and_links do
         h1 "Site Features"
+
+        div do
+          link "Create", to: Features::New
+        end
       end
 
       table class: "mx-auto w-64 table-zebra table-borders" do
