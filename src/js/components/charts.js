@@ -63,11 +63,11 @@ class Chart {
   }
 
   formatted_date (date) {
-    return `${date.getFullYear()}-${this.pad(date.getMonth())}-${this.pad(date.getDay())}`
+    return `${date.getFullYear()}-${this.pad(date.getMonth() + 1)}-${this.pad(date.getDay() + 1)}`
   }
 
   formatted_time (date) {
-    return `${this.pad(date.getHours())}:${this.pad(date.getMinutes())}:${this.pad(date.getSeconds())}`
+    return `${this.pad(date.getHours())}:${this.pad(date.getMinutes() + 1)}:${this.pad(date.getSeconds() + 1)}`
   }
 
   optionsForType () {
