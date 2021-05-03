@@ -21,6 +21,9 @@ dependencies:
   pundit:
     github: stephendolan/pundit
 
+  breeze:
+    github: luckyframework/breeze
+
   lucky:
     github: luckyframework/lucky
     version: ~> 0.27.1 # branch: master

@@ -12,6 +12,10 @@ shards:
     git: https://github.com/spider-gazelle/bindata.git
     version: 1.8.3
 
+  breeze:
+    git: https://github.com/luckyframework/breeze.git
+    version: 0.1.0+git.commit.7bc5a89e88aa22aa92eba8c8d0daad00eafb389f
+
   carbon:
     git: https://github.com/luckyframework/carbon.git
     version: 0.1.4
