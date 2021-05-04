@@ -4,7 +4,7 @@ require "carbon"
 require "authentic"
 require "mosquito"
 require "pundit"
-require "breeze"
+# require "breeze"
 
 require "./lib/notifier"
 require "./lib/featurette"
