@@ -1,11 +1,11 @@
 class HomePage < GuestLayout
   def content
-    div class: "small-frame md:flex md:flex-row-reverse" do
-      div class: "md:w-2/5 md:pl-3 mb-6 md:mb-0" do
+    div class: "small-frame sm:flex sm:flex-row-reverse" do
+      div class: "mb-6 w-48 sm:w-2/5 sm:pl-3 sm:mb-0" do
         img src: "assets/images/undraw_connected_world_wuay.svg"
       end
 
-      div class: "md:w-3/5" do
+      div class: "sm:w-3/5" do
         para do
           strong "Service Availability Monitoring"
         end
