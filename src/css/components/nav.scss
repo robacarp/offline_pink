@@ -25,7 +25,6 @@ header {
     }
   }
 
-
   #hamburger-menu-toggle { @apply hidden; }
   #hamburger-menu-toggle:checked ~ #nav { @apply block; }
 }
