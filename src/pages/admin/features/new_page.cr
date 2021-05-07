@@ -1,4 +1,4 @@
-class Features::NewPage < AuthLayout
+class Admin::Features::NewPage < AuthLayout
   needs save : SaveFeature
 
   def content
@@ -8,7 +8,7 @@ class Features::NewPage < AuthLayout
       end
 
       shrink_to_fit do
-        form_for Features::Create do
+        form_for Admin::Features::Create do
           mount Shared::Field, attribute: save.name, label_text: "Feature Name", &.text_input(autofocus: true)
           submit "Create"
         end

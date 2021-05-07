@@ -1,4 +1,4 @@
-class Features::Enabled::Create < AdminAction
+class Admin::Features::Enabled::Create < AdminAction
   post "/features/:id/grant" do
     feature = FeatureQuery.new
       .preload_grants(EnabledFeatureQuery.new.preload_user)
@@ -9,7 +9,7 @@ class Features::Enabled::Create < AdminAction
     GrantFeature.create(params, feature) do |operation, feature_grant|
       if feature_grant
         flash.info = "Access to #{feature.name} granted to #{user.email}"
-        redirect to: Features::Show.with(feature)
+        redirect to: Admin::Features::Show.with(feature)
       else
         html(
           ShowPage,

@@ -1,4 +1,4 @@
-class Features::Toggle < AdminAction
+class Admin::Features::Toggle < AdminAction
   post "/features/:id" do
     feature = FeatureQuery.new.find(id)
 

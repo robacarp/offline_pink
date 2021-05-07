@@ -1,4 +1,4 @@
-class Features::Enabled::Destroy < AdminAction
+class Admin::Features::Enabled::Destroy < AdminAction
   delete "/features/enabled/:id" do
     enabled_feature = EnabledFeatureQuery.new
       .preload_user
@@ -9,6 +9,6 @@ class Features::Enabled::Destroy < AdminAction
 
     flash.info = "#{enabled_feature.user.email} revoked from #{enabled_feature.feature.name}"
 
-    redirect Features::Show.with(enabled_feature.feature_id)
+    redirect Admin::Features::Show.with(enabled_feature.feature_id)
   end
 end

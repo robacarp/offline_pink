@@ -1,4 +1,4 @@
-class Features::Create < AdminAction
+class Admin::Features::Create < AdminAction
   post "/features/new" do
     SaveFeature.create(params) do |operation, feature|
       if feature

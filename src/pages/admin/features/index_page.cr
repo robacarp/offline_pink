@@ -1,4 +1,4 @@
-class Features::IndexPage < AuthLayout
+class Admin::Features::IndexPage < AuthLayout
   needs features : FeatureQuery
 
   def content
@@ -7,7 +7,7 @@ class Features::IndexPage < AuthLayout
         h1 "Site Features"
 
         div do
-          link "Create", to: Features::New
+          link "Create", to: Admin::Features::New
         end
       end
 
@@ -25,7 +25,7 @@ class Features::IndexPage < AuthLayout
   def feature_row(feature : ::Feature)
     tr do
       td do
-        link feature.name, to: Features::Show.with(feature)
+        link feature.name, to: Admin::Features::Show.with(feature)
       end
 
       td do

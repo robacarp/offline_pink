@@ -1,10 +1,10 @@
-class Features::Show < AdminAction
+class Admin::Features::Show < AdminAction
   get "/features/:id" do
     feature = FeatureQuery.new
       .preload_grants(EnabledFeatureQuery.new.preload_user)
       .find(id)
 
-    authorize feature
+    authorize feature, FeaturePolicy
 
     html(
       ShowPage,

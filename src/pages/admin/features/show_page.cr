@@ -1,4 +1,4 @@
-class Features::ShowPage < AuthLayout
+class Admin::Features::ShowPage < AuthLayout
   needs feature : ::Feature
   needs grant_op : GrantFeature
   needs toggle_op : ToggleFeature
@@ -13,7 +13,7 @@ class Features::ShowPage < AuthLayout
         end
 
         div do
-          link "Delete", to: Features::Delete.with(feature), data_confirm: "Are you sure?"
+          link "Delete", to: Admin::Features::Delete.with(feature), data_confirm: "Are you sure?"
         end
       end
 
@@ -36,6 +36,8 @@ class Features::ShowPage < AuthLayout
         submit "Update"
       end
 
+      h3 "User Grants"
+      hr
       if feature.state.to_i == Feature::State::Grantable.to_i
         unless feature.grants.empty?
             table do
@@ -55,7 +57,7 @@ class Features::ShowPage < AuthLayout
                   end
 
                   td do
-                    link "Delete", to: Features::Enabled::Destroy.with(grant), data_confirm: "Are you sure?"
+                    link "Delete", to: Admin::Features::Enabled::Destroy.with(grant), data_confirm: "Are you sure?"
                   end
                 end
               end

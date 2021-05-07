@@ -1,4 +1,4 @@
-class Features::Delete < AdminAction
+class Admin::Features::Delete < AdminAction
   delete "/feature/:id" do
     feature = FeatureQuery.new.find(id)
     feature.delete
