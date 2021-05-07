@@ -16,7 +16,7 @@ class Shared::NavBar < BaseComponent
       end
 
       input type: "checkbox", id: "hamburger-menu-toggle"
-      nav do
+      nav id: "nav" do
         div class: "items" do
           if current_user
             logged_in_menu
@@ -25,6 +25,7 @@ class Shared::NavBar < BaseComponent
           end
         end
       end
+
     end
   end
 
@@ -33,11 +34,25 @@ class Shared::NavBar < BaseComponent
     link "Account", to: My::Account::Show
 
     if feature_enabled?(:admin)
-      link "Features", to: Features::Index
+      label class: "admin-burger", for: "admin-menu-toggle" do
+        text "Admin"
+      end
+
+      admin_menu
     end
   end
 
   def logged_out_menu
     link "Login", to: SignIns::New
+  end
+
+  def admin_menu
+    input type: "checkbox", id: "admin-menu-toggle", checked: false
+    nav id: "admin-menu" do
+      div class: "items" do
+        link "Features", to: Admin::Features::Index
+        link "Users", to: Admin::Users::Index
+      end
+    end
   end
 end

@@ -1,5 +1,5 @@
 header {
-  @apply flex flex-wrap items-center justify-between p-6;
+  @apply relative flex flex-wrap items-center justify-between p-6;
 
   a.logo {
     @apply flex items-center flex-shrink-0 mr-6;
@@ -16,19 +16,18 @@ header {
     svg { @apply fill-current h-3 w-3 }
   }
 
-  nav {
+  #nav {
     @apply w-full hidden mt-1;
 
     .items {
       @apply w-full block w-auto flex flex-col text-center;
-
-      a { @apply block py-4 inline-block text-teal-200; }
+      a, label { @apply py-4 inline-block text-teal-200 rounded; }
     }
   }
 
 
   #hamburger-menu-toggle { @apply hidden; }
-  #hamburger-menu-toggle:checked ~ nav { @apply block; }
+  #hamburger-menu-toggle:checked ~ #nav { @apply block; }
 }
 
 // 'sm': '640px', => @media (min-width: 640px)
@@ -43,13 +42,13 @@ header {
 
     .hamburger { @apply hidden; }
 
-    nav {
+    #nav {
       @apply block w-auto;
 
       .items {
         @apply flex flex-row justify-between items-center;
 
-        a {
+        a, label {
           @apply py-2 px-2 flex-grow;
           &:hover { @apply bg-gray-500; }
         }

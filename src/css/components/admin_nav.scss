@@ -1,0 +1,41 @@
+header {
+  @apply flex flex-wrap items-center justify-between p-6;
+
+  .admin-burger {
+    @apply bg-gray-500 text-gray-100;
+  }
+
+  #admin-menu {
+    @apply hidden;
+    @apply rounded;
+    @apply bg-gray-500;
+
+    .items {
+      a {
+        @apply py-4 px-8 inline-block;
+        @apply text-gray-100 rounded;
+
+        &:hover {
+          @apply bg-gray-300 text-gray-900;
+        }
+      }
+    }
+  }
+
+  #admin-menu-toggle { @apply hidden; }
+  #admin-menu-toggle:checked ~ nav#admin-menu { @apply block; }
+}
+
+// 'sm': '640px', => @media (min-width: 640px)
+// 'md': '768px', => @media (min-width: 768px)
+// 'lg': '1024px', => @media (min-width: 1024px)
+// 'xl': '1280px', => @media (min-width: 1280px)
+
+@screen md {
+  header {
+    #admin-menu {
+      @apply z-10 absolute;
+      right: 0; top: 4.5rem;
+    }
+  }
+}
