@@ -30,8 +30,12 @@ class Admin::Users::ShowPage < AuthLayout
     h1 "Enabled Features"
     hr
 
-    user.features.each do |feature|
-      para feature.name
+    ul do
+      user.enabled_features.each do |grant|
+        li do
+          link grant.feature.name, to: Features::Show.with(grant.feature)
+        end
+      end
     end
   end
 

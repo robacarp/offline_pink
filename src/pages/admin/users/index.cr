@@ -22,7 +22,11 @@ class Admin::Users::IndexPage < AuthLayout
   def user_row(for user : User)
     tr do
       td user.id
-      td user.email
+
+      td do
+        link user.email, to: Admin::Users::Show.with(user)
+      end
+
       td user.created_at.to_rfc3339
     end
   end
