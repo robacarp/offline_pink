@@ -2,23 +2,17 @@ abstract class BrowserAction < Lucky::Action
   include Lucky::ProtectFromForgery
   accepted_formats [:html, :json], default: :html
 
-  include Authentic::ActionHelpers(User)
-  include Auth::TestBackdoor
-  include Auth::RequireSignIn
+  include Foundation::ActionHelpers::Authentication(User, UserQuery)
   include PolymorphicOwnership
   include Pundit::ActionHelpers(User)
   include Featurette::ActionHelpers
 
   expose current_user
 
-  # This method tells Authentic how to find the current user
-  @users : Hash(String, User?)?
-  private def find_current_user(id) : User?
-    @users ||= Hash(String, User?).new do |hash, key|
-      hash[key] = UserQuery.new
-        .preload_enabled_features.preload_features
-        .id(key).first?
-    end
-    @users.try { |users| users[id] }
+  private def query_for_user(user_id) : User?
+    UserQuery.new
+      .preload_enabled_features
+      .preload_features
+      .id(user_id).first?
   end
 end

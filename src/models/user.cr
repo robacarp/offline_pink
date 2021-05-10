@@ -1,8 +1,6 @@
-require "./domain"
-
 class User < BaseModel
   include Carbon::Emailable
-  include Authentic::PasswordAuthenticatable
+  include Foundation::ModelHelpers::Authentication
 
   avram_enum Validity do
     Unchecked = 1024

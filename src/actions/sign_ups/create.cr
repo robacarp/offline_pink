@@ -1,5 +1,5 @@
 class SignUps::Create < BrowserAction
-  include Auth::RedirectSignedInUsers
+  redirect_signed_in_users
 
   post "/sign_up" do
     SignUpUser.create(params) do |operation, user|

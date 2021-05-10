@@ -1,4 +1,4 @@
-module Auth::TestBackdoor
+module Foundation::ActionHelpers::TestBackdoor
   macro included
     before test_backdoor
   end

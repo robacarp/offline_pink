@@ -1,5 +1,5 @@
 class PasswordResetRequests::NewPage < GuestLayout
-  needs operation : RequestPasswordReset
+  needs operation : User::RequestPasswordReset
 
   def content
     shrink_to_fit do

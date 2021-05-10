@@ -1,4 +1,4 @@
-module Auth::AllowGuests
+module Foundation::ActionHelpers::AllowGuests
   macro included
     skip require_sign_in
   end

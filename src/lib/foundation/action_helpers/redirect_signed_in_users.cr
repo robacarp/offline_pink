@@ -1,6 +1,6 @@
-module Auth::RedirectSignedInUsers
+module Foundation::ActionHelpers::RedirectSignedInUsers
   macro included
-    include Auth::AllowGuests
+    include Foundation::ActionHelpers::AllowGuests
     before redirect_signed_in_users
   end
 

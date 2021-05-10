@@ -1,5 +1,5 @@
 class Home::Index < BrowserAction
-  include Auth::AllowGuests
+  allow_guests
 
   get "/" do
     html HomePage

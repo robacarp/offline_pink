@@ -1,4 +1,4 @@
-class RequestPasswordReset < Avram::Operation
+class User::RequestPasswordReset < Avram::Operation
   # You can modify this in src/operations/mixins/user_from_email.cr
   include UserFromEmail
 

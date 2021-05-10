@@ -1,6 +1,6 @@
 class My::Password::ShowPage < AuthLayout
   needs user : User
-  needs save : ChangePassword
+  needs save : User::ChangePassword
 
   def content
     small_frame do

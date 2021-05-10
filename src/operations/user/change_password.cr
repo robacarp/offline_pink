@@ -1,4 +1,7 @@
-class ChangePassword < User::SaveOperation
+require "./password_validations"
+
+class User::ChangePassword < User::SaveOperation
+  include Foundation::OperationHelpers::Authentication
   include PasswordValidations
 
   attribute old_password : String
@@ -9,12 +12,12 @@ class ChangePassword < User::SaveOperation
   before_save run_password_validations
 
   before_save do
-    Authentic.copy_and_encrypt password, to: encrypted_password
+    encrypt_password from: password, to: encrypted_password
   end
 
   def check_old_password
     return unless user = record
-    unless Authentic.correct_password?(user, old_password.value.to_s)
+    unless user.correct_password? old_password.value.to_s
       old_password.add_error "incorrect"
     end
   end

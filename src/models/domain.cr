@@ -1,5 +1,3 @@
-require "./user"
-
 class Domain < BaseModel
   avram_enum Status do
     UnChecked = -1

@@ -1,11 +1,11 @@
 require "avram"
 require "lucky"
 require "carbon"
-require "authentic"
 require "mosquito"
 require "pundit"
 # require "breeze"
 
 require "./lib/notifier"
+require "./lib/foundation"
 require "./lib/featurette"
 require "./apis/pushover"

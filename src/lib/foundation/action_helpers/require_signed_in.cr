@@ -1,13 +1,20 @@
-module Auth::RequireSignIn
+module Foundation::ActionHelpers::RequireSignedIn
   macro included
     before require_sign_in
+  end
+
+  # Inspired by Authentic
+  def remember_requested_path
+    if request.method.upcase == "GET"
+      session.set(:return_to, request.resource)
+    end
   end
 
   private def require_sign_in
     if current_user?
       continue
     else
-      Authentic.remember_requested_path(self)
+      remember_requested_path
       flash.info = "Please sign in first"
       redirect to: SignIns::New
     end

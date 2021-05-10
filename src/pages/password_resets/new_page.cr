@@ -1,6 +1,5 @@
 class PasswordResets::NewPage < GuestLayout
-  needs operation : ResetPassword
-  needs user_id : Int64
+  needs operation : User::ResetPassword
 
   def content
     shrink_to_fit do
@@ -9,7 +8,7 @@ class PasswordResets::NewPage < GuestLayout
   end
 
   private def render_password_reset_form(op)
-    form_for PasswordResets::Create.with(@user_id) do
+    form_for PasswordResets::Create.route do
       mount Shared::Field, attribute: op.password, label_text: "Password", &.password_input(autofocus: "true")
       mount Shared::Field, attribute: op.password_confirmation, label_text: "Confirm Password", &.password_input
 

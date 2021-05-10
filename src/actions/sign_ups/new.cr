@@ -1,5 +1,5 @@
 class SignUps::New < BrowserAction
-  include Auth::RedirectSignedInUsers
+  redirect_signed_in_users
 
   get "/sign_up" do
     html NewPage, operation: SignUpUser.new
