@@ -3,6 +3,7 @@ abstract class BaseLayout
 
   abstract def content
   abstract def current_user
+  abstract def admin_user
 
   def page_title
     "Welcome"
@@ -18,7 +19,7 @@ abstract class BaseLayout
       classes << self.class.name.underscore.gsub(/::|_/, "-")
 
       body class: classes.join(' ') do
-        mount Shared::NavBar, current_user
+        mount Shared::NavBar, current_user, admin_user
         mount Shared::FlashMessages, context.flash
         content
       end

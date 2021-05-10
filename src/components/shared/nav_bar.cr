@@ -1,5 +1,6 @@
 class Shared::NavBar < BaseComponent
   needs current_user : User?
+  needs admin_user : User?
 
   def render
     header do
@@ -33,7 +34,7 @@ class Shared::NavBar < BaseComponent
     link "Monitored Domains", to: Domains::Index if feature_enabled?(:domain_monitoring)
     link "Account", to: My::Account::Show
 
-    if feature_enabled?(:admin)
+    if admin_user
       label class: "admin-burger", for: "admin-menu-toggle" do
         text "Admin"
       end
@@ -47,7 +48,7 @@ class Shared::NavBar < BaseComponent
   end
 
   def admin_menu
-    input type: "checkbox", id: "admin-menu-toggle", checked: false
+    input type: "checkbox", id: "admin-menu-toggle"
     nav id: "admin-menu" do
       div class: "items" do
         link "Features", to: Admin::Features::Index
