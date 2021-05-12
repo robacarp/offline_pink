@@ -1,0 +1,22 @@
+#sudo-toolbar {
+  @apply relative flex justify-between items-center;
+  @apply rounded px-6 py-3 border-blue-400;
+
+  color: $electric_blue;
+  background-color: $bg_electric_blue;
+
+  .close {
+    color: $electric_blue;
+
+    svg {
+      @apply fill-current h-6 w-6;
+    }
+  }
+}
+
+@screen md {
+  #sudo-toolbar {
+    @apply mx-auto;
+    width: 48rem;
+  }
+}

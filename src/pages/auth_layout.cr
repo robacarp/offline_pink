@@ -1,9 +1,7 @@
 abstract class AuthLayout < BaseLayout
-  needs current_user : User
-  needs admin_user : User?
+  include Foundation::LayoutHelpers::Authenticated
+  include Featurette::LayoutHelpers(Feature)
 
   needs organizations : OrganizationQuery
   needs possible_owners : Array(NamedValue)
-
-  include Featurette::LayoutHelpers(Feature)
 end

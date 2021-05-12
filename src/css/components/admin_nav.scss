@@ -33,7 +33,9 @@ header {
   header {
     #admin-menu {
       @apply z-10 absolute;
-      right: 0; top: 4.5rem;
+      top: 0;
+      right: 4rem;
+      min-width: 14rem;
     }
   }
 }

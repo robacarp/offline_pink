@@ -5,6 +5,10 @@ class Admin::Users::ShowPage < AuthLayout
     small_frame do
       header_and_links do
         h1 user.email
+
+        div do
+          link "Assume User", to: Admin::Users::Impersonate.with(user), data_confirm: "Are you sure?"
+        end
       end
 
       if user.domains.any?

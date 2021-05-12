@@ -8,6 +8,10 @@ module Foundation::ActionHelpers::SignIn(UserModel, UserQuery)
     end
   end
 
+  def end_admin_takeover
+    session.set(USER_SESSION_KEY, session.get(ADMIN_SESSION_KEY))
+  end
+
   def sign_in(user : UserModel) : Void
     session.set(USER_SESSION_KEY, user.id.to_s)
 
@@ -27,9 +31,7 @@ module Foundation::ActionHelpers::SignIn(UserModel, UserQuery)
 
   # Override when possible to drop the nil
   def admin_user : UserModel?
-    admin_user?.tap do |u|
-      puts "Admin User: #{u}"
-    end
+    admin_user?
   end
 
   def admin_user? : UserModel?
@@ -48,8 +50,8 @@ module Foundation::ActionHelpers::SignIn(UserModel, UserQuery)
   # Memoized user lookup.
   @users : Hash(String, UserModel?)?
   def current_user_memo(id) : UserModel?
-    @users ||= Hash(String, UserModel?).new { |hash, key| hash[key] = query_for_user(id) }
-    @users.try { |users| users[id] }
+    user_lookup_table = @users ||= Hash(String, UserModel?).new { |hash, key| hash[key] = query_for_user(key) }
+    user_lookup_table[id]
   end
 
   # Look up a user in the database.

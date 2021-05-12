@@ -4,9 +4,9 @@ module Featurette
 
   module ActionHelpers
     macro ensure_feature_permitted(name)
-      before _ensure_feature
+      before _ensure_feature_{{ name.id }}
 
-      def _ensure_feature
+      def _ensure_feature_{{ name.id }}
         feature_name = "{{ name.id }}"
         features = current_user.features.map(&.name)
 
@@ -20,6 +20,10 @@ module Featurette
           end
         end
       end
+    end
+
+    macro allow_feature_bypass(name)
+      skip _ensure_feature_{{ name.id }}
     end
   end
 end

@@ -1,4 +1,3 @@
 abstract class GuestLayout < BaseLayout
-  needs current_user : User?
-  needs admin_user : User?
+  include Foundation::LayoutHelpers::Guest
 end

@@ -20,7 +20,7 @@ header {
     @apply w-full hidden mt-1;
 
     .items {
-      @apply w-full block w-auto flex flex-col text-center;
+      @apply relative w-full block w-auto flex flex-col text-center;
       a, label { @apply py-4 inline-block text-teal-200 rounded; }
     }
   }
@@ -36,7 +36,7 @@ header {
 
 @screen md {
   header {
-    @apply mx-auto p-0;
+    @apply mx-auto p-0 mb-4;
     width: 48rem;
 
     .hamburger { @apply hidden; }
