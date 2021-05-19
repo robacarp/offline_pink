@@ -1,9 +1,9 @@
 class PasswordResets::Create < BrowserAction
   include Foundation::ActionHelpers::PasswordReset(User, UserQuery)
-
+  allow_guests
   redirect_without_reset_token
 
-  post "/password_resets" do
+  post "/password-reset" do
     user = password_reset_token_user
     User::ResetPassword.update(user, params) do |operation, user|
       if operation.saved?

@@ -14,7 +14,7 @@ shards:
 
   breeze:
     git: https://github.com/luckyframework/breeze.git
-    version: 0.1.0+git.commit.7bc5a89e88aa22aa92eba8c8d0daad00eafb389f
+    version: 0.1.0+git.commit.86af21ac4c5ff791a827297a24ef74c6d1226bf2
 
   carbon:
     git: https://github.com/luckyframework/carbon.git

@@ -1,5 +1,7 @@
 class PasswordResets::Edit < BrowserAction
-  get "/password_resets/edit" do
+  allow_guests
+
+  get "/password-reset/edit" do
     html NewPage, operation: User::ResetPassword.new
   end
 end

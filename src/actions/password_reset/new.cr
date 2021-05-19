@@ -5,7 +5,7 @@ class PasswordResets::New < BrowserAction
 
   param token : String
 
-  get "/password_resets" do
+  get "/password-reset" do
     save_password_reset_token token
     redirect to: PasswordResets::Edit
   end

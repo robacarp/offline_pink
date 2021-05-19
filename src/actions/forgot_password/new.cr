@@ -1,7 +1,7 @@
 class PasswordResetRequests::New < BrowserAction
   redirect_signed_in_users
 
-  route do
+  get "/forgot-password" do
     html NewPage, operation: User::RequestPasswordReset.new
   end
 end

@@ -2,6 +2,8 @@ ENV["LUCKY_ENV"] = "test"
 ENV["PORT"] = "5001"
 require "spec"
 require "lucky_flow"
+require "faker"
+
 require "../src/app"
 require "./support/flows/base_flow"
 require "./support/**"
@@ -16,5 +18,5 @@ require "./setup/**"
 include Carbon::Expectations
 include LuckyFlow::Expectations
 
-LuckyRecord::Migrator::Runner.new.ensure_migrated!
+Avram::Migrator::Runner.new.ensure_migrated!
 Habitat.raise_if_missing_settings!

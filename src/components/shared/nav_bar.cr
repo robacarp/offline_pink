@@ -44,7 +44,7 @@ class Shared::NavBar < BaseComponent
   end
 
   def logged_out_menu
-    link "Login", to: SignIns::New
+    link "Sign In", to: SignIns::New
   end
 
   def admin_menu
