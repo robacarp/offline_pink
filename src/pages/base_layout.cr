@@ -12,7 +12,7 @@ abstract class BaseLayout
     html_doctype
 
     html lang: "en" do
-      mount Shared::LayoutHead, page_title: page_title, context: context, current_user: current_user
+      mount Shared::LayoutHead, page_title: page_title, current_user: current_user
 
       classes = [] of String
       classes << self.class.name.underscore.gsub(/::|_/, "-")

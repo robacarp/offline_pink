@@ -3,7 +3,7 @@
 # Look at config/route_helper.cr if you want to change the domain used when
 # generating links with `Action.url`.
 Lucky::Server.configure do |settings|
-  if Lucky::Env.production?
+  if LuckyEnv.production?
     settings.secret_key_base = secret_key_from_env
     settings.host = "0.0.0.0"
     settings.port = ENV["PORT"].to_i
@@ -26,7 +26,7 @@ Lucky::Server.configure do |settings|
   # However you could use a CDN when in production like this:
   #
   #   Lucky::Server.configure do |settings|
-  #     if Lucky::Env.production?
+  #     if LuckyEnv.production?
   #       settings.asset_host = "https://mycdnhost.com"
   #     else
   #       settings.asset_host = ""
@@ -39,7 +39,7 @@ Lucky::ForceSSLHandler.configure do |settings|
   force_ssl = ENV["FORCE_SSL"]? == "true"
 
   if force_ssl.nil?
-    force_ssl = Lucky::Env.production?
+    force_ssl = LuckyEnv.production?
   end
 
   settings.enabled = force_ssl

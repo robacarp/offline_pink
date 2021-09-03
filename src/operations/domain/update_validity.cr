@@ -3,7 +3,7 @@ class DomainOp::UpdateValidity < Domain::SaveOperation
 
   before_save do
     if is_valid.value == false
-      status_code.value = Domain::Status.new :offline
+      status_code.value = Domain::Status::Offline
     end
   end
 

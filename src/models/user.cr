@@ -2,7 +2,7 @@ class User < BaseModel
   include Carbon::Emailable
   include Foundation::ModelHelpers::Authentication
 
-  avram_enum Validity do
+  enum Validity
     Unchecked = 1024
     Valid = 0
     Invalid = 1
@@ -16,7 +16,7 @@ class User < BaseModel
     column pushover_device : String?
 
     column valid_pushover_settings : User::Validity = User::Validity.new(:unchecked).to_i
-    column email_valid : User::Validity = User::Validity.new(:unchecked).to_i
+    column email_valid : User::Validity = User::Validity::Unchecked
 
     has_many domains : Domain
     has_many memberships : Membership
@@ -35,6 +35,6 @@ class User < BaseModel
   end
 
   def valid_pushover_settings?
-    valid_pushover_settings == User::Validity.new :valid
+    valid_pushover_settings == User::Validity::Valid
   end
 end

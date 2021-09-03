@@ -1,21 +1,3 @@
-module SaveMonitor
-  macro included
-    needs domain : Domain
-
-    getter meta_error : String = ""
-
-    before_save do
-      monitor_type.value = type.to_i
-      config.value = monitor_config
-      domain_id.value = domain.id
-      region_id.value = Region.default_region.id
-    end
-
-    before_save ensure_uniqueness_of_monitor
-  end
-
-end
-
 class SaveHttpMonitor < Monitor::SaveOperation
   include SaveMonitor
 
@@ -67,7 +49,7 @@ class SaveHttpMonitor < Monitor::SaveOperation
 
     # UserQuery.new.preferences(JSON::Any.new({"theme" => JSON::Any.new("dark_mode")}))
     existing_monitor = MonitorQuery.new
-     .monitor_type(type.to_i)
+     .monitor_type(type)
      .domain_id(domain_id)
      .config(JSON::Any.new({
       "path" => JSON::Any.new(path_value),
@@ -112,39 +94,3 @@ class SaveHttpMonitor < Monitor::SaveOperation
   end
 end
 
-class SaveIcmpMonitor < Monitor::SaveOperation
-  include SaveMonitor
-
-  before_save do
-    config.value = Monitor::Icmp.from_json("{}").to_any
-    domain_id.value = domain.id
-    region_id.value = Region.default_region.id
-  end
-
-  def type
-    Monitor::Type::Icmp
-  end
-
-  def monitor_config
-    Monitor::Icmp.from_json("{}").to_any
-  end
-
-  def ensure_uniqueness_of_monitor
-    permit_only_one_monitor_per_domain
-  end
-
-  def permit_only_one_monitor_per_domain
-    return unless domain_fk = domain.id
-
-    results = MonitorQuery.new
-      .domain_id(domain_fk)
-      .monitor_type(type.to_i)
-      .first?
-
-    if results
-      # this won't ever show, but is needed to fail the validations
-      domain_id.add_error "is already being checked"
-      @meta_error = "Only one ICMP monitor can be present for a domain"
-    end
-  end
-end

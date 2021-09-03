@@ -1,5 +1,5 @@
 class LogEntry < BaseModel
-  avram_enum Severity do
+  enum Severity
     Info = 2
     Notice = 3
     Warn = 4

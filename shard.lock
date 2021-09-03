@@ -2,23 +2,31 @@ version: 2.0
 shards:
   authentic:
     git: https://github.com/luckyframework/authentic.git
-    version: 0.7.3
+    version: 0.8.0
 
   avram:
     git: https://github.com/luckyframework/avram.git
-    version: 0.20.0
+    version: 0.21.1
+
+  backtracer:
+    git: https://github.com/sija/backtracer.cr.git
+    version: 1.2.1
 
   bindata:
     git: https://github.com/spider-gazelle/bindata.git
-    version: 1.8.3
+    version: 1.9.1
 
   breeze:
     git: https://github.com/luckyframework/breeze.git
-    version: 0.1.0+git.commit.86af21ac4c5ff791a827297a24ef74c6d1226bf2
+    version: 0.2.0
 
   carbon:
     git: https://github.com/luckyframework/carbon.git
-    version: 0.1.4
+    version: 0.2.0
+
+  carbon_sendgrid_adapter:
+    git: https://github.com/luckyframework/carbon_sendgrid_adapter.git
+    version: 0.1.0
 
   cry:
     git: https://github.com/luckyframework/cry.git
@@ -36,13 +44,9 @@ shards:
     git: https://github.com/luckyframework/dexter.git
     version: 0.3.3
 
-  dotenv:
-    git: https://github.com/gdotdesign/cr-dotenv.git
-    version: 1.0.0
-
   exception_page:
     git: https://github.com/crystal-loot/exception_page.git
-    version: 0.1.5
+    version: 0.2.0
 
   faker:
     git: https://github.com/askn/faker.git
@@ -50,7 +54,7 @@ shards:
 
   future:
     git: https://github.com/crystal-community/future.cr.git
-    version: 1.0.0+git.commit.9fe168418c6884cb3552c13b004763eb4815ceb9
+    version: 1.0.0
 
   habitat:
     git: https://github.com/luckyframework/habitat.git
@@ -64,9 +68,17 @@ shards:
     git: https://github.com/crystal-community/jwt.git
     version: 1.5.1
 
+  lexbor:
+    git: https://github.com/kostya/lexbor.git
+    version: 3.0.1
+
   lucky:
     git: https://github.com/luckyframework/lucky.git
-    version: 0.27.1
+    version: 0.28.0
+
+  lucky_env:
+    git: https://github.com/luckyframework/lucky_env.git
+    version: 0.1.4
 
   lucky_flow:
     git: https://github.com/luckyframework/lucky_flow.git
@@ -74,7 +86,7 @@ shards:
 
   lucky_router:
     git: https://github.com/luckyframework/lucky_router.git
-    version: 0.4.2
+    version: 0.5.0
 
   lucky_task:
     git: https://github.com/luckyframework/lucky_task.git
@@ -84,17 +96,13 @@ shards:
     git: https://github.com/robacarp/mosquito.git
     version: 0.11.0
 
-  myhtml:
-    git: https://github.com/kostya/myhtml.git
-    version: 1.5.4
-
   openssl_ext:
     git: https://github.com/spider-gazelle/openssl_ext.git
-    version: 2.1.4
+    version: 2.1.5
 
   pg:
     git: https://github.com/will/crystal-pg.git
-    version: 0.23.2
+    version: 0.24.0
 
   pool:
     git: https://github.com/ysbaddaden/pool.git
@@ -106,7 +114,7 @@ shards:
 
   pundit:
     git: https://github.com/stephendolan/pundit.git
-    version: 0.9.0+git.commit.c92eff360b1d652234337ec46bf9f055cd5ea77e
+    version: 0.10.0
 
   redis:
     git: https://github.com/stefanwille/crystal-redis.git
@@ -118,11 +126,11 @@ shards:
 
   shell-table:
     git: https://github.com/luckyframework/shell-table.cr.git
-    version: 0.9.2+git.commit.ad72379f241ba28698ca2873d9b43785324a7932
+    version: 0.9.3+git.commit.fefbc8b19d18630660b2653de755217597808b1b
 
   teeplate:
     git: https://github.com/luckyframework/teeplate.git
-    version: 0.8.3
+    version: 0.8.4
 
   webdrivers:
     git: https://github.com/matthewmcgarvey/webdrivers.cr.git
@@ -130,5 +138,5 @@ shards:
 
   wordsmith:
     git: https://github.com/luckyframework/wordsmith.git
-    version: 0.2.2
+    version: 0.3.0
 

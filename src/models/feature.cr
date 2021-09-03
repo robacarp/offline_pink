@@ -1,5 +1,5 @@
 class Feature < BaseModel
-  avram_enum State do
+  enum State
     Enabled = 0
     Disabled = 1
     Grantable = 2
@@ -18,6 +18,6 @@ class Feature < BaseModel
   end
 
   def self.states_for_select
-    AvramState.names.zip(AvramState.values.map(&.to_i)).to_h
+    State.names.zip(State.values.map(&.to_i)).to_h
   end
 end

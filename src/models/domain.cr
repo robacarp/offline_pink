@@ -1,5 +1,5 @@
 class Domain < BaseModel
-  avram_enum Status do
+  enum Status
     UnChecked = -1
     Stable = 0
     Degraded = 1
@@ -10,7 +10,7 @@ class Domain < BaseModel
   table :domains do
     column name : String
     column is_valid : Bool = false
-    column status_code : Domain::Status = Domain::Status.new(:un_checked).to_i
+    column status_code : Domain::Status = Domain::Status::UnChecked
     column last_monitor_event : Time?
 
     belongs_to user : User?

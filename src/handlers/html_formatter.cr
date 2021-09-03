@@ -1,4 +1,4 @@
-require "myhtml"
+require "lexbor"
 
 class HtmlBeautificationHandler
   include HTTP::Handler
@@ -18,7 +18,7 @@ class HtmlBeautificationHandler
     call_next context
 
     if context.response.headers["Content-Type"]? == "text/html"
-      to_client << Myhtml::Parser.new(unpretty.to_s).to_pretty_html
+      to_client << Lexbor::Parser.new(unpretty.to_s).to_pretty_html
     else
       to_client << unpretty
     end

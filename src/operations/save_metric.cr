@@ -32,19 +32,19 @@ class SaveMetric < Metric::SaveOperation
   def set_metric_type
     case
     when boolean_value.value.present?
-      metric_type.value = Metric::Type::Bool.to_i
+      metric_type.value = Metric::Type::Bool
 
     when float_value.value.present?
-      metric_type.value = Metric::Type::Float.to_i
+      metric_type.value = Metric::Type::Float
 
     when integer_value.value.present?
-      metric_type.value = Metric::Type::Integer.to_i
+      metric_type.value = Metric::Type::Integer
 
     when string_value.value.present?
-      metric_type.value = Metric::Type::String.to_i
+      metric_type.value = Metric::Type::String
 
     else
-      metric_type.value = Metric::Type::None.to_i
+      metric_type.value = Metric::Type::None
 
     end
   end

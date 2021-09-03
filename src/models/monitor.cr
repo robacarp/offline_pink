@@ -1,11 +1,11 @@
 class Monitor < BaseModel
-  avram_enum Type do
+  enum Type
     Http = 1
     Icmp = 2
   end
 
   table do
-    column monitor_type : Int32
+    column monitor_type : Monitor::Type
     column config : JSON::Any
     column last_succeeded_at : Time?
     belongs_to domain : Domain

@@ -1,5 +1,5 @@
 class Metric < BaseModel
-  avram_enum Type do
+  enum Type
     None = 0
     Integer = 1
     Float = 2
@@ -9,7 +9,7 @@ class Metric < BaseModel
 
   table do
     belongs_to monitor : Monitor
-    column metric_type : Int32
+    column metric_type : Metric::Type
 
     column name : String
     column success : Bool = false
