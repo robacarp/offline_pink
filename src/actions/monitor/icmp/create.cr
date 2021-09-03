@@ -1,4 +1,4 @@
-class Monitor::Icmp::Create < BrowserAction
+class MonitorIcmp::Create < BrowserAction
   post "/domain/:id/monitors/icmp/create" do
     domain = DomainQuery.new.find(id)
     authorize domain, DomainPolicy, :update?

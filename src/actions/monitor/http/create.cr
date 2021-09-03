@@ -1,4 +1,4 @@
-class Monitor::Http::Create < BrowserAction
+class MonitorHttp::Create < BrowserAction
   post "/domain/:id/monitors/http/create" do
     domain = DomainQuery.new.find(id)
     authorize domain, DomainPolicy, :update?

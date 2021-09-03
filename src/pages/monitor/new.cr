@@ -67,14 +67,14 @@ class Monitor::NewPage < AuthLayout
   end
 
   def icmp_form
-    form_for Monitor::Icmp::Create.with(id: @domain) do
+    form_for MonitorIcmp::Create.with(id: @domain) do
       meta_error icmp_op
       submit "Add ICMP Ping Monitoring"
     end
   end
 
   def html_form
-    form_for Monitor::Http::Create.with(id: @domain) do
+    form_for MonitorHttp::Create.with(id: @domain) do
       meta_error http_op
 
       div class: "flex justify-between items-start" do
