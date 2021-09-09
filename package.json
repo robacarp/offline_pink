@@ -5,21 +5,27 @@
     "@rails/ujs": "^6.0.0",
     "apexcharts": "^3.23.0",
     "lodash": "^4.17.20",
-    "parcel-bundler": "^1.12.4",
-    "parcel-plugin-bundle-manifest": "^0.2.0",
     "turbolinks": "^5.2.0"
   },
   "scripts": {
-    "heroku-postbuild": "yarn run prod",
-    "watch": "yarn run parcel watch --no-autoinstall -d public --log-level 3 src/_entrypoint.html",
-    "prod": "yarn run parcel build --no-autoinstall -d public --log-level 4 src/_entrypoint.html"
+    "dev": "yarn run mix",
+    "watch": "yarn run mix watch",
+    "prod": "yarn run mix --production"
   },
   "devDependencies": {
-    "browser-sync": "^2.26.7",
+    "@babel/core": "^7.15.5",
+    "@babel/plugin-transform-runtime": "^7.15.0",
     "@tailwindcss/typography": "^0.4.1",
     "autoprefixer": "^10.3.4",
+    "browser-sync": "^2.26.7",
+    "compression-webpack-plugin": "^8.0.1",
+    "laravel-mix": "^6.0.30",
+    "postcss": "^8.3.6",
+    "postcss-import": "^14.0.2",
     "postcss-modules": "^3.2.2",
+    "resolve-url-loader": "^4.0.0",
     "sass": "^1.39.0",
+    "sass-loader": "^12.1.0",
     "tailwindcss": "^2.2.10"
   }
 }
