@@ -21,7 +21,7 @@ header {
 
     .items {
       @apply relative w-full block w-auto flex flex-col text-center;
-      a, label { @apply py-4 inline-block text-teal-200 rounded; }
+      a, label { @apply py-4 inline-block text-green-200 rounded; }
     }
   }
 

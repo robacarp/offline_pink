@@ -3,12 +3,10 @@
   "private": true,
   "dependencies": {
     "@rails/ujs": "^6.0.0",
-    "@tailwindcss/typography": "^0.2.0",
     "apexcharts": "^3.23.0",
     "lodash": "^4.17.20",
     "parcel-bundler": "^1.12.4",
     "parcel-plugin-bundle-manifest": "^0.2.0",
-    "tailwindcss": "^1.9.6",
     "turbolinks": "^5.2.0"
   },
   "scripts": {
@@ -18,7 +16,10 @@
   },
   "devDependencies": {
     "browser-sync": "^2.26.7",
+    "@tailwindcss/typography": "^0.4.1",
+    "autoprefixer": "^10.3.4",
     "postcss-modules": "^3.2.2",
-    "sass": "1.17.1"
+    "sass": "^1.39.0",
+    "tailwindcss": "^2.2.10"
   }
 }

@@ -159,7 +159,7 @@ document.addEventListener("turbolinks:load", () => {
         chart = new HttpStatusCodeChart(div)
         break
       default:
-        console.log(`could not build chart for ${this.type}`)
+        console.log(`could not build chart for ${div}`)
     }
 
     chart.begin()
