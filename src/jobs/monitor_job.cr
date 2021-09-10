@@ -73,7 +73,7 @@ class MonitorJob < Mosquito::QueuedJob
     end
 
     domain.monitors.map do |monitor|
-      log "#{Monitor::AvramType.new(monitor.monitor_type)}:"
+      log "#{monitor.monitor_type}:"
 
       hosts.each do |host|
         args = { host: host, with: monitor, logger: result_logger.for(host) }
