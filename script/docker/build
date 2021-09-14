@@ -1,5 +1,5 @@
 #!/bin/bash
 
-yarn run prod
+# yarn run prod
 
-docker build . -t offline_pink
+docker build . -t offline_pink --progress plain

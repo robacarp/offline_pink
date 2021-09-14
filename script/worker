@@ -1,0 +1,5 @@
+#!/bin/bash
+
+set -euo pipefail
+
+crystal run src/app-worker.cr --error-trace

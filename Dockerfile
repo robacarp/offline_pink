@@ -1,21 +1,22 @@
-# FROM node:14.15.4-alpine3.12 AS frontend
-# WORKDIR /node-build
-# 
-# # yarn install dependencies
-# COPY package.json yarn.lock ./
-# RUN yarn install
-# 
-# # yarn run prod dependencies
-# ENV PARCEL_WORKERS=1
-# COPY .sassrc postcss.config.js bs-config.js tailwind.config.js /
-# COPY src/js src/js
-# COPY src/css src/css
-# COPY src/_entrypoint.html src/
-# RUN yarn run prod
+FROM node:14-alpine3.14 AS frontend
+WORKDIR /build
 
-FROM crystallang/crystal:1.0.0-alpine-build
+# yarn install dependencies
+COPY package.json yarn.lock ./
+RUN yarn install
 
-WORKDIR /crystal-build
+# yarn run prod dependencies
+COPY .sassrc postcss.config.js tailwind.config.js webpack.mix.js .
+COPY src/js src/js
+COPY src/css src/css
+COPY src/pages src/pages
+RUN yarn run production-build
+
+FROM crystallang/crystal:1.1.1-alpine-build
+
+RUN apk add cmake
+
+WORKDIR /build
 
 # shards dependencies
 COPY shard.yml shard.lock ./
@@ -47,10 +48,8 @@ COPY public/assets ./public/assets/
 COPY public/robots.txt public/favicon.ico public/
 
 # assume the assets have already been generated
-COPY public public/
-# COPY --from=frontend /node-build/public public/
-
-RUN cp public/parcel-manifest.json public/mix-manifest.json
+# COPY public public/
+COPY --from=frontend /build/public public/
 
 RUN shards build #--release
 
@@ -59,9 +58,9 @@ COPY script/docker/entrypoint /usr/local/bin/
 
 # move everything into it's final place
 WORKDIR /app
-RUN cp -r /crystal-build/bin .
-RUN cp -r /crystal-build/db .
-RUN cp -r /crystal-build/public .
+RUN cp -r /build/bin .
+RUN cp -r /build/db .
+RUN cp -r /build/public .
 
 ENTRYPOINT ["/usr/local/bin/entrypoint"]
 CMD []

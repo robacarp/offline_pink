@@ -10,7 +10,7 @@
   "scripts": {
     "dev": "yarn run mix",
     "watch": "yarn run mix watch",
-    "prod": "yarn run mix --production"
+    "production-build": "yarn run mix --production --no-progress"
   },
   "devDependencies": {
     "@babel/core": "^7.15.5",
