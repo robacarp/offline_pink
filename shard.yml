@@ -16,20 +16,20 @@ dependencies:
     github: robacarp/icmp.cr
 
   mosquito:
-    github: robacarp/mosquito
-      # path: /Users/robert/Documents/repositories/robacarp/mosquito
+    # github: mosquito/mosquito
+    path: ../../mosquito-cr/mosquito
 
   pundit:
     github: stephendolan/pundit
 
   breeze:
     github: luckyframework/breeze
-    version: ~> 0.2.0
+    version: ~> 0.2
 
   lucky:
     # path: /Users/robert/Documents/repositories/luckyframework/lucky
     github: luckyframework/lucky
-    version: ~> 0.28.0 # branch: master
+    version: ~> 0.29.0 # branch: master
 
   avram:
     github: luckyframework/avram
@@ -43,7 +43,7 @@ dependencies:
 
   authentic:
     github: luckyframework/authentic
-    version: ~> 0.8.0 # branch: master
+    version: ~> 0.8
 
   carbon:
     github: luckyframework/carbon
@@ -63,3 +63,6 @@ dependencies:
   jwt:
     github: crystal-community/jwt
     version: ~> 1.5.1
+
+  honeybadger:
+    path: ../../honeybadger/crystal

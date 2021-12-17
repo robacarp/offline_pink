@@ -22,4 +22,7 @@ Avram.configure do |settings|
   # In production, allow lazy loading (N+1).
   # In development and test, raise an error if you forget to preload associations
   settings.lazy_load_enabled = LuckyEnv.production?
+
+  # Disable query cache during tests
+  settings.query_cache_enabled = !LuckyEnv.test?
 end

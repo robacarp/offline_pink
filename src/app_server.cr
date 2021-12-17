@@ -1,10 +1,14 @@
+require "honeybadger"
+
 class AppServer < Lucky::BaseAppServer
   def middleware : Array(HTTP::Handler)
     [
+      Lucky::RequestIdHandler.new,
       Lucky::ForceSSLHandler.new,
       Lucky::HttpMethodOverrideHandler.new,
       Lucky::LogHandler.new,
       Lucky::ErrorHandler.new(action: Errors::Show),
+      Honeybadger::AuthenticHandler.new(session_key: "user_id"),
       Lucky::RemoteIpHandler.new,
       Lucky::RouteHandler.new,
       Lucky::StaticCompressionHandler.new("./public", file_ext: "gz", content_encoding: "gzip"),
@@ -18,9 +22,7 @@ class AppServer < Lucky::BaseAppServer
   end
 
   def listen
-    # Learn about bind_tcp: https://tinyurl.com/bind-tcp-docs
     puts "Listening on #{host} #{port}..."
-    server.bind_tcp(host, port, reuse_port: false)
-    server.listen
+    server.listen(host, 5001, reuse_port: false)
   end
 end

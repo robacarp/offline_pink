@@ -13,7 +13,8 @@ module Featurette
         if features.includes? feature_name
           continue
         else
-          if FeatureQuery.new.name(feature_name).state(Feature::State.new(:enabled).to_i).any?
+          if FeatureQuery.new.name(feature_name).state(Feature::State::Enabled).any?
+
             continue
           else
             raise Featurette::DisabledFeatureError.new("#{current_user.id} cannot '#{feature_name}' (can: #{features.join(", ")})")
