@@ -16,8 +16,9 @@ dependencies:
     github: robacarp/icmp.cr
 
   mosquito:
-    # github: mosquito/mosquito
-    path: ../../mosquito-cr/mosquito
+    github: mosquito-cr/mosquito
+    version: ~> 1.0.0.rc1
+      # path: ../../mosquito-cr/mosquito
 
   pundit:
     github: stephendolan/pundit

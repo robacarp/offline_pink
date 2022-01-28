@@ -97,8 +97,8 @@ shards:
     version: 0.1.1
 
   mosquito:
-    path: ../../mosquito-cr/mosquito
-    version: 0.11.0
+    git: https://github.com/mosquito-cr/mosquito.git
+    version: 1.0.0.rc1
 
   openssl_ext:
     git: https://github.com/spider-gazelle/openssl_ext.git
