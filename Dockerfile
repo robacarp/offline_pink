@@ -58,6 +58,7 @@ COPY script/docker/entrypoint /usr/local/bin/
 
 # move everything into it's final place
 WORKDIR /app
+COPY BUILD_DETAILS .
 RUN cp -r /build/bin .
 RUN cp -r /build/db .
 RUN cp -r /build/public .

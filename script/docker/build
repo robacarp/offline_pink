@@ -1,5 +1,29 @@
 #!/bin/bash
 
-# yarn run prod
+build_stats () {
+  echo -n '{ "build_timestamp" : "'
+  date "+%Y-%m-%d %H:%M:%S" | tr -d '\n'
+
+  echo -n '", "git_revision" : "'
+  git rev-parse HEAD | tr -d '\n'
+
+  echo -n '", "version" : "'
+  git tag -l \
+    | grep release \
+    | tr '-' ' ' \
+    | awk '{ print $2 }' \
+    | sort -V \
+    | tail -n 1 \
+    | tr -d '\n'
+
+  echo '"}'
+}
+
+function cleanup {
+  rm BUILD_DETAILS
+}
+trap cleanup EXIT
+
+build_stats > BUILD_DETAILS
 
 docker build . -t offline_pink --progress plain
