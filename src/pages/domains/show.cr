@@ -55,15 +55,26 @@ class Domains::ShowPage < AuthLayout
 
     div class: "log-output" do
       output.each do |log_line|
-        classes = ["entry"]
-        classes << log_line.severity.to_s.downcase
-        classes << "monitor" if log_line.attached_monitor?
-
-        span class: classes.join(' ') do
-          text log_line.text
-        end
-
+        clickable_log_line log_line
         br
+      end
+    end
+  end
+
+  def clickable_log_line(log_line : LogEntry)
+    classes = ["entry"]
+    classes << log_line.severity.to_s.downcase
+
+    if log_line.attached_monitor?
+      classes << "monitor"
+    end
+
+    span class: classes.join(' ') do
+      if monitor_id = log_line.monitor_id
+        # todo fix link color, add icon for click-ability
+        link log_line.text, to: MonitorEvent::Show.with(monitor_id, log_line.monitor_event.to_unix)
+      else
+        text log_line.text
       end
     end
   end
