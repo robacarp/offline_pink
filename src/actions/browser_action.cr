@@ -8,9 +8,6 @@ abstract class BrowserAction < Lucky::Action
   include Pundit::ActionHelpers(User)
   include Featurette::ActionHelpers
 
-  expose current_user
-  expose admin_user
-
   private def query_for_user(user_id) : User?
     UserQuery.new
       .preload_enabled_features

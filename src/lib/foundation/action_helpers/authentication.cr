@@ -11,6 +11,9 @@ module Foundation::ActionHelpers::Authentication(UserModel, UserQuery)
     include Foundation::ActionHelpers::RequireSignedIn
     include Foundation::ActionHelpers::TestBackdoor
     include Foundation::ActionHelpers::OriginalRequestPreserver(UserModel)
+
+    expose current_user
+    expose admin_user
   end
 
   macro redirect_signed_in_users
