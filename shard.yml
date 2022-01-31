@@ -66,4 +66,4 @@ dependencies:
     version: ~> 1.5.1
 
   honeybadger:
-    path: ../../honeybadger/crystal
+    github: honeybadger-io/honeybadger-crystal
