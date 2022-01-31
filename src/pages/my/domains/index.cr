@@ -1,11 +1,11 @@
-class Domains::IndexPage < AuthLayout
+class My::Domains::IndexPage < AuthLayout
   needs domains : DomainQuery
 
   def content
     small_frame do
       header_and_links do
         h1 "Monitored Domains"
-        link "Monitor a new domain", to: Domains::New
+        link "Monitor a new domain", to: My::Domains::New
       end
 
       table class: "mx-auto w-64 table-zebra table-borders" do
@@ -22,7 +22,7 @@ class Domains::IndexPage < AuthLayout
   def domain_row(for domain : Domain)
     tr do
       td do
-        link to: Domains::Show.with(id: domain.id) do
+        link to: ::Domains::Show.with(id: domain.id) do
           text domain.name
         end
       end

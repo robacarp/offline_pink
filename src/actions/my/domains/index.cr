@@ -1,4 +1,4 @@
-class Domains::Index < BrowserAction
+class My::Domains::Index < BrowserAction
   ensure_feature_permitted :domain_monitoring
 
   get "/my/domains" do

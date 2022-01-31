@@ -1,4 +1,4 @@
-class Domains::Create < BrowserAction
+class My::Domains::Create < BrowserAction
   ensure_feature_permitted :domain_monitoring
 
   post "/my/domains/new" do

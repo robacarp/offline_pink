@@ -6,8 +6,6 @@ module Foundation::LayoutHelpers::Authentication
     return false unless admin = admin_user
     return false unless viewer = current_user
 
-    puts "user: #{viewer.id}"
-    puts "admin: #{admin.id}"
     viewer.id != admin.id
   end
 end

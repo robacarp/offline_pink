@@ -1,4 +1,4 @@
-class Domains::New < BrowserAction
+class My::Domains::New < BrowserAction
   ensure_feature_permitted :domain_monitoring
 
   get "/my/domains/new" do

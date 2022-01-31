@@ -1,4 +1,4 @@
-class Domains::NewPage < AuthLayout
+class My::Domains::NewPage < AuthLayout
   needs save : SaveDomain
 
   def content

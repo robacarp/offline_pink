@@ -31,7 +31,7 @@ class Shared::NavBar < BaseComponent
   end
 
   def logged_in_menu
-    link "Monitored Domains", to: Domains::Index if feature_enabled?(:domain_monitoring)
+    link "Monitored Domains", to: My::Domains::Index if feature_enabled?(:domain_monitoring)
     link "Account", to: My::Account::Show
 
     if admin_user

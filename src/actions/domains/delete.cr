@@ -7,6 +7,6 @@ class Domains::Delete < BrowserAction
     authorize domain
 
     domain.delete
-    redirect Domains::Index
+    redirect My::Domains::Index
   end
 end
