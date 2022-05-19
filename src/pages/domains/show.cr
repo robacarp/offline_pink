@@ -7,7 +7,7 @@ class Domains::ShowPage < AuthLayout
         h1 do
           text domain.name
           middot_sep
-          text formatted_status for: domain
+          text domain.status_code.to_s.downcase
         end
 
         div do
@@ -17,7 +17,7 @@ class Domains::ShowPage < AuthLayout
         end
       end
 
-      shrink_to_fit do
+      centered do
         ul do
           domain.monitors.each do |monitor|
             li do

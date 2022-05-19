@@ -57,8 +57,8 @@ abstract class BaseLayout
     end
   end
 
-  def shrink_to_fit
-    div class: "shrink-to-fit" do
+  def centered
+    div class: "w-full flex justify-center" do
       div do
         yield
       end
@@ -66,22 +66,11 @@ abstract class BaseLayout
   end
 
   def small_frame
-    div class: "small-frame" do
+    div class: "prose mx-auto w-full px-6 md:px-0 md:w-5/6" do
       yield
     end
   end
 
-  def header_and_links
-    div class: "header-and-links" do
-      yield
-    end
-
-    hr
-  end
-
-  def middot_sep
-    raw "&nbsp;&middot;&nbsp;"
-  end
 
   def formatted_status(for domain : Domain)
     domain.status_code.to_s.downcase

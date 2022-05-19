@@ -18,7 +18,7 @@ class MonitorEvent::ShowPage < AuthLayout
         end
       end
 
-      shrink_to_fit do
+      centered do
         log_entries.each do |entry|
           div do
             text entry.text

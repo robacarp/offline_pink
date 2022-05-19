@@ -7,12 +7,12 @@ class My::Domains::NewPage < AuthLayout
         h1 "Monitor new domain"
       end
 
-      shrink_to_fit do
+      centered do
         form_for Domains::Create do
           mount Shared::OwnershipDropdown, attribute: save.owner, possible_owners: possible_owners
           mount Shared::Field, attribute: save.name, label_text: "DNS Name", &.text_input(autofocus: true, placeholder: "google.com")
 
-          shrink_to_fit do
+          centered do
             submit "Submit"
           end
         end

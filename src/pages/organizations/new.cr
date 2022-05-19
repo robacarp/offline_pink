@@ -7,7 +7,7 @@ class Organizations::NewPage < AuthLayout
         h1 "Create an organization"
       end
 
-      shrink_to_fit do
+      centered do
         form_for Organizations::Create do
           mount Shared::Field,
             attribute: save.name,

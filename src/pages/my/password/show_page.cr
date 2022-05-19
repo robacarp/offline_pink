@@ -8,13 +8,13 @@ class My::Password::ShowPage < AuthLayout
         h1 "Change Password"
       end
 
-      shrink_to_fit do
+      centered do
         form_for My::Password::Update do
           mount Shared::Field, attribute: save.old_password, &.password_input(placeholder: "*************")
           mount Shared::Field, attribute: save.password, &.password_input(placeholder: "*************")
           mount Shared::Field, attribute: save.password_confirmation, &.password_input(placeholder: "*************")
 
-          shrink_to_fit do
+          centered do
             submit "Change Password"
           end
         end
