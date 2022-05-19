@@ -1,6 +1,7 @@
 abstract class BaseLayout
   include Foundation::LayoutHelpers::Authentication
   include Lucky::HTMLPage
+  include HeaderAndLinks
 
   abstract def content
 

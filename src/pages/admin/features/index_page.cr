@@ -3,12 +3,8 @@ class Admin::Features::IndexPage < AuthLayout
 
   def content
     small_frame do
-      header_and_links do
-        h1 "Site Features"
-
-        div do
-          link "Create", to: Admin::Features::New
-        end
+      header_and_links "Site Features" do
+        link "Create", to: Admin::Features::New
       end
 
       table class: "mx-auto w-64 table-zebra table-borders" do

@@ -3,9 +3,7 @@ class Admin::Users::IndexPage < AuthLayout
 
   def content
     small_frame do
-      header_and_links do
-        h1 "Users"
-      end
+      header_and_links "Users"
 
       table class: "mx-auto w-64 table-zebra table-borders" do
         tr do
