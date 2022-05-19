@@ -61,7 +61,7 @@ abstract class BaseLayout
   end
 
   def fixed_width
-    div class: "fixed-width" do
+    div class: "prose max-w-screen-xl w-full mx-auto h-screen p-4" do
       yield
     end
   end
@@ -78,11 +78,6 @@ abstract class BaseLayout
     div class: "prose mx-auto w-full px-6 md:px-0 md:w-5/6" do
       yield
     end
-  end
-
-
-  def formatted_status(for domain : Domain)
-    domain.status_code.to_s.downcase
   end
 
   def text(time : Time)

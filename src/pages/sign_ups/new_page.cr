@@ -2,22 +2,18 @@ class SignUps::NewPage < GuestLayout
   needs operation : SignUpUser
 
   def content
-    shrink_to_fit do
-      render_sign_up_form(@operation)
-    end
-  end
+    small_frame do
+      header_and_links "Sign Up" do
+        link "Sign in", to: SignIns::New
+      end
 
-  private def render_sign_up_form(op)
-    form_for SignUps::Create do
-      mount Shared::Field, attribute: op.email, label_text: "Email", &.email_input(autofocus: "true")
-      mount Shared::Field, attribute: op.password, label_text: "Password", &.password_input(placeholder: "****************")
-      mount Shared::Field, attribute: op.password_confirmation, label_text: "Confirm Password", &.password_input(placeholder: "****************")
+      form_for SignUps::Create do
+        mount Shared::Field, attribute: operation.email, label_text: "Email", &.email_input(autofocus: "true")
+        mount Shared::Field, attribute: operation.password, label_text: "Password", &.password_input(placeholder: "****************")
+        mount Shared::Field, attribute: operation.password_confirmation, label_text: "Confirm Password", &.password_input(placeholder: "****************")
 
-      div class: "button-group" do
-        submit "Sign Up", flow_id: "sign-up-button"
-
-        div class: "flex flex-col items-end" do
-          link "Sign in instead", to: SignIns::New
+        div class: "button-group" do
+          submit "Sign Up", flow_id: "sign-up-button"
         end
       end
     end

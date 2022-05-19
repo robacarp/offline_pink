@@ -38,7 +38,8 @@ class Admin::Features::ShowPage < AuthLayout
 
       h3 "User Grants"
       hr
-      if feature.state.to_i == Feature::State::Grantable.to_i
+      text feature.state.to_s
+      if feature.state == Feature::State::Grantable
         unless feature.grants.empty?
             table do
               tr do
