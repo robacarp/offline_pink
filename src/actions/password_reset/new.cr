@@ -7,6 +7,6 @@ class PasswordResets::New < BrowserAction
 
   get "/password-reset" do
     save_password_reset_token token
-    redirect to: PasswordResets::Edit
+    redirect to: PasswordReset::Edit
   end
 end

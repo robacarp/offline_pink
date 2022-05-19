@@ -1,4 +1,4 @@
-class PasswordResets::Edit < BrowserAction
+class PasswordReset::Edit < BrowserAction
   allow_guests
 
   get "/password-reset/edit" do

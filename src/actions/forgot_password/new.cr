@@ -1,4 +1,4 @@
-class PasswordResetRequests::New < BrowserAction
+class RequestPasswordReset::New < BrowserAction
   redirect_signed_in_users
 
   get "/forgot-password" do

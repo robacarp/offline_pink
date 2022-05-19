@@ -1,4 +1,4 @@
-class PasswordResetRequests::Create < BrowserAction
+class RequestPasswordReset::Create < BrowserAction
   include Foundation::ActionHelpers::PasswordReset(User, UserQuery)
 
   redirect_signed_in_users

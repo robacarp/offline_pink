@@ -1,4 +1,4 @@
-class PasswordResets::Create < BrowserAction
+class PasswordReset::Create < BrowserAction
   include Foundation::ActionHelpers::PasswordReset(User, UserQuery)
   allow_guests
   redirect_without_reset_token
