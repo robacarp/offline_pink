@@ -5,7 +5,7 @@ class Notification {
   }
 
   close = evt => {
-    this.notification.classList.add("closed")
+    this.notification.classList.add("hidden")
   }
 }
 

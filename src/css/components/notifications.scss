@@ -1,27 +1,6 @@
 .flashes {
-  @apply w-full flex flex-col items-center;
-
   .flash {
-    @apply relative w-4/12 flex;
-    @apply border px-4 py-3 mb-4 rounded;
-
-    // sm:inline;
-
-    .title {
-      @apply font-bold mr-4 w-16;
-    }
-
-    .close {
-      @apply absolute top-0 bottom-0 right-0 px-4 py-3;
-
-      svg {
-        @apply fill-current h-6 w-6;
-      }
-    }
-
     &.failure {
-      @apply bg-red-100 border-red-400 text-red-700;
-
       color: $bright_pink;
       background-color: $bg_bright_pink;
 
@@ -31,8 +10,6 @@
     }
 
     &.success {
-      @apply bg-green-100 border-green-400 text-green-700;
-
       color: $electric_green;
       background-color: $bg_electric_green;
 
@@ -40,15 +17,10 @@
     }
 
     &.info {
-      @apply bg-blue-100 border-blue-400 text-blue-700;
       color: $electric_blue;
       background-color: $bg_electric_blue;
 
       .close { color: $electric_blue }
-    }
-
-    &.closed {
-      @apply hidden;
     }
   }
 }
