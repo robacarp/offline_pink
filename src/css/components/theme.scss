@@ -31,9 +31,6 @@ hr {
   @apply p-4;
 }
 
-.header-and-links {
-}
-
 .shrink-to-fit {
   @apply w-full flex justify-center;
 }
@@ -43,10 +40,6 @@ hr {
 }
 
 @screen md {
-  .fixed-width { }
-
-  .shrink-to-fit { }
-
   .header-and-links {
     @apply flex justify-between items-end;
   }

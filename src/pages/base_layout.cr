@@ -25,7 +25,11 @@ abstract class BaseLayout
 
       classes = [] of String
       classes << self.class.name.underscore.gsub(/::|_/, "-")
-      classes << "max-w-screen-xl mx-auto"
+      classes.concat %w|
+        max-w-screen-xl mx-auto
+        px-2
+        md:mx-auto md:w:2/3
+      |
 
       body class: classes.join(' ') do
         mount Shared::NavBar, current_user, admin_user
@@ -62,12 +66,14 @@ abstract class BaseLayout
 
   def fixed_width
     div class: "prose max-w-screen-xl w-full mx-auto h-screen p-4" do
+      raw "<!-- fixed width -->"
       yield
     end
   end
 
   def centered
     div class: "w-full flex justify-center" do
+      raw "<!-- centered -->"
       div do
         yield
       end
@@ -75,7 +81,8 @@ abstract class BaseLayout
   end
 
   def small_frame
-    div class: "prose mx-auto w-full px-6 md:px-0 md:w-5/6" do
+    div class: "mx-auto w-full md:w-2/3" do
+      raw "<!-- small frame -->"
       yield
     end
   end

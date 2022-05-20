@@ -1,59 +1,11 @@
-header {
-  @apply relative flex flex-wrap items-center justify-between px-6 py-3;
+input.menu-toggle ~ nav { @apply hidden; }
+input:checked.menu-toggle ~ nav { @apply block; }
 
-  a.logo {
-    @apply flex items-center flex-shrink-0 mr-6;
-    @apply text-white font-semibold text-xl tracking-tight;
-  }
-
-  a:hover.logo {
-    font-style: oblique -5deg;
-  }
-
-  .hamburger {
-    label { @apply text-4xl text-white leading-4 align-middle cursor-pointer; }
-    svg { @apply fill-current h-3 w-3 }
-  }
-
-  #nav {
-    @apply w-full hidden mt-1;
-
-    .items {
-      @apply relative w-full block w-auto flex flex-col text-center;
-      a, label {
-        @apply py-4 inline-block rounded;
-        color: $electric_blue;
-      }
-    }
-  }
-
-  #hamburger-menu-toggle { @apply hidden; }
-  #hamburger-menu-toggle:checked ~ #nav { @apply block; }
+@screen md {
+  input.menu-toggle ~ nav.show-in-md { @apply block; }
 }
 
 // 'sm': '640px', => @media (min-width: 640px)
 // 'md': '768px', => @media (min-width: 768px)
 // 'lg': '1024px', => @media (min-width: 1024px)
 // 'xl': '1280px', => @media (min-width: 1280px)
-
-@screen md {
-  header {
-    @apply mx-auto mb-4;
-    width: 48rem;
-
-    .hamburger { @apply hidden; }
-
-    #nav {
-      @apply block w-auto;
-
-      .items {
-        @apply flex flex-row justify-between items-center;
-
-        a, label {
-          @apply py-2 px-2 flex-grow;
-          &:hover { @apply bg-gray-500; }
-        }
-      }
-    }
-  }
-}

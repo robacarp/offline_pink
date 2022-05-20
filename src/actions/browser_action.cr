@@ -10,7 +10,7 @@ abstract class BrowserAction < Lucky::Action
 
   private def query_for_user(user_id) : User?
     UserQuery.new
-      .preload_enabled_features
+      .preload_enabled_features(EnabledFeatureQuery.new.preload_feature)
       .preload_features
       .id(user_id).first?
   end
