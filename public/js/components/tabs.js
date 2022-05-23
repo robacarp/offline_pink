@@ -1,6 +1,6 @@
 "use strict";
 
-class Tabs {
+export default class Tabs {
   constructor(tabs) {
     tabs.querySelectorAll(".tab").forEach( tab => {
       tab.addEventListener('click', this.clicked)
@@ -26,8 +26,3 @@ class Tabs {
   }
 }
 
-document.addEventListener("turbolinks:load", () => {
-  document.querySelectorAll(`[data-behavior~=tabs]`).forEach(tabs => {
-    new Tabs(tabs)
-  })
-})

@@ -18,7 +18,6 @@ abstract class BaseLayout
         title "Offline.pink - #{page_title}"
         css_link "css/app.css"
         js_link "js/app.js", defer: "true"
-        js_link "https://cdn.jsdelivr.net/npm/apexcharts", defer: true
         csrf_meta_tags
         responsive_meta_tag
       end
