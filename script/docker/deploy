@@ -2,12 +2,16 @@
 
 set -evuo pipefail
 
-docker tag offline_pink registry.heroku.com/offline-pink/web
-docker push registry.heroku.com/offline-pink/web
+# docker tag offline_pink registry.heroku.com/offline-pink/web
+# docker push registry.heroku.com/offline-pink/web
 
-docker tag offline_pink registry.heroku.com/offline-pink/worker
-docker push registry.heroku.com/offline-pink/worker
+# docker tag offline_pink registry.heroku.com/offline-pink/worker
+# docker push registry.heroku.com/offline-pink/worker
 
-heroku container:release web worker
+# heroku container:release web worker
 
 # heroku run bin/tasks db.migrate
+
+docker tag registry.heroku.com/offline-pink/web offline_pink
+docker tag offline_pink registry.fly.io/offline-pink
+docker push registry.fly.io/offline-pink

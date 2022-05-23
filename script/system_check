@@ -19,7 +19,7 @@ fi
 
 # Only if this isn't CI
 if [ -z "$CI" ]; then
-  lucky ensure_process_runner_installed
+  .lucky ensure_process_runner_installed
 fi
 
 if command_not_found "createdb"; then
