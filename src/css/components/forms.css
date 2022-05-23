@@ -1,5 +1,5 @@
 form {
-  // @apply bg-white text-gray-900 shadow-md
+  /* @apply bg-white text-gray-900 shadow-md */
   @apply rounded pt-6 pb-8 mb-4;
 
   .field {

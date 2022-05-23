@@ -16,7 +16,7 @@ abstract class BaseLayout
       head do
         utf8_charset
         title "Offline.pink - #{page_title}"
-        css_link "css/app.css"
+        css_link "/css/app.css"
         js_link "/js/app.js", type: "module", defer: true
         csrf_meta_tags
         responsive_meta_tag

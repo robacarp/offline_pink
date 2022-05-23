@@ -1,72 +1,21 @@
-@tailwind base;
+@import 'tailwindcss/base';
 
-@layer base {
-  a {
-    color: #face00;
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
 
-    &:hover { color: inherit; }
-  }
+@import './components/theme.css';
 
-  hr {
-    border: 1px solid $font-color;
-    @apply my-2;
-  }
+@import './components/admin_nav.css';
+@import './components/forms.css';
+@import './components/graph.css';
+@import './components/headers.css';
+@import './components/log_output.css';
+@import './components/nav.css';
+@import './components/notifications.css';
+@import './components/sudo_toolbar.css';
+@import './components/tables.css';
+@import './components/tabs.css';
 
-  .pink {
-    @apply text-brand;
-  }
-
-  .alert {
-    p {
-      margin-bottom: 0;
-    }
-
-    &.alert-info a {
-      color: #0291ff;
-    }
-  }
-
-  .fixed-width {
-    @apply max-w-screen-xl w-full mx-auto h-screen;
-    @apply p-4;
-  }
-
-  .shrink-to-fit {
-    @apply w-full flex justify-center;
-  }
-
-  .small-frame {
-    @apply mx-auto w-full px-6;
-  }
-
-  @screen md {
-    .header-and-links {
-      @apply flex justify-between items-end;
-    }
-
-    .small-frame {
-      width: 48rem;
-      @apply px-0;
-    }
-  }
-}
-
-@tailwind components;
-@tailwind utilities;
-
-@import './components/theme';
-
-@import './components/admin_nav';
-@import './components/forms';
-@import './components/graph';
-@import './components/headers';
-@import './components/log_output';
-@import './components/nav';
-@import './components/notifications';
-@import './components/sudo_toolbar';
-@import './components/tables';
-@import './components/tabs';
-
-@import './overrides/monitor_creation';
+@import './overrides/monitor_creation.css';
 
 

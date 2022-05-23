@@ -1,1 +1,51 @@
+@layer base {
+  a {
+    color: #face00;
+
+    &:hover { color: inherit; }
+  }
+
+  hr {
+    border: 1px solid $font-color;
+    @apply my-2;
+  }
+
+  .pink {
+    @apply text-brand;
+  }
+
+  .alert {
+    p {
+      margin-bottom: 0;
+    }
+
+    &.alert-info a {
+      color: #0291ff;
+    }
+  }
+
+  .fixed-width {
+    @apply max-w-screen-xl w-full mx-auto h-screen;
+    @apply p-4;
+  }
+
+  .shrink-to-fit {
+    @apply w-full flex justify-center;
+  }
+
+  .small-frame {
+    @apply mx-auto w-full px-6;
+  }
+
+  @screen md {
+    .header-and-links {
+      @apply flex justify-between items-end;
+    }
+
+    .small-frame {
+      width: 48rem;
+      @apply px-0;
+    }
+  }
+}
 
