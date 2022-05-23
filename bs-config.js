@@ -15,6 +15,7 @@ module.exports = {
       }
     }
   },
+  notify: false,
   files: ["public/css/**/*.css", "public/js/**/*.js"],
   watchEvents: ["change"],
   open: false,

@@ -16,9 +16,9 @@ abstract class BaseLayout
       head do
         utf8_charset
         title "Offline.pink - #{page_title}"
-        js_link asset("js/app.js"), defer: "true", data_turbolinks_track: "reload"
-        meta name: "turbolinks-cache-control", content: "no-cache"
         css_link "css/app.css"
+        js_link "js/app.js", defer: "true"
+        js_link "https://cdn.jsdelivr.net/npm/apexcharts", defer: true
         csrf_meta_tags
         responsive_meta_tag
       end

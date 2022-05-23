@@ -1,1 +1,6 @@
-parcel-manifest.json
+{
+    "/js/app.js": "/js/app.js?id=9f73e36163448599799c0ba369b82b17",
+    "/css/app.css": "/css/app.css?id=33f8a4ab53fddbf2929bcc1292f74a51",
+    "/assets/images/undraw_connected_world_wuay.svg": "/assets/images/undraw_connected_world_wuay.svg?id=f7405a70872cac61f0d0b78da653bc36",
+    "/assets/images/undraw_predictive_analytics_kf9n.svg": "/assets/images/undraw_predictive_analytics_kf9n.svg?id=7e6b47b3ee6b9d72bac362cb9be6276c"
+}

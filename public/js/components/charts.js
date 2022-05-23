@@ -1,7 +1,7 @@
 "use strict";
 
 import ApexCharts from "apexcharts"
-import _ from "lodash"
+import _ from "https://unpkg.com/lodash@:version/:file"
 
 class Chart {
   constructor(container) {
