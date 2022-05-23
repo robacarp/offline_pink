@@ -1,2 +1,2 @@
 web: .lucky watch --reload-browser
-assets: yarn watch
+tailwind: tailwindcss --watch --postcss --input=src/css/app.css --output=public/css/app.css
