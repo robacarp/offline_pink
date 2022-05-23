@@ -1,5 +1,3 @@
-"use strict";
-
 export default class Tabs {
   constructor(tabs) {
     tabs.querySelectorAll(".tab").forEach( tab => {

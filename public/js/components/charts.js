@@ -1,9 +1,7 @@
-"use strict";
+import * as ApexCharts from "https://unpkg.com/apexcharts@3.35.2"
+import * as _ from "https://unpkg.com/lodash@4.17.21"
 
-import ApexCharts from "https://unpkg.com/apexcharts@3.35.2"
-import _ from "https://unpkg.com/lodash@4.17.21"
-
-class Chart {
+export default class Chart {
   constructor(container) {
     this.container = container
     this.url = container.dataset.chartUrl
@@ -75,7 +73,7 @@ class Chart {
   }
 
   options () {
-    return _.merge(this.defaultOptions(), this.optionsForType())
+    return _merge(this.defaultOptions(), this.optionsForType())
   }
 
   defaultOptions () {
@@ -124,7 +122,7 @@ class Chart {
 }
 
 
-class ResponseTimeChart extends Chart {
+export class ResponseTimeChart extends Chart {
   optionsForType () {
     return {
       chart: { type: 'scatter' },
@@ -132,7 +130,7 @@ class ResponseTimeChart extends Chart {
   }
 }
 
-class HttpStatusCodeChart extends Chart {
+export class HttpStatusCodeChart extends Chart {
   optionsForType () {
     return {
       chart: { type: 'scatter' },
@@ -145,23 +143,3 @@ class HttpStatusCodeChart extends Chart {
     }
   }
 }
-
-document.addEventListener("turbolinks:load", () => {
-  document.querySelectorAll("[data-chart]").forEach(div => {
-    let chart
-
-    switch(div.dataset.chartType) {
-      case "http_response_time":
-      case "icmp_response_time":
-        chart = new ResponseTimeChart(div)
-        break
-      case "http_status_code":
-        chart = new HttpStatusCodeChart(div)
-        break
-      default:
-        console.log(`could not build chart for ${div}`)
-    }
-
-    chart.begin()
-  })
-})

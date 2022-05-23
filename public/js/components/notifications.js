@@ -1,4 +1,4 @@
-class Notification {
+export default class Notification {
   constructor(notification) {
     this.notification = notification
     notification.querySelector('.close').addEventListener('click', this.close)
@@ -8,7 +8,3 @@ class Notification {
     this.notification.classList.add("hidden")
   }
 }
-
-document.addEventListener("turbolinks:load", () => {
-  document.querySelectorAll('.flash').forEach(flash => new Notification(flash))
-})

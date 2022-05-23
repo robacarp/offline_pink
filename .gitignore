@@ -13,3 +13,4 @@ public/app.css
 public/app.css.map
 server
 start_server
+/node_modules
