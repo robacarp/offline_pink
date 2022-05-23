@@ -65,7 +65,7 @@ abstract class BaseLayout
   end
 
   def fixed_width
-    div class: "prose max-w-screen-xl w-full mx-auto h-screen p-4" do
+    div class: "max-w-screen-xl w-full mx-auto h-screen p-4" do
       raw "<!-- fixed width -->"
       yield
     end

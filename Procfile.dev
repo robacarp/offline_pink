@@ -1,2 +1,2 @@
 web: .lucky watch --reload-browser
-tailwind: tailwindcss --watch --postcss --input=src/css/app.css --output=public/css/app.css
+yolo: postcss src/css/app.css -o public/css/app.css --watch --verbose

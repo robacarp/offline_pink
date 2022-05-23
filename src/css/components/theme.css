@@ -1,6 +1,7 @@
 @layer base {
   a {
-    color: #face00;
+    @apply text-electric-blue;
+    /* color: #face00; */
 
     &:hover { color: inherit; }
   }

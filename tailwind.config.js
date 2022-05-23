@@ -14,12 +14,12 @@ module.exports = {
     extend: {
       colors: {
         brand: '#ed03ff',
-        electric_green: '#13ff02',
-        bright_pink: '#ef03ff',
-        electric_blue: '#02ffee',
-        light_brown: '#c7c76d',
-        warm_yellow: '#face43',
-        dark_red: '#cf593c'
+        'electric-green': '#13ff02',
+        'bright-pink': '#ef03ff',
+        'electric-blue': '#02ffee',
+        'light-brown': '#c7c76d',
+        'warm-yellow': '#face43',
+        'dark-red': '#cf593c'
       }
     }
   },
