@@ -1,8 +1,7 @@
-// todo: RailsUjs?
-
-import Notification from './components/notifications.js';
-import { ResponseTimeChart, HttpStatusCodeChart } from './components/charts.js';
-import Tabs from './components/tabs.js';
+import Notification from './components/notifications.js'
+import { ResponseTimeChart, HttpStatusCodeChart } from './components/charts.js'
+import Tabs from './components/tabs.js'
+import UJS from './lib/ujs.js'
 
 document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(`[data-behavior~=tabs]`).forEach(tabs => {
@@ -28,6 +27,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     chart.begin()
   })
-})
 
-// Rails.start();
+  UJS.start()
+})

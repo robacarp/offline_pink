@@ -1,5 +1,5 @@
-import * as ApexCharts from "https://unpkg.com/apexcharts@3.35.2"
-import * as _ from "https://unpkg.com/lodash@4.17.21"
+import ApexCharts from "https://unpkg.com/apexcharts@3.7.0/dist/apexcharts.esm.js"
+import _merge from "../lib/merge.js"
 
 export default class Chart {
   constructor(container) {
@@ -26,7 +26,6 @@ export default class Chart {
     this.container.dataset.refreshProgress = Math.trunc(100 * this.counter / this.fetchInterval)
 
     if (this.counter <= 0) {
-      console.log(this.counter)
       this.populate()
       this.counter = this.fetchInterval
     }
@@ -34,7 +33,6 @@ export default class Chart {
 
   async makeRequest () {
     let raw_data = await fetch(this.url).then(response => response.json())
-    console.log(`got ${this.url} back with ${raw_data.length} elements`)
     this.data = raw_data.map(datum => { return [datum.timestamp, datum.value]; })
   }
 

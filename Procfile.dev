@@ -1,2 +1,3 @@
 web: .lucky watch --reload-browser
-yolo: postcss src/css/app.css -o public/css/app.css --watch --verbose
+postcss: postcss src/css/app.css -o public/css/app.css --watch --verbose
+worker: crystal run src/app_worker.cr
