@@ -1,31 +1,12 @@
 .monitor-new-page {
-  .left-right-chooser {
-    @apply flex;
-
-    height: 25rem;
-
-    .left {
-      @apply w-1/2 flex flex-col h-full;
-      @apply bg-gray-800;
-
-      p, a {
-        @apply p-4;
-      }
-
-      .active {
-        @apply bg-gray-500;
-      }
+  [data-behavior=tabs] {
+    .tab.active {
+      @apply bg-gray-500;
     }
-
-    .right {
-      @apply w-1/2 h-full;
-
-      .pane {
-        @apply p-4 bg-gray-500 h-full;
-      }
+  }
+  .tab_panes {
+    .active {
+      @apply visible;
     }
-
-    p { }
-    a { @apply block }
   }
 }

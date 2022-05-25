@@ -6,6 +6,10 @@ export default class Tabs {
   }
 
   clicked = evt => {
+    evt.preventDefault()
+
+    if (evt.target.classList.contains("active")) return
+
     const pane = document.querySelector(evt.target.attributes.href.value)
     const panes = pane.parentNode.querySelectorAll('.pane')
 
@@ -18,9 +22,7 @@ export default class Tabs {
     setTimeout(() => {
       tab.classList.add("active")
       pane.classList.add("active")
-    }, 100)
-
-    evt.preventDefault()
+    }, 50)
   }
 }
 

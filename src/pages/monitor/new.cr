@@ -12,19 +12,23 @@ class Monitor::NewPage < AuthLayout
         text @domain.name
       end
 
-      div class: "left-right-chooser" do
+      div class: "flex", style: "height: 25rem" do
 
-        div class: "left tabs", data_behavior: "tabs" do
-          para "When checking to see the status of a domain, Offline.pink first checks DNS for a list of hosts. For each resolved host, additional monitoring can be performed."
+        div class: "w-1/2 flex flex-col h-full tabs bg-gray-800", data_behavior: "tabs" do
+          para class: "p-4" do
+            text <<-TEXT
+              When checking to see the status of a domain, Offline.pink first checks DNS for a list of hosts. For each resolved host, additional monitoring can be performed."
+            TEXT
+          end
 
-          a class: active_if(:http == selected_monitor, "tab"), data_toggle: "tab", href: "#http" do
+          a class: class_list("p-4 block tab", active_if(:http == selected_monitor)), href: "#http" do
             text <<-TEXT
               HTTP is a high level application monitor which checks to the correctness and responsiveness
               of a web application. It is equivalent to the `curl` utility.
             TEXT
           end
 
-          a class: active_if(:icmp == selected_monitor, "tab"), data_toggle: "tab", href: "#icmp" do
+          a class: class_list("p-4 block tab", active_if(:icmp == selected_monitor)), href: "#icmp" do
             text <<-TEXT
               ICMP Echo is a low level network monitor which checks to see a host is responsive
               and measures the time of that response. It is equivalent to the `ping` utility.
@@ -32,15 +36,16 @@ class Monitor::NewPage < AuthLayout
           end
         end
 
-        div class: "right tab_panes" do
+        div class: "w-1/2 h-full tab_panes" do
+          pane_classes = %|pane p-4 bg-gray-500 h-full|
 
-          div class: active_if(:http == selected_monitor, "pane"), id: "http" do
+          div class: class_list(pane_classes, active_if(:http == selected_monitor)), id: "http" do
             h1 "HTTP"
 
             html_form
           end
 
-          div class: active_if(:icmp == selected_monitor, "pane"), id: "icmp" do
+          div class: class_list(pane_classes, active_if(:icmp == selected_monitor)), id: "icmp" do
             h1 "PING"
 
             icmp_form
@@ -53,9 +58,9 @@ class Monitor::NewPage < AuthLayout
     end
   end
 
-  def active_if(statement : Bool, always base_classes : String) : String
-    base_classes += " active" if statement
-    base_classes
+  def active_if(statement : Bool) : String
+    return "active" if statement
+    return ""
   end
 
   def meta_error(operation)
