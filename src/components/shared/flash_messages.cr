@@ -4,15 +4,21 @@ class Shared::FlashMessages < BaseComponent
   def render
     return unless flash.any?
 
-    div class: "w-full flex flex-col items-center" do
+    div class: "w-full flex flex-col items-center space-y-4" do
       flash.each do |flash_type, flash_message|
         # class flash is used to attach the event listener to the close action
-        div class: "flash relative w-full md:w-4/12 flex border px-4 py-3 mb-4 rounded " + flash_style(flash_type),
-          flow_id: "flash", role: "alert" do
-          div flash_type, class: "font-bold mr-4 w-16"
-          text flash_message
+        div(
+          class: class_list("flash w-full md:w-4/12 flex space-x-4 items-start border p-4 rounded", flash_style(flash_type)),
+          flow_id: "flash",
+          role: "alert"
+        ) do
+          div flash_type, class: "font-bold flex-none"
 
-          span class: "close absolute top-0 bottom-0 right-0 px-4 py-3" do
+          para class: "flex-1" do
+            text flash_message
+          end
+
+          div class: "close flex-none" do
             tag "svg", role: "button", class: "fill-current h-6 w-6", xmlns: "http://www.w3.org/2000/svg", viewBox:"0 0 20 20" do
               tag "title", "Close"
               tag "path",

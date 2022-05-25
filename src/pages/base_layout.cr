@@ -2,6 +2,7 @@ abstract class BaseLayout
   include Foundation::LayoutHelpers::Authentication
   include Lucky::HTMLPage
   include HeaderAndLinks
+  include ClassList
 
   abstract def content
 
@@ -89,16 +90,5 @@ abstract class BaseLayout
 
   def text(time : Time)
     text time.to_rfc3339
-  end
-
-  def class_list(*args) : String
-    args.map do |arg|
-      case arg
-      when Array
-        class_list *arg
-      when String
-        arg
-      end
-    end.join ' '
   end
 end
