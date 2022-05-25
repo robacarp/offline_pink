@@ -72,7 +72,7 @@ class Domains::ShowPage < AuthLayout
     span class: classes.join(' ') do
       if monitor_id = log_line.monitor_id
         # todo fix link color, add icon for click-ability
-        link log_line.text, to: MonitorEvent::Show.with(monitor_id, log_line.monitor_event.to_unix)
+        link log_line.text, to: MonitorEvent::Show.with(monitor_id, log_line.monitor_event.to_unix_ms)
       else
         text log_line.text
       end

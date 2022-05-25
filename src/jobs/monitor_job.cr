@@ -47,9 +47,7 @@ class MonitorJob < Mosquito::QueuedJob
   end
 
   def perform
-    create_monitor_event
-
-    log "Starting monitor for Domain##{domain_id} at #{Time.utc.to_s("%Y-%m-%d %H:%M:%S %:z")}"
+    log "Starting monitor for Domain##{domain_id} at #{Time.utc.to_s("%F %X.%6N")}"
 
     ensure_domain
     setup_logs
