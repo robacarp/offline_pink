@@ -1,9 +1,9 @@
 class SaveHttpMonitor < Monitor::SaveOperation
   include SaveMonitor
 
-  attribute path : String
-  attribute ssl : Bool
-  attribute expected_status_code : Int32
+  attribute path : String = "/"
+  attribute ssl : Bool = true
+  attribute expected_status_code : Int32 = 200
   attribute expected_content : String
 
   before_save do
