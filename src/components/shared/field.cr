@@ -6,15 +6,18 @@ class Shared::Field(T) < BaseComponent
   needs button : NamedTuple(text: String)?
 
   def render
-    classes = ["field"]
+    classes = %w|field mb-4|
     unless attribute.valid?
-      classes << "error"
+      classes << "text-red-500"
     end
 
     div class: classes.join(' ') do
-      label_for attribute, label_text
+      label_for attribute, label_text, class: "block text-sm font-bold mb-2"
 
-      tag_defaults field: attribute do |input_builder|
+      tag_classes = %w|shadow appearance-none border rounded py-2 px-3 text-gray-700 mb-3 leading-tight|
+      tag_classes << "border-red-500" unless attribute.valid?
+
+      tag_defaults field: attribute, class: class_list(tag_classes) do |input_builder|
         yield input_builder
       end
 
@@ -25,6 +28,6 @@ class Shared::Field(T) < BaseComponent
 
   def render_button
     return unless config = button
-    submit config[:text], class: "inline-button"
+    submit config[:text], class: "ml-2"
   end
 end

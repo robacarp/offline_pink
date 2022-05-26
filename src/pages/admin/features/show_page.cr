@@ -18,7 +18,7 @@ class Admin::Features::ShowPage < AuthLayout
       end
 
       h3 "Enable or Disable"
-      form_for Features::Toggle.with(feature) do
+      themed_form Features::Toggle.with(feature) do
         div class: "field" do
           select_input(toggle_op.state) do
             # options_for_select doesn't work well with enum
@@ -68,7 +68,7 @@ class Admin::Features::ShowPage < AuthLayout
         end
 
         h3 "Grant a user this feature"
-        form_for Features::Enabled::Create.with(grant_op.feature) do
+        themed_form Features::Enabled::Create.with(grant_op.feature) do
           mount Shared::Field, attribute: grant_op.user_id, label_text: "User ID", &.number_input
 
           submit "Grant"

@@ -1,38 +1,13 @@
 form {
   /* @apply bg-white text-gray-900 shadow-md */
-  @apply rounded pt-6 pb-8 mb-4;
+  /* @apply rounded pt-6 pb-8 mb-4; */
 
   .field {
-    @apply mb-4;
-
-    label {
-      @apply block text-sm font-bold mb-2;
-    }
-
-    input[type=text],
-    input[type=email],
-    input[type=password],
-    input[type=number],
-    select,
-    textarea {
-      @apply shadow appearance-none border rounded py-2 px-3 text-gray-700 mb-3 leading-tight;
-    }
-
     textarea {
       @apply h-16;
       width: 18rem;
     }
-
-    &.error {
-      input, select {
-        @apply border-red-500;
-      }
-
-      .error_text {
-        @apply text-red-500 text-xs italic;
-      }
-    }
-  }
+ }
 
   input[type=button],
   input[type=submit],
@@ -47,26 +22,6 @@ form {
     a {
       @apply inline-block align-baseline font-bold text-sm text-blue-500;
     }
-  }
-
-  .inline-button {
-    @apply ml-2;
-  }
-
-  .error {
-    @apply text-red-500;
-  }
-}
-
-.field.checkbox {
-  @apply flex items-baseline;
-
-  input[type=checkbox] {
-    @apply mr-2 cursor-pointer;
-  }
-
-  label {
-    @apply mb-0 cursor-pointer;
   }
 }
 

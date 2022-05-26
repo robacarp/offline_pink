@@ -6,7 +6,7 @@ class Admin::Features::NewPage < AuthLayout
       header_and_links "Create a new Feature Flag"
 
       centered do
-        form_for Admin::Features::Create do
+        themed_form Admin::Features::Create do
           mount Shared::Field, attribute: save.name, label_text: "Feature Name", &.text_input(autofocus: true)
           submit "Create"
         end

@@ -8,7 +8,7 @@ class Organizations::Memberships::NewPage < AuthLayout
         text "Invite someone to "
         text organization.name
 
-        form_for Organizations::Memberships::Create.route(organization.id) do
+        themed_form Organizations::Memberships::Create.route(organization.id) do
           mount Shared::Field, attribute: save.email, &.email_input(autofocus: true)
           submit "Invite"
         end

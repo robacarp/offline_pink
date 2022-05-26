@@ -8,7 +8,7 @@ class Organizations::NewPage < AuthLayout
       end
 
       centered do
-        form_for Organizations::Create do
+        themed_form Organizations::Create do
           mount Shared::Field,
             attribute: save.name,
             label_text: "Organization Name",

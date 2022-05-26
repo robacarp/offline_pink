@@ -1,12 +1,12 @@
 module ClassList
   def class_list(*args) : String
-    args.map do |arg|
+    args.to_a.map do |arg|
       case arg
       when Array
-        class_list *arg
+        arg.map {|a| class_list a}
       when String
         arg
       end
-    end.join ' '
+    end.flatten.join ' '
   end
 end

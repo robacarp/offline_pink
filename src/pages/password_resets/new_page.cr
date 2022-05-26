@@ -5,7 +5,7 @@ class PasswordReset::NewPage < GuestLayout
     small_frame do
       header_and_links "Reset your password"
 
-      form_for PasswordReset::Create.route do
+      themed_form PasswordReset::Create.route do
         mount Shared::Field, attribute: operation.password, label_text: "Password", &.password_input(autofocus: "true")
         mount Shared::Field, attribute: operation.password_confirmation, label_text: "Confirm Password", &.password_input
 

@@ -14,7 +14,7 @@ class My::Account::ShowPage < AuthLayout
         end
       end
 
-      form_for My::Account::Update do
+      themed_form My::Account::Update do
         mount Shared::Field, attribute: save.email, &.text_input
         pushover_settings if feature_enabled?(:pushover)
         submit "Save"
@@ -53,33 +53,40 @@ class My::Account::ShowPage < AuthLayout
   end
 
   private def pushover_settings
-    div class: "field" do
-      div class: "flex" do
+    div class: "mb-4" do
+      div class: "flex mb-3" do
         label_for save.pushover_key, "Pushover Settings"
 
         nbsp
 
-        classes = ["text-sm mb-2"]
+        classes = %w|text-sm mb-2|
         valid_text = ""
 
         if user.valid_pushover_settings == User::Validity.new(:valid)
-          classes << "text-limegreen-500"
+          classes << "text-green-500"
           valid_text = "valid"
         elsif user.valid_pushover_settings == User::Validity.new(:invalid)
-          classes << "text-crimson-500"
+          classes << "text-red-500"
           valid_text = "invalid"
         elsif user.valid_pushover_settings == User::Validity.new(:unchecked)
-          classes << "text-crimson-500"
+          classes << "text-amber-500"
           valid_text = "unchecked"
         end
 
-        span class: classes.join(' ') do
+        span class: class_list(classes) do
           text valid_text
         end
       end
 
-      text_input field: save.pushover_key, placeholder: "Pushover key"
-      text_input field: save.pushover_device, placeholder: "(optional) Device"
+      shared_classes = %|text-gray-700 leading-tight py-2|
+
+      text_input field: save.pushover_key,
+        placeholder: "Pushover key",
+        class: class_list("rounded-l pl-2", shared_classes)
+
+      text_input field: save.pushover_device,
+        placeholder: "(optional) Device",
+        class: class_list("rounded-r pr-2", shared_classes)
       br
 
       if user.valid_pushover_settings == User::Validity.new(:valid)

@@ -6,17 +6,17 @@ class Shared::Checkbox(T) < BaseComponent
   needs label_text : String?
 
   def render
-    classes = ["field checkbox"]
+    classes = ["field mb-4 flex items-baseline"]
     unless attribute.valid?
       classes << "error"
     end
 
     div class: classes.join(' ') do
-      tag_defaults field: attribute do |input_builder|
+      tag_defaults field: attribute, class: "mr-2 cursor-pointer" do |input_builder|
         yield input_builder
       end
 
-      label_for attribute, label_text
+      label_for attribute, label_text, class: "mb-0 cursor-pointer"
 
       mount Shared::FieldErrors, attribute
     end

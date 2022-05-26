@@ -3,6 +3,7 @@ abstract class BaseLayout
   include Lucky::HTMLPage
   include HeaderAndLinks
   include ClassList
+  include Theme::Form
 
   abstract def content
 

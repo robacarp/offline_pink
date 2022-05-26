@@ -9,7 +9,7 @@ class My::Password::ShowPage < AuthLayout
       end
 
       centered do
-        form_for My::Password::Update do
+        themed_form My::Password::Update do
           mount Shared::Field, attribute: save.old_password, &.password_input(placeholder: "*************")
           mount Shared::Field, attribute: save.password, &.password_input(placeholder: "*************")
           mount Shared::Field, attribute: save.password_confirmation, &.password_input(placeholder: "*************")

@@ -9,7 +9,7 @@ class SignIns::NewPage < GuestLayout
         link "Forgot Password?", to: RequestPasswordReset::New
       end
 
-      form_for SignIns::Create do
+      themed_form SignIns::Create do
         mount Shared::Field, attribute: operation.email, label_text: "Email", &.email_input(autofocus: "true", placeholder: "me@offline.pink")
         mount Shared::Field, attribute: operation.password, label_text: "Password", &.password_input(placeholder: "*************")
 

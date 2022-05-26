@@ -7,7 +7,7 @@ class SignUps::NewPage < GuestLayout
         link "Sign in", to: SignIns::New
       end
 
-      form_for SignUps::Create do
+      themed_form SignUps::Create do
         mount Shared::Field, attribute: operation.email, label_text: "Email", &.email_input(autofocus: "true")
         mount Shared::Field, attribute: operation.password, label_text: "Password", &.password_input(placeholder: "****************")
         mount Shared::Field, attribute: operation.password_confirmation, label_text: "Confirm Password", &.password_input(placeholder: "****************")
