@@ -28,7 +28,7 @@ class Errors::ShowPage
           h2 status_code, class: "status-code"
           h1 message, class: "message"
 
-          img src: "assets/images/undraw_predictive_analytics_kf9n.svg"
+          img src: "/assets/images/undraw_predictive_analytics_kf9n.svg"
           hr
 
           ul class: "helpful-links" do

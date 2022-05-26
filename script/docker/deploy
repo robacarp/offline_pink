@@ -12,6 +12,6 @@ set -evuo pipefail
 
 # heroku run bin/tasks db.migrate
 
-docker tag registry.heroku.com/offline-pink/web offline_pink
 docker tag offline_pink registry.fly.io/offline-pink
 docker push registry.fly.io/offline-pink
+fly deploy -i offline_pink

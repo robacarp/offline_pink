@@ -1,7 +1,7 @@
 module.exports = {
   content: [
     "src/pages/**/*.cr",
-    "src/js/**/*.js",
+    "public/js/**/*.js",
     "src/components/**/*.cr"
   ],
   theme: {

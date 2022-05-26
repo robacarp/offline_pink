@@ -6,11 +6,12 @@ COPY package.json yarn.lock ./
 RUN yarn install
 
 # yarn run prod dependencies
-COPY .sassrc postcss.config.js tailwind.config.js webpack.mix.js .
-COPY src/js src/js
+COPY postcss.config.js tailwind.config.js .
 COPY src/css src/css
 COPY src/pages src/pages
-RUN yarn run production-build
+COPY src/components src/components
+COPY public/js public/js
+RUN yarn run postcss src/css/app.css -o public/css/app.css
 
 FROM crystallang/crystal:1.1.1-alpine-build
 
@@ -21,7 +22,7 @@ WORKDIR /build
 # shards dependencies
 COPY shard.yml shard.lock ./
 ENV SKIP_LUCKY_TASK_PRECOMPILATION 1
-RUN shards install # --production
+RUN shards install --production
 
 ENV DATABASE_URL postgresql://host.docker.internal/production
 ENV REDIS_URL redis://host.docker.internal:6379
