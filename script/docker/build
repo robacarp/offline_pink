@@ -1,29 +1,18 @@
 #!/bin/bash
 
-build_stats () {
-  echo -n '{ "build_timestamp" : "'
-  date "+%Y-%m-%d %H:%M:%S" | tr -d '\n'
+source script/helpers/build_details.sh
 
-  echo -n '", "git_revision" : "'
-  git rev-parse HEAD | tr -d '\n'
+echo build_timestamp="$build_timestamp"
+echo git_rev="$git_rev"
+echo git_tag="$git_tag"
 
-  echo -n '", "version" : "'
-  git tag -l \
-    | grep release \
-    | tr '-' ' ' \
-    | awk '{ print $2 }' \
-    | sort -V \
-    | tail -n 1 \
-    | tr -d '\n'
+#,linux/amd64 \
 
-  echo '"}'
-}
-
-function cleanup {
-  rm BUILD_DETAILS
-}
-trap cleanup EXIT
-
-build_stats > BUILD_DETAILS
-
-docker build . -t offline_pink --progress plain
+docker buildx build . \
+  --load \
+  --platform linux/arm64 \
+  --progress plain \
+  -t offline_pink \
+  --build-arg build_timestamp="$build_timestamp" \
+  --build-arg git_rev="$git_rev" \
+  --build-arg git_tag="$git_tag"
