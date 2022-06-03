@@ -1,6 +1,6 @@
-# fly.toml file generated for offline-pink-redis on 2022-05-19T19:16:08-06:00
+# fly.toml file generated for summer-surf-4263 on 2022-06-02T07:47:42-06:00
 
-app = "offline-pink-redis"
+app = "summer-surf-4263"
 
 kill_signal = "SIGINT"
 kill_timeout = 5
@@ -16,7 +16,3 @@ processes = []
   auto_rollback = true
 
 [[services]]
-
-[[mounts]]
-  destination = "/data"
-  source = "redis_server"

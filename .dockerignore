@@ -1,6 +1,7 @@
 node_modules
 lib
 .git
-.parcel-cache
 .cache
 bin
+fly.toml
+fly-redis

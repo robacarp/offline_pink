@@ -59,10 +59,21 @@ COPY script/docker/entrypoint /usr/local/bin/
 
 # move everything into it's final place
 WORKDIR /app
-COPY BUILD_DETAILS .
 RUN cp -r /build/bin .
 RUN cp -r /build/db .
 RUN cp -r /build/public .
+
+ARG build_timestamp
+ARG git_rev
+ARG git_tag
+
+run echo -n '{ "build_timestamp": "' >  build_details.json
+run echo -n "$build_timestamp"       >> build_details.json
+run echo -n '", "git_revision": "'   >> build_details.json
+run echo -n "$git_rev"               >> build_details.json
+run echo -n '", "version": "'        >> build_details.json
+run echo -n "$git_tag"               >> build_details.json
+run echo -n '"}'                     >> build_details.json
 
 ENTRYPOINT ["/usr/local/bin/entrypoint"]
 CMD []

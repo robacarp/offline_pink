@@ -22,6 +22,6 @@ class AppServer < Lucky::BaseAppServer
   end
 
   def listen
-    server.listen(host, 5001, reuse_port: false)
+    server.listen(host, port, reuse_port: false)
   end
 end

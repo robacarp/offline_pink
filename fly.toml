@@ -1,6 +1,6 @@
-# fly.toml file generated for offline-pink on 2022-05-18T14:39:25-06:00
+# fly.toml file generated for proud-surf-9953 on 2022-06-01T19:15:57-06:00
 
-app = "offline-pink"
+app = "proud-surf-9953"
 
 kill_signal = "SIGINT"
 kill_timeout = 5
@@ -10,7 +10,7 @@ app = "bin/server"
 worker = "bin/worker"
 
 [env]
-  APP_DOMAIN = "offline-pink.fly.dev"
+  APP_DOMAIN = "offline.pink"
   FORCE_SSL = true
   LUCKY_ENV = "production"
 
@@ -22,11 +22,21 @@ worker = "bin/worker"
   release_command = "bin/tasks db.migrate"
 
 [[services]]
-  http_checks = []
   internal_port = 3001
   processes = ["app"]
   protocol = "tcp"
   script_checks = []
+
+  # [[services.http_checks]]
+  #   interval = 60000 # 1 minute
+  #   grace_period = "1s"
+  #   method = "get"
+  #   path = "/ping"
+  #   protocol = "http"
+  #   restart_limit = 1
+  #   timeout = 1000
+  #   tls_skip_verify = false
+  #   [services.http_checks.headers]
 
   [services.concurrency]
     hard_limit = 25
