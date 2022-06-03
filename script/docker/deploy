@@ -1,17 +1,15 @@
 #!/bin/bash
 
-set -evuo pipefail
+source script/helpers/build_details.sh
 
-# docker tag offline_pink registry.heroku.com/offline-pink/web
-# docker push registry.heroku.com/offline-pink/web
+echo build_timestamp="$build_timestamp"
+echo git_rev="$git_rev"
+echo git_tag="$git_tag"
 
-# docker tag offline_pink registry.heroku.com/offline-pink/worker
-# docker push registry.heroku.com/offline-pink/worker
-
-# heroku container:release web worker
-
-# heroku run bin/tasks db.migrate
-
-docker tag offline_pink registry.fly.io/offline-pink
-docker push registry.fly.io/offline-pink
-fly deploy -i offline_pink
+# docker tag offline_pink registry.fly.io/offline-pink
+# docker push registry.fly.io/offline-pink
+fly deploy \
+  --remote-only \
+  --build-arg build_timestamp="$build_timestamp" \
+  --build-arg git_rev="$git_rev" \
+  --build-arg git_tag="$git_tag"
