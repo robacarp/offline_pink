@@ -1,5 +1,5 @@
-class GrantFeature < EnabledFeature::SaveOperation
-  needs feature : Feature
+class GrantFeature < Featurette::EnabledFeature::SaveOperation
+  needs feature : Featurette::Feature
 
   permit_columns user_id
 
@@ -11,7 +11,7 @@ class GrantFeature < EnabledFeature::SaveOperation
   end
 
   def validate_grant_doesnt_already_exist
-    existing_grant = EnabledFeatureQuery.new
+    existing_grant = Featurette::EnabledFeatureQuery.new
       .user_id.nilable_eq(user_id.value)
       .feature_id(feature.id)
       .first?

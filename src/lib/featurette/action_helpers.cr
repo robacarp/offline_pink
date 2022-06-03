@@ -13,7 +13,7 @@ module Featurette
         if features.includes? feature_name
           continue
         else
-          if FeatureQuery.new.name(feature_name).state(Feature::State::Enabled).any?
+          if Featurette::FeatureQuery.new.name(feature_name).state(Featurette::Feature::State::Enabled).any?
 
             continue
           else

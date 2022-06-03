@@ -1,6 +1,6 @@
 class Admin::Features::Toggle < AdminAction
   post "/features/:id" do
-    feature = FeatureQuery.new.find(id)
+    feature = Featurette::FeatureQuery.new.find(id)
 
     ToggleFeature.update(feature, params) do |operation, feature|
       if operation.saved?
@@ -18,12 +18,12 @@ class Admin::Features::Toggle < AdminAction
   end
 
   def tensify(state)
-    case state.to_i
-    when Feature::State::Disabled.to_i
+    case state
+    when .disabled?
       "disabled"
-    when Feature::State::Enabled.to_i
+    when .enabled?
       "enabled"
-    when Feature::State::Grantable.to_i
+    when .grantable?
       "enabled per-user"
     else
       pp state

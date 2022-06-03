@@ -1,5 +1,5 @@
 module Featurette
-  module LayoutHelpers(FeatureModel)
+  module LayoutHelpers
     Log = ::Log.for("featurette")
 
     def feature_enabled?(feature_name : Symbol) : Bool
@@ -21,8 +21,8 @@ module Featurette
       end
     end
 
-    private def lookup_feature(feature_name : String) : FeatureModel?
-      FeatureModel.query.name(feature_name.to_s).first?.tap do |feature|
+    private def lookup_feature(feature_name : String) : Featurette::Feature?
+      Featurette::Feature.query.name(feature_name.to_s).first?.tap do |feature|
         Log.warn { "Could not find feature '#{feature_name}'" } unless feature
       end
     end

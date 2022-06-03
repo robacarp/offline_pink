@@ -3,7 +3,7 @@ class Admin::Users::Show < AdminAction
     user = UserQuery.new
       .preload_domains
       .preload_enabled_features(
-        EnabledFeatureQuery.new.preload_feature
+        Featurette::EnabledFeatureQuery.new.preload_feature
       )
       .find(id)
 

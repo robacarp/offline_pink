@@ -14,15 +14,15 @@ class Db::Seed::RequiredData < LuckyTask::Task
       region.name("Region 1")
     end
 
-    FeatureFactory.create do |feature|
+    Featurette::FeatureFactory.create do |feature|
       feature.name "domain_monitoring"
     end
 
-    FeatureFactory.create do |feature|
+    Featurette::FeatureFactory.create do |feature|
       feature.name "admin"
     end
 
-    FeatureFactory.create do |feature|
+    Featurette::FeatureFactory.create do |feature|
       feature.name "pushover"
     end
 

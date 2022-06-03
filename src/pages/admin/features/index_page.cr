@@ -1,5 +1,5 @@
 class Admin::Features::IndexPage < AuthLayout
-  needs features : FeatureQuery
+  needs features : Featurette::FeatureQuery
 
   def content
     small_frame do
@@ -18,7 +18,7 @@ class Admin::Features::IndexPage < AuthLayout
     end
   end
 
-  def feature_row(feature : ::Feature)
+  def feature_row(feature : Featurette::Feature)
     tr do
       td do
         link feature.name, to: Admin::Features::Show.with(feature)

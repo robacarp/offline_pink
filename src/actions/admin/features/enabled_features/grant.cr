@@ -1,7 +1,7 @@
 class Admin::Features::Enabled::Create < AdminAction
   post "/features/:id/grant" do
-    feature = FeatureQuery.new
-      .preload_grants(EnabledFeatureQuery.new.preload_user)
+    feature = Featurette::FeatureQuery.new
+      .preload_grants(Featurette::EnabledFeatureQuery.new.preload_user)
       .find(id)
 
     user = UserQuery.new.find(params.nested(:enabled_feature)["user_id"])

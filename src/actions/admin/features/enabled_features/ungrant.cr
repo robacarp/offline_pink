@@ -1,6 +1,6 @@
 class Admin::Features::Enabled::Destroy < AdminAction
   delete "/features/enabled/:id" do
-    enabled_feature = EnabledFeatureQuery.new
+    enabled_feature = Featurette::EnabledFeatureQuery.new
       .preload_user
       .preload_feature
       .find(id)

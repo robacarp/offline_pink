@@ -22,8 +22,8 @@ class User < BaseModel
     has_many memberships : Membership
     has_many organizations : Organization, through: [:memberships, :user]
 
-    has_many enabled_features : EnabledFeature
-    has_many features : Feature, through: [:enabled_features, :feature]
+    has_many enabled_features : Featurette::EnabledFeature
+    has_many features : Featurette::Feature, through: [:enabled_features, :feature]
   end
 
   def emailable : Carbon::Address

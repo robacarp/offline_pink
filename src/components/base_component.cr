@@ -1,4 +1,4 @@
 abstract class BaseComponent < Lucky::BaseComponent
-  include Featurette::LayoutHelpers(Feature)
+  include Featurette::LayoutHelpers
   include ClassList
 end

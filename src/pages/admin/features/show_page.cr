@@ -1,5 +1,5 @@
 class Admin::Features::ShowPage < AuthLayout
-  needs feature : ::Feature
+  needs feature : Featurette::Feature
   needs grant_op : GrantFeature
   needs toggle_op : ToggleFeature
 
@@ -22,7 +22,7 @@ class Admin::Features::ShowPage < AuthLayout
         div class: "field" do
           select_input(toggle_op.state) do
             # options_for_select doesn't work well with enum
-            Feature.states_for_select.each do |option_name, option_value|
+            Featurette::Feature.states_for_select.each do |option_name, option_value|
               attributes = {"value" => option_value.to_s}
 
               is_selected = option_value == feature.state.to_i
@@ -39,7 +39,7 @@ class Admin::Features::ShowPage < AuthLayout
       h3 "User Grants"
       hr
       text feature.state.to_s
-      if feature.state == Feature::State::Grantable
+      if feature.state == Featurette::Feature::State::Grantable
         unless feature.grants.empty?
             table do
               tr do

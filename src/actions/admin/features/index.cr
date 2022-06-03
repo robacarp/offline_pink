@@ -1,5 +1,5 @@
 class Admin::Features::Index < AdminAction
   get "/features" do
-    html IndexPage, features: FeatureQuery.new
+    html IndexPage, features: Featurette::FeatureQuery.new
   end
 end

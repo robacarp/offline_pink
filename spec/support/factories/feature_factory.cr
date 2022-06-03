@@ -1,7 +1,7 @@
-class FeatureFactory < Avram::Factory
+class Featurette::FeatureFactory < Avram::Factory
   def initialize
     name Faker::Internet.user_name
     editable true
-    state Feature::State::Disabled
+    state Featurette::Feature::State::Disabled
   end
 end

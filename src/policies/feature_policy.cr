@@ -1,4 +1,4 @@
-class FeaturePolicy < ApplicationPolicy(Feature)
+class FeaturePolicy < ApplicationPolicy(Featurette::Feature)
   def show?
     true
   end

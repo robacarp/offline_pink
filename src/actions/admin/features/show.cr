@@ -1,7 +1,7 @@
 class Admin::Features::Show < AdminAction
   get "/features/:id" do
-    feature = FeatureQuery.new
-      .preload_grants(EnabledFeatureQuery.new.preload_user)
+    feature = Featurette::FeatureQuery.new
+      .preload_grants(Featurette::EnabledFeatureQuery.new.preload_user)
       .find(id)
 
     authorize feature, FeaturePolicy
