@@ -13,7 +13,7 @@ COPY src/components src/components
 COPY public/js public/js
 RUN yarn run postcss src/css/app.css -o public/css/app.css
 
-FROM crystallang/crystal:1.1.1-alpine-build
+FROM crystallang/crystal:1.4.1-alpine-build
 
 RUN apk add cmake
 

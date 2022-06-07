@@ -6,7 +6,7 @@ echo build_timestamp="$build_timestamp"
 echo git_rev="$git_rev"
 echo git_tag="$git_tag"
 
-#,linux/amd64 \
+# --platform linux/arm64,linux/amd64 \
 
 docker buildx build . \
   --load \

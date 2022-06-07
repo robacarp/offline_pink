@@ -2,10 +2,6 @@
 
 source script/helpers/build_details.sh
 
-echo build_timestamp="$build_timestamp"
-echo git_rev="$git_rev"
-echo git_tag="$git_tag"
-
 # docker tag offline_pink registry.fly.io/offline-pink
 # docker push registry.fly.io/offline-pink
 fly deploy \

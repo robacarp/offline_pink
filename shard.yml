@@ -9,7 +9,7 @@ targets:
   tasks:
     main: tasks.cr
 
-crystal: 1.0.0
+crystal: 1.4.1
 
 dependencies:
   icmp:
