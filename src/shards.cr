@@ -2,7 +2,7 @@
 require "lucky_env"
 LuckyEnv.load?(".env")
 
-require "avram"
+require "avram/lucky"
 require "lucky_router"
 require "lucky"
 require "carbon"

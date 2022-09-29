@@ -19,6 +19,7 @@ require "./db/migrations/**"
 
 # Load Lucky tasks (dev, routes, etc.)
 require "lucky/tasks/**"
+require "avram/lucky/tasks"
 
 LuckyTask::Runner.run
 

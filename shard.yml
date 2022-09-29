@@ -30,11 +30,11 @@ dependencies:
   lucky:
     # path: /Users/robert/Documents/repositories/luckyframework/lucky
     github: luckyframework/lucky
-    version: ~> 0.30.1 # branch: master
+    version: ~> 1.0.0-rc1 # branch: master
 
   avram:
     github: luckyframework/avram
-    version: ~> 0.23 # branch: master
+    version: ~> 1.0.0-rc1 # branch: master
 
   faker:
     github: askn/faker
@@ -44,22 +44,18 @@ dependencies:
 
   authentic:
     github: luckyframework/authentic
-    version: ~> 0.8
+    version: ~> 0.9
 
   carbon:
     github: luckyframework/carbon
-    version: ~> 0.2.0
+    version: ~> 0.3.0
 
   carbon_sendgrid_adapter:
     github: luckyframework/carbon_sendgrid_adapter
-    version: ~> 0.1.0
+    version: ~> 0.3.0
 
   lucky_env:
     github: luckyframework/lucky_env
-
-  lucky_flow:
-    github: luckyframework/lucky_flow
-    version: ~> 0.7.3
 
   jwt:
     github: crystal-community/jwt
@@ -67,3 +63,8 @@ dependencies:
 
   honeybadger:
     github: honeybadger-io/honeybadger-crystal
+
+development_dependencies:
+  lucky_flow:
+    github: luckyframework/lucky_flow
+    version: ~> 0.7.3
