@@ -2,7 +2,7 @@ module Monitoring
   class ResultHostLogger
     getter success : Bool = true
 
-    private getter result_logger
+    private getter result_logger, host
 
     def initialize(@result_logger : ResultLogger, @host : Host)
     end
@@ -22,7 +22,8 @@ module Monitoring
         name: name,
         success: success,
         units: units,
-        monitor_event: result_logger.monitor_event
+        monitor_event: result_logger.monitor_event,
+        host: host.ip_address
       )
 
       case data
@@ -48,7 +49,8 @@ module Monitoring
         monitor,
         name: name,
         success: success,
-        monitor_event: result_logger.monitor_event
+        monitor_event: result_logger.monitor_event,
+        host: host.ip_address
       ).save!
     end
 

@@ -93,4 +93,24 @@ abstract class BaseLayout
   def text(time : Time)
     text time.to_rfc3339
   end
+
+  def metric_unit_humanizer(unit : String?) : String
+    case unit
+    when Nil
+      ""
+    when "http_status_code"
+      ""
+    else
+      unit
+    end
+  end
+
+  def metric_name_humanizer(name : String) : String
+    case name
+    when "http_status_code"
+      "HTTP Status"
+    else
+      name.gsub("_", " ").titleize
+    end
+  end
 end

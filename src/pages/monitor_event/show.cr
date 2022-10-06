@@ -19,6 +19,26 @@ class MonitorEvent::ShowPage < AuthLayout
       end
 
       centered do
+        h2 "Per Host Metrics"
+
+        div class: "mb-8" do
+          metric_data.group_by(&.host).each do |host, metrics|
+            h3(host || "0")
+
+            div class: "mb-8" do
+              metrics.each do |metric|
+                text metric_name_humanizer metric.name
+                text ": "
+                text metric.string_value
+                text metric_unit_humanizer metric.units
+                br
+              end
+            end
+          end
+        end
+
+        h2 "Log Entries"
+
         log_entries.each do |entry|
           div do
             text entry.text

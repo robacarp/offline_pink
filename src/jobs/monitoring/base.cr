@@ -26,11 +26,11 @@ module Monitoring
     end
 
     def save_metric(name : String, data : String | Float64 | Int32 | Bool, units : String, *, success = true)
-      logger.save_metric monitor, name: name, data: data, units: units
+      logger.save_metric monitor, name: name, data: data, units: units, success: success
     end
 
     def save_metric(name : String, data : Time::Span, *, success = true)
-      logger.save_metric monitor, name: name, data: data
+      logger.save_metric monitor, name: name, data: data, success: success
     end
 
     def save_failed_metric(name : String)

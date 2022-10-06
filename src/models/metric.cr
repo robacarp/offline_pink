@@ -21,5 +21,17 @@ class Metric < BaseModel
     column units : String?
 
     column monitor_event : Time
+    column host : String?
+  end
+
+  def string_value
+    case metric_type
+    when Metric::Type::Integer then integer_value
+    when Metric::Type::Float   then float_value
+    when Metric::Type::String  then string_value
+    when Metric::Type::Bool    then boolean_value
+    else
+      -1
+    end.to_s
   end
 end
