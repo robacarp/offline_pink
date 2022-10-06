@@ -52,12 +52,13 @@ abstract class Monitor::ShowPage < AuthLayout
     end
   end
 
-  def chart_for(endpoint, *, name : String = "chart", type : String = "chart" )
+  def chart_for(monitor, metric, *, name : String = "chart")
     div("", {
-        data_chart_url: endpoint.path,
-        data_chart_name: name,
-        data_chart_type: type,
-        data_refresh_progress: 0
+      data_chart_url: Monitor::Data.with(monitor, metric: metric).path,
+      data_chart_monitor_id: monitor.id,
+      data_chart_name: name,
+      data_chart_type: metric,
+      data_refresh_progress: 0
       }, [:data_chart]
     )
   end

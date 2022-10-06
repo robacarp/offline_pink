@@ -4,6 +4,7 @@ import _merge from "../lib/merge.js"
 export default class Chart {
   constructor(container) {
     this.container = container
+    this.monitorId = container.dataset.chartMonitorId
     this.url = container.dataset.chartUrl
     this.name = container.dataset.chartName
     this.type = container.dataset.chartType || "basic"
@@ -31,9 +32,17 @@ export default class Chart {
     }
   }
 
+  buildPoint(datum) {
+    return {
+      x: datum.timestamp,
+      y: datum.value,
+      monitorId: this.monitorId
+    }
+  }
+
   async makeRequest () {
     let raw_data = await fetch(this.url).then(response => response.json())
-    this.data = raw_data.map(datum => { return [datum.timestamp, datum.value]; })
+    this.data = raw_data.map(datum => this.buildPoint(datum))
   }
 
   async populate () {
@@ -44,6 +53,12 @@ export default class Chart {
     } else {
       this.chart.updateOptions(this.options())
     }
+  }
+
+  dotClick (event, chartContext, { dataPointIndex }) {
+    const point = this.data[dataPointIndex]
+    const url = `/monitor/${point.monitorId}/event/${point.x}`
+    window.location.href = url
   }
 
   pad (n) { return n >= 10 ? n : `0${n}` }
@@ -82,7 +97,10 @@ export default class Chart {
         type: 'line',
         zoom: { enabled: false },
         animations: { enabled: false },
-        toolbar: { show: false }
+        toolbar: { show: false },
+        events: {
+          dataPointSelection: this.dotClick.bind(this)
+        }
       },
       noData: {
         text: "No Data"
