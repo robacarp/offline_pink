@@ -22,7 +22,9 @@ class Errors::Show < Lucky::ErrorAction
     end
   end
 
-  def render(error : Lucky::RouteNotFoundError | Avram::RecordNotFoundError)
+  def render(
+    error : Lucky::RouteNotFoundError | Avram::RecordNotFoundError | NotFound
+  )
     if html?
       error_html "Sorry, we couldn't find that page.", status: 404
     else

@@ -6,7 +6,7 @@ module Monitoring
     getter results : Array(ResultHostLogger)
 
     def initialize(@domain : Domain, @logger : Log)
-      @monitor_event = Time.utc
+      @monitor_event = Time.utc.at_beginning_of_second
       @results = [] of ResultHostLogger
     end
 
