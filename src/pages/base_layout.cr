@@ -22,6 +22,7 @@ abstract class BaseLayout
         js_link "/js/app.js", type: "module", defer: true
         csrf_meta_tags
         responsive_meta_tag
+        live_reload_connect_tag
       end
 
       classes = [] of String
