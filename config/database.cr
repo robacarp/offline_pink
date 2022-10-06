@@ -24,5 +24,6 @@ Avram.configure do |settings|
   settings.lazy_load_enabled = LuckyEnv.production?
 
   # Disable query cache during tests
-  settings.query_cache_enabled = !LuckyEnv.test?
+  # settings.query_cache_enabled = !LuckyEnv.test?
+  settings.query_cache_enabled = false
 end

@@ -8,4 +8,8 @@ if LuckyEnv.development?
   Avram::SchemaEnforcer.ensure_correct_column_mappings!
 end
 
+Avram.configure do |settings|
+  settings.query_cache_enabled = false
+end
+
 Mosquito::Runner.start
