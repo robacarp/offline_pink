@@ -11,10 +11,15 @@ class SaveDomain < Domain::SaveOperation
   before_save do
     is_valid.value = true
     status_code.value = Domain::Status::UnChecked
+    verification_status.value = Domain::Verification::UnChecked
 
     validate_required owner
     validate_required name
     validate_uniqueness_of name
+  end
+
+  before_save do
+    verification_token.value = Domain.build_verification_token
   end
 
   after_save attach_default_monitors

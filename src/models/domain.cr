@@ -7,11 +7,22 @@ class Domain < BaseModel
     SystemFailure = 3
   end
 
+  enum Verification
+    UnChecked = -1
+    Verified = 0
+    Pending = 1
+    Invalid = 2
+  end
+
   table :domains do
     column name : String
     column is_valid : Bool = false
     column status_code : Domain::Status = Domain::Status::UnChecked
     column last_monitor_event : Time?
+
+    column verification_status : Domain::Verification = Domain::Verification::UnChecked
+    column verification_token : String = ""
+    column verification_date : Time = Time::UNIX_EPOCH
 
     belongs_to user : User?
     belongs_to organization : Organization?
@@ -43,5 +54,9 @@ class Domain < BaseModel
     else
       LogEntryQuery.new.none
     end
+  end
+
+  def self.build_verification_token
+    Base64.urlsafe_encode(Random::Secure.random_bytes(18))
   end
 end

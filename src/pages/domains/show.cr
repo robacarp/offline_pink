@@ -17,6 +17,8 @@ class Domains::ShowPage < AuthLayout
         end
       end
 
+      verification_messaging
+
       centered do
         ul do
           domain.monitors.each do |monitor|
@@ -28,6 +30,24 @@ class Domains::ShowPage < AuthLayout
       end
 
       last_monitor_output
+    end
+  end
+
+  def verification_messaging
+    return if domain.verification_status == Domain::Verification::Verified
+
+    div class: "flash w-full border p-4 rounded bg-red-100 border-red-400 text-red-700" do
+      if domain.verification_status == Domain::Verification::UnChecked
+        para "We're still checking the validity of this domain."
+      end
+
+      if domain.verification_status == Domain::Verification::Invalid
+        para "This domain does not have the correct ownership verification token in place."
+        para "Please add the following TXT record to your DNS configuration:"
+        div class: "" do
+          text "#{domain.verification_token}.#{domain.name} TXT offline_pink"
+        end
+      end
     end
   end
 

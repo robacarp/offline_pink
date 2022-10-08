@@ -12,4 +12,6 @@ Avram.configure do |settings|
   settings.query_cache_enabled = false
 end
 
+Log.dexter.configure :debug, Log::IOBackend.new
+
 Mosquito::Runner.start
