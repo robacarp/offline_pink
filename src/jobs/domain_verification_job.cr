@@ -9,17 +9,19 @@ class DomainVerificationJob < Mosquito::QueuedJob
     domain = DomainQuery.new.find domain_id
     fqdn = domain.verification_token + "." + domain.name
     txt_records = PoorDNS.query fqdn, "TXT"
-    
+
     log "Found TXT records #{txt_records}"
 
     save = DomainOp::UpdateVerification.new(domain)
+    save.verification_date.value = Time.utc
 
     if txt_records.any?(&.matches? /offline.pink verified/)
       log "#{fqdn} verified"
+      # todo notify user that the domain is verified
       save.verification_status.value = Domain::Verification::Verified
     else
       log "#{fqdn} not verified"
-      save.verification_status.value = Domain::Verification::Invalid
+      save.verification_status.value = Domain::Verification::Failed
     end
 
     save.save!

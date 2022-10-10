@@ -11,7 +11,7 @@ class Domain < BaseModel
     UnChecked = -1
     Verified = 0
     Pending = 1
-    Invalid = 2
+    Failed = 2
   end
 
   table :domains do

@@ -7,62 +7,57 @@ class Domains::Verification::ShowPage < AuthLayout
         h1 do
           text domain.name
           middot_sep
-          text domain.status_code.to_s.downcase
-        end
-
-        div do
+          text "ownership verification"
         end
       end
 
       case domain.verification_status
       when Domain::Verification::UnChecked
         domain_verification_instructions
-        unchecked_domain_verification
       when Domain::Verification::Pending
+        pending_verification
         domain_verification_instructions
-        pending_domain_verification
       when Domain::Verification::Verified
         verified_domain
-      when Domain::Verification::Invalid
+      when Domain::Verification::Failed
+        invalid_verification
         domain_verification_instructions
-        invalid_domain_verification
       end
     end
   end
 
-  def pending_domain_verification
-    para "We're still checking the validity of this domain."
+  def pending_verification
+    mount Shared::AlertBox, dismissable: false do
+      para "#{domain.name} is queued for DNS verification."
+    end
   end
 
   def domain_verification_instructions
-    div class: "flash w-full border p-4 rounded bg-red-100 border-red-400 text-red-700" do
-      para "Please add the following TXT record to your DNS configuration:"
-      div class: "" do
-        text "#{domain.verification_token}.#{domain.name} TXT offline.pink verified"
+    para "To verify your domain, please add the following DNS record to your domain's name servers:"
+    div class: "font-mono bg-gray-500 flex space-x-8 p-4 my-4" do
+      div "TXT"
+      div "#{domain.verification_token}.#{domain.name}."
+      div "\"offline.pink verified\""
+    end
+
+    hr
+
+    div class: "flex justify-center w-full mt-4" do
+      form_for Domains::Verification::Create.with(domain) do
+        submit "I've added the record, please check now"
       end
     end
   end
 
-  def unchecked_domain_verification
-    text "when you've added the TXT record, "
-    form_for Domains::Verification::Create.with(domain) do
-      submit "press this button"
+  def invalid_verification
+    mount Shared::AlertBox, severity: "failure", dismissable: false do
+      para "#{domain.name} did not complete verification. We looked #{time_ago_in_words(domain.verification_date)} ago."
     end
   end
 
-  def pending_domain_verification
-    text "pending domain verification"
-  end
-
-  def invalid_domain_verification
-    text "invalid domain verification"
-  end
-
-  def check_verification_now_button
-    text "re-check verification now"
-  end
-
   def verified_domain
-    text "domain is verified"
+    mount Shared::AlertBox, dismissable: false do
+      para "#{domain.name} is verified!"
+    end
   end
 end

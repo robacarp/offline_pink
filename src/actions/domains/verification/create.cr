@@ -7,10 +7,9 @@ class Domains::Verification::Create < BrowserAction
 
     DomainOp::UpdateVerification.update(domain, verification_status: Domain::Verification::Pending) do |operation, domain|
       if operation.saved?
-        flash.success = "Domain queued for verification"
         redirect to: Domains::Verification::Show.with(domain)
       else
-        flash.failure = "Domain verification failed"
+        flash.failure = "Domain verification failed :("
         redirect to: Domains::Verification::Show.with(domain)
       end
     end
