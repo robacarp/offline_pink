@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
     new Tabs(tabs)
   })
 
-  document.querySelectorAll('.flash').forEach(flash => new Notification(flash))
+  document.querySelectorAll('[data-has-close-button]').forEach(flash => new Notification(flash))
 
   document.querySelectorAll("[data-chart]").forEach(div => {
     let chart
