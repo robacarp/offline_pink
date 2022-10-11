@@ -51,7 +51,7 @@ class Domains::Verification::ShowPage < AuthLayout
 
   def invalid_verification
     mount Shared::AlertBox, severity: "failure", dismissable: false do
-      para "#{domain.name} did not complete verification. We looked #{time_ago_in_words(domain.verification_date)} ago."
+      para "#{domain.name} did not complete verification. We looked #{time_ago_in_words(domain.verified_at)} ago."
     end
   end
 

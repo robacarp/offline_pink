@@ -22,7 +22,7 @@ class Domain < BaseModel
 
     column verification_status : Domain::Verification = Domain::Verification::UnChecked
     column verification_token : String = ""
-    column verification_date : Time = Time::UNIX_EPOCH
+    column verified_at : Time = Time::UNIX_EPOCH
 
     belongs_to user : User?
     belongs_to organization : Organization?

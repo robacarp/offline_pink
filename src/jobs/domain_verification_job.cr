@@ -13,11 +13,10 @@ class DomainVerificationJob < Mosquito::QueuedJob
     log "Found TXT records #{txt_records}"
 
     save = DomainOp::UpdateVerification.new(domain)
-    save.verification_date.value = Time.utc
+    save.verified_at.value = Time.utc
 
     if txt_records.any?(&.matches? /offline.pink verified/)
       log "#{fqdn} verified"
-      # todo notify user that the domain is verified
       save.verification_status.value = Domain::Verification::Verified
     else
       log "#{fqdn} not verified"
