@@ -1,7 +1,7 @@
 export default class Notification {
   constructor(notification) {
     this.notification = notification
-    notification.querySelector('.close').addEventListener('click', this.close)
+    notification.querySelector('[data-close-button]').addEventListener('click', this.close)
   }
 
   close = evt => {

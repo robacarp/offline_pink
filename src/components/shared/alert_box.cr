@@ -51,7 +51,7 @@ class Shared::AlertBox < BaseComponent
       end
 
       if dismissable?
-        div class: "close flex-none" do
+        div class: "flex-none", data_close_button: true do
           tag "svg", role: "button", class: "fill-current h-6 w-6", xmlns: "http://www.w3.org/2000/svg", viewBox:"0 0 20 20" do
             tag "title", "Close"
             tag "path",
