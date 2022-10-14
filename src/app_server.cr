@@ -1,4 +1,5 @@
 require "honeybadger"
+require "./lib/honeybadger_handler"
 
 class AppServer < Lucky::BaseAppServer
   def middleware : Array(HTTP::Handler)

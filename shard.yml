@@ -59,6 +59,7 @@ dependencies:
 
   honeybadger:
     github: honeybadger-io/honeybadger-crystal
+    version: ~> 0.2.3
 
 development_dependencies:
   lucky_flow:
