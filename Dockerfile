@@ -15,7 +15,8 @@ RUN yarn run postcss src/css/app.css -o public/css/app.css
 
 FROM crystallang/crystal:1.4.1-alpine-build
 
-RUN apk add cmake
+# bind-tools provides `dig` which is used to verify domain ownership.
+RUN apk add cmake bind-tools
 
 WORKDIR /build
 
