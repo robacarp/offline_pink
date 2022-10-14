@@ -9,7 +9,6 @@ require "carbon"
 require "carbon_sendgrid_adapter"
 require "mosquito"
 require "pundit"
-# require "breeze"
 
 require "./lib/notifier"
 require "./lib/foundation"

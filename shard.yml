@@ -23,10 +23,6 @@ dependencies:
   pundit:
     github: stephendolan/pundit
 
-  breeze:
-    github: luckyframework/breeze
-    version: ~> 0.2
-
   lucky:
     # path: /Users/robert/Documents/repositories/luckyframework/lucky
     github: luckyframework/lucky
