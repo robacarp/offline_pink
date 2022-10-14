@@ -19,7 +19,7 @@ class DomainVerificationJob < Mosquito::QueuedJob
     save = DomainOp::UpdateVerification.new(domain)
     save.verified_at.value = Time.utc
 
-    if txt_records.any?(&.matches? /offline.pink verified/)
+    if txt_records.any?(&.matches? /offline\.pink verified/)
       log "#{fqdn} verified"
       save.verification_status.value = Domain::Verification::Verified
     else
