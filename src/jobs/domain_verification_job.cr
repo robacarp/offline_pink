@@ -1,6 +1,10 @@
 class DomainVerificationJob < Mosquito::QueuedJob
   params(domain_id : Int64)
 
+  def rescheduleable?
+    false
+  end
+
   #  PoorDNS responds with the raw Bind9 style zone record:
   #  "example.com.\t\t900\tIN\tTXT\t\"v=spf1 include:spf.messagingengine.com ~all\""]
   #  "bFUB93-js5rJ-jNupa9NemZV.robacarp.com. 78 IN TXT \"offline.pink verified\""
