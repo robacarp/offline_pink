@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# https://stripe.com/docs/billing/subscriptions/webhooks
+
+stripe listen \
+  --forward-to localhost:5001/webhook/stripe \
+  --events 'customer.subscription.created,customer.subscription.updated,customer.subscription.deleted,invoice.payment_failed,payment_intent.succeeded,invoice.payment_action_required,invoice.paid'

@@ -1,5 +1,18 @@
 require "./shards"
 
+module OfflinePink
+  SUBSCRIPTION_PRICE = 8.75
+
+  def self.domain
+    case
+    when domain_ = ENV["DOMAIN"]?
+      domain_
+    else
+      "#{Lucky::ServerSettings.host}:#{Lucky::ServerSettings.port}"
+    end
+  end
+end
+
 # Load the asset manifest in public/mix-manifest.json
 # Lucky::AssetHelpers.load_manifest
 

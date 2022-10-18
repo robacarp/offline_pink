@@ -9,6 +9,10 @@ require "carbon"
 require "carbon_sendgrid_adapter"
 require "mosquito"
 require "pundit"
+require "stripe"
+require "./lib/stripe"
+Stripe.api_key = ENV.fetch("STRIPE_SECRET_KEY")
+
 
 require "./lib/notifier"
 require "./lib/foundation"

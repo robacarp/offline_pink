@@ -36,22 +36,27 @@ module Foundation::ActionHelpers::SignIn(UserModel, UserQuery)
 
   def admin_user? : UserModel?
     if id = session.get?(ADMIN_SESSION_KEY)
-      current_user_memo(id)
+      user_lookup_table[id]
     end
   end
 
   # Check to see if there's a current user.
   def current_user? : UserModel?
     if id = session.get?(USER_SESSION_KEY)
-      current_user_memo(id)
+      user_lookup_table[id]
     end
   end
 
-  # Memoized user lookup.
+  # Memoized user lookup table.
   @users : Hash(String, UserModel?)?
-  def current_user_memo(id) : UserModel?
-    user_lookup_table = @users ||= Hash(String, UserModel?).new { |hash, key| hash[key] = query_for_user(key) }
-    user_lookup_table[id]
+  private def user_lookup_table : Hash(String, UserModel?)
+    @users ||= Hash(String, UserModel?).new do |cache, key|
+      cache[key] = query_for_user(key)
+    end
+  end
+
+  def reload_current_user
+    user_lookup_table.delete current_user.id.to_s
   end
 
   # Look up a user in the database.

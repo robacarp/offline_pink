@@ -136,6 +136,10 @@ shards:
     git: https://github.com/wyhaines/splay_tree_map.cr.git
     version: 0.2.2
 
+  stripe:
+    git: https://github.com/confact/stripe.cr.git
+    version: 1.4.0
+
   teeplate:
     git: https://github.com/luckyframework/teeplate.git
     version: 0.8.5

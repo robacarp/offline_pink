@@ -20,6 +20,10 @@ dependencies:
     version: ~> 1.0.0.rc1
       # path: ../../mosquito-cr/mosquito
 
+  stripe:
+    github: confact/stripe.cr
+    version: ~> 1.4.0
+
   pundit:
     github: stephendolan/pundit
 
