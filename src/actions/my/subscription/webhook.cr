@@ -42,17 +42,6 @@ class Webhook::Stripe < ApiAction
 
     Log.info { "Stripe webhook received: #{event.type}" }
 
-    # todo there are still some holes in this logic:
-    # - Stripe seems to indicate that I should keep track of the expiration date of a subscription
-    #   - But the expiration date isn't always present.
-    #   - https://stripe.com/docs/billing/subscriptions/webhooks#active-subscriptions
-    #   - "appropriate date in the future" - what is that date?
-    # - Other parts of the documentation indicate that it is sufficient to watch for the status
-    #   of a subscription to change to inactive.
-    #   - This flag is always present but I'm not doing anything with it because of the above.
-    #   - https://stripe.com/docs/billing/subscriptions/webhooks#state-changes
-    # - Some of the docs indicate that watching for payment failures is necessary too.
-    #   - I'm not doing this yet.
     # - Testing this stuff isn't possible right now 
     #   - https://github.com/confact/stripe.cr/issues/53
     case event.type
@@ -69,8 +58,7 @@ class Webhook::Stripe < ApiAction
       Log.info { "Stripe subscription: #{subscription.id}" }
       Log.info { "Customer ID: #{customer_id}" }
 
-      # TODO: when does this get called?
-      # CreateSubscription.update!(stripe_id: request.data.object.id)
+      UpdateSubscription.run! stripe_subscription: subscription, stripe_customer_id: customer_id
     when "customer.subscription.deleted"
       subscription = event.data.object.as ::Stripe::Subscription
       customer_id = stripe_customer_id from: subscription
@@ -78,16 +66,24 @@ class Webhook::Stripe < ApiAction
       Log.info { "Customer ID: #{customer_id}" }
 
       DeleteSubscription.run! stripe_customer_id: customer_id, stripe_id: subscription.id
-    when "payment_intent.succeeded"
-      payment_intent = event.data.object.as ::Stripe::PaymentIntent
-      customer_id = stripe_customer_id from: payment_intent
+    when "invoice.paid"
+      invoice = event.data.object.as ::Stripe::Invoice
+      customer_id = stripe_customer_id from: invoice
 
-      Log.info { "Payment intent: #{payment_intent.id}" }
+      Log.info { "Invoice: #{invoice.id}" }
       Log.info { "Customer ID: #{customer_id}" }
 
       SubscriptionPaymentSucceeded.run! stripe_customer_id: customer_id
+    when "invoice.payment_failed"
+      invoice = event.data.object.as ::Stripe::Invoice
+      customer_id = stripe_customer_id from: invoice
+
+      Log.info { "Invoice: #{invoice.id}" }
+      Log.info { "Customer ID: #{customer_id}" }
+
+      # SubscriptionPaymentFailed.run! stripe_customer_id: customer_id
     else
-      raise "unhandled Stripe webhook event type: #{event.type}"
+      Log.warn { "unhandled Stripe webhook event type: #{event.type}" }
     end
 
     raw_json "{}", 200
