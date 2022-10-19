@@ -10,7 +10,7 @@ class My::Subscription::SubscribedPage < AuthLayout
       subscription_status
 
       centered do
-        themed_form My::Subscription::Create do
+        themed_form My::Subscription::Update do
           submit "Manage Subscription"
         end
       end
